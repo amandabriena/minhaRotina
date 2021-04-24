@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Meu Projeto</string>
+    <string name="e_mail">E-mail:</string>
+    <string name="nome">Nome:</string>
+    <string name="data">Data de Nascimento:</string>
+    <string name="genero">Gênero:</string>
+    <string name="senha">Senha:</string>
+    <string name="cadastro">Não possui uma conta? Cadastre-se</string>
+    <string name="acesse">Ou acesse com:</string>
+    <string name="button">Entrar</string>
+    <string name="esqueciSenha">Esqueci minha senha</string>
+    <string name="orientacaoAtividades">Selecione uma das atividades abaixo para incluir na rotina ou crie uma nova.</string>
+</resources>
