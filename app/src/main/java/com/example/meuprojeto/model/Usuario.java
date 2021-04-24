@@ -1,4 +1,4 @@
-package com.example.meuprojeto.view;
+package com.example.meuprojeto.model;
 
 public class Usuario {
     private String nome;

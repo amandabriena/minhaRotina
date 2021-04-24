@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context=".MainActivity">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,9 +39,9 @@
 
         <EditText
             android:id="@+id/nome"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="@dimen/width_edit"
+            android:layout_height="@dimen/height_edit"
+            android:layout_marginTop="@dimen/margin_top_cadastro"
             android:background="@drawable/edit_round" />
 
         <TextView
@@ -49,13 +49,14 @@
             android:layout_width="wrap_content"
             android:layout_height="26dp"
             android:text="@string/data"
+            android:layout_marginTop="@dimen/margin_top_cadastro"
             android:textAppearance="@style/label" />
 
         <EditText
             android:id="@+id/data"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="@dimen/width_edit"
+            android:layout_height="@dimen/height_edit"
+            android:layout_marginTop="@dimen/margin_top_cadastro"
             android:background="@drawable/edit_round"
             android:inputType="date" />
 
@@ -64,13 +65,14 @@
             android:layout_width="wrap_content"
             android:layout_height="26dp"
             android:text="@string/genero"
+            android:layout_marginTop="@dimen/margin_top_cadastro"
             android:textAppearance="@style/label" />
 
         <EditText
             android:id="@+id/genero"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="@dimen/width_edit"
+            android:layout_height="@dimen/height_edit"
+            android:layout_marginTop="@dimen/margin_top_cadastro"
             android:background="@drawable/edit_round" />
 
         <TextView
@@ -78,13 +80,14 @@
             android:layout_width="wrap_content"
             android:layout_height="26dp"
             android:text="@string/e_mail"
+            android:layout_marginTop="@dimen/margin_top_cadastro"
             android:textAppearance="@style/label" />
 
         <EditText
             android:id="@+id/email"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
+            android:layout_width="@dimen/width_edit"
+            android:layout_height="@dimen/height_edit"
+            android:layout_marginTop="@dimen/margin_top_cadastro"
             android:background="@drawable/edit_round"
             android:inputType="textEmailAddress" />
 
@@ -92,6 +95,7 @@
             android:id="@+id/tsenha"
             android:layout_width="71dp"
             android:layout_height="26dp"
+            android:layout_marginTop="@dimen/margin_top_cadastro"
             android:text="@string/senha"
             android:textAppearance="@style/label"
 
@@ -99,9 +103,9 @@
 
         <EditText
             android:id="@+id/senha"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="@dimen/width_edit"
+            android:layout_height="@dimen/height_edit"
+            android:layout_marginTop="@dimen/margin_top_cadastro"
             android:background="@drawable/edit_round"
             android:inputType="textPassword" />
 

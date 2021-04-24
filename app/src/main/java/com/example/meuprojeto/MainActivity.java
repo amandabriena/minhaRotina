@@ -1,4 +1,4 @@
-package com.example.meuprojeto.view;
+package com.example.meuprojeto;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,14 +6,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.meuprojeto.R;
+import com.example.meuprojeto.controller.UsuarioController;
+import com.example.meuprojeto.model.Usuario;
+
 
 public class MainActivity extends AppCompatActivity {
 
     Usuario objUsuario;
+    UsuarioController controleUsuario;
 
     //Declarando variáveis
     Button btnCadatrar;
@@ -24,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         objUsuario = new Usuario();
-
+        controleUsuario = new UsuarioController();
         //Atrelando variáveis as views
         btnCadatrar = (Button) findViewById(R.id.btnCadastrar);
 
@@ -39,27 +42,35 @@ public class MainActivity extends AppCompatActivity {
         btnCadatrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                incluirUsuario();
+                //Incluindo no objeto usuários os dados do formulário
+                incluirDadosUsuario();
 
-                String dadosUsuario;
-                dadosUsuario = "Nome: "+objUsuario.getNome()+"\n";
-                dadosUsuario = "Email: "+objUsuario.getEmail()+"\n";
-                dadosUsuario = "Data: "+objUsuario.getData()+"\n";
-                dadosUsuario = "Genero: "+objUsuario.getGenero()+"\n";
-                dadosUsuario = "Senha: "+objUsuario.getSenha()+"\n";
+                //Salvando os dados na controller
+                controleUsuario.incluirUsuario(objUsuario);
 
-                Toast.makeText(getApplicationContext(), dadosUsuario, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), controleUsuario.toString(), Toast.LENGTH_LONG).show();
+                limparDados();
             }
         });
 
     }
-
-    private void incluirUsuario(){
+    //Função para incluir dados no objeto usuário
+    private void incluirDadosUsuario(){
         objUsuario.setNome(nome.getText().toString());
         objUsuario.setData(data.getText().toString());
         objUsuario.setEmail(email.getText().toString());
         objUsuario.setSenha(senha.getText().toString());
         objUsuario.setGenero(genero.getText().toString());
 
+    }
+    //Função para limpar dados dos campos
+    public void limparDados(){
+        nome.setText("");
+        data.setText("");
+        email.setText("");
+        senha.setText("");
+        genero.setText("");
+
+        nome.requestFocus();
     }
 }
