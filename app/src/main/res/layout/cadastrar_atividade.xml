@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp"
+        tools:ignore="MissingConstraints">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/imgIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:srcCompat="@drawable/icon_user" />
+
+            <Button
+                android:id="@+id/btAjuda"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/button_round_border"
+                android:drawableRight="@android:drawable/ic_menu_help"
+                android:text="@string/btAjuda" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            >
+            <TextView
+                android:id="@+id/tatividade"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:text="@string/atividade"
+                android:textAppearance="@style/label" />
+
+            <EditText
+                android:id="@+id/nome_atividade"
+                android:layout_width="@dimen/width_edit"
+                android:layout_height="@dimen/height_edit"
+                android:layout_marginTop="@dimen/margin_top_cadastro"
+                android:background="@drawable/edit_round" />
+
+            <TextView
+                android:id="@+id/thorario"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:text="@string/horario"
+                android:layout_marginTop="@dimen/margin_top_cadastro"
+                android:textAppearance="@style/label" />
+
+            <EditText
+                android:id="@+id/horario"
+                android:layout_width="@dimen/width_edit"
+                android:layout_height="@dimen/height_edit"
+                android:layout_marginTop="@dimen/margin_top_cadastro"
+                android:background="@drawable/edit_round" />
+
+            <TextView
+                android:id="@+id/tmusica"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:text="@string/musica"
+                android:layout_marginTop="@dimen/margin_top_cadastro"
+                android:textAppearance="@style/label" />
+
+            <EditText
+                android:id="@+id/musica"
+                android:layout_width="@dimen/width_edit"
+                android:layout_height="@dimen/height_edit"
+                android:layout_marginTop="@dimen/margin_top_cadastro"
+                android:background="@drawable/edit_round" />
+
+            <TextView
+                android:id="@+id/tdias"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:text="@string/dias_semana"
+                android:layout_marginTop="@dimen/margin_top_cadastro"
+                android:textAppearance="@style/label" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <CheckBox android:id="@+id/checkbox_seg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SEG"
+                    android:onClick="onCheckboxClicked"/>
+                <CheckBox android:id="@+id/checkbox_ter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TER"
+                    android:onClick="onCheckboxClicked"/>
+                <CheckBox android:id="@+id/checkbox_qua"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QUA"
+                    android:onClick="onCheckboxClicked"/>
+                <CheckBox android:id="@+id/checkbox_qui"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="QUI"
+                    android:onClick="onCheckboxClicked"/>
+                <CheckBox android:id="@+id/checkbox_sex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SEX"
+                    android:onClick="onCheckboxClicked"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/btnCadastrar"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_round"
+                android:text="Pronto!" />
+
+        </LinearLayout>
+
+
+
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
