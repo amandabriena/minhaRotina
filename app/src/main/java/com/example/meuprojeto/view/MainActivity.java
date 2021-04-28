@@ -2,6 +2,7 @@ package com.example.meuprojeto.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,15 +22,35 @@ public class MainActivity extends AppCompatActivity {
     //Declarando variáveis
     Button btnCadatrar;
     EditText nome, data, email, senha, genero;
-
+    Button btGerAtividades;
+    Button btCadastrarAtv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_dashboard);
+
         objUsuario = new Usuario();
         controleUsuario = new UsuarioController();
+        btGerAtividades = (Button) findViewById(R.id.btGerAtividades);
+        btCadastrarAtv = (Button) findViewById(R.id.btAddAtividadeFora);
+        btGerAtividades.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Direcionando a ação do botão para abrir a tela de atividades
+                Intent gerAtividades = new Intent(MainActivity.this, GerAtividadesActivity.class);
+                startActivity(gerAtividades);
+            }
+        });
+        btCadastrarAtv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Direcionando a ação do botão para abrir a tela de atividades
+                Intent addAtividade = new Intent(MainActivity.this, CadastrarAtividade.class);
+                startActivity(addAtividade);
+            }
+        });
         //Atrelando variáveis as views
-        btnCadatrar = (Button) findViewById(R.id.btnCadastrar);
+        /*btnCadatrar = (Button) findViewById(R.id.btnCadastrar);
 
         nome = (EditText) findViewById(R.id.nome);
         data = (EditText) findViewById(R.id.data);
@@ -51,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), controleUsuario.toString(), Toast.LENGTH_LONG).show();
                 limparDados();
             }
-        });
+        });*/
 
     }
     //Função para incluir dados no objeto usuário

@@ -20,4 +20,14 @@
     <string name="horario">Horário:</string>
     <string name="musica">Música:</string>
     <string name="dias_semana">Dias da Semana:</string>
+
+    //Strings Página Dashboard (menu)
+    <string name="btEditar">EDITAR</string>
+    <string name="btRotinaDiaria">MINHA ROTINA DE HOJE</string>
+    <string name="btGerAtividades">GERENCIAR ATIVIDADES</string>
+    <string name="btAddAtividadeFora">ADICIONAR ATIVIDADE FORA DA ROTINA</string>
+    <string name="btAtvsAgendadas">VER ATIVIDADES AGENDADAS</string>
+    <string name="btTempoMax">TEMPO MÁXIMO DE USO</string>
+    <string name="btVolMax">AJUSTAR VOLUME MÁXIMO</string>
+    <string name="btEditarPreferencias">EDITAR PREFERÊNCIAS</string>
 </resources>

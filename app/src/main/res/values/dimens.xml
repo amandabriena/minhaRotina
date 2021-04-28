@@ -3,5 +3,8 @@
     <dimen name="margin_top_cadastro">8dp</dimen>
     <dimen name="width_edit">300dp</dimen>
     <dimen name="height_edit">40dp</dimen>
+    <dimen name="margin_bts_dashboard">10dp</dimen>
+    <dimen name="padding_bts_dashboard">20dp</dimen>
+
 
 </resources>

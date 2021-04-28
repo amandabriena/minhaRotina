@@ -5,6 +5,12 @@ public class Atividade {
     private String horario;
     private String musica;
 
+    public Atividade(){
+
+    }
+    public Atividade(String nome_atividade){
+        this.nome_atividade = nome_atividade;
+    }
     public String getNome_atividade() {
         return nome_atividade;
     }
