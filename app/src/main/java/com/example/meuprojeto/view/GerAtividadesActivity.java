@@ -7,25 +7,25 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.meuprojeto.R;
+import com.example.meuprojeto.controller.AtividadeController;
 import com.example.meuprojeto.datasource.DataSource;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GerAtividadesActivity extends AppCompatActivity {
-    DataSource ds;
     ArrayAdapter<String> atividadeAdapter;
     List<String> atividades;
     ListView listView;
-
+    AtividadeController atvController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ver_atividades);
 
-        ds = new DataSource();
+        atvController = new AtividadeController();
 
-        atividades = ds.listarAtividades();
+        atividades = atvController.listarDados();
 
         listView = (ListView) findViewById(R.id.lvAtividades);
 

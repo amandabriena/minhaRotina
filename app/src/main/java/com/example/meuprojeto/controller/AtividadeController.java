@@ -1,8 +1,11 @@
 package com.example.meuprojeto.controller;
 
+import com.example.meuprojeto.datasource.DataSource;
 import com.example.meuprojeto.model.Atividade;
 
-public class AtividadeController {
+import java.util.List;
+
+public class AtividadeController extends DataSource {
     private Atividade atividade;
 
     public AtividadeController(){
@@ -13,5 +16,11 @@ public class AtividadeController {
     public void incluirAtividade(Atividade atividade){
         //TODO - incluindo atividade na base de dados
         this.atividade = atividade;
+        persisirDados(atividade);
     }
+
+    public List<String> listarDados(){
+        return listarAtividades();
+    }
+
 }
