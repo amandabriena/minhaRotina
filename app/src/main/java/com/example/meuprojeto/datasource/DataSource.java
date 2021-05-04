@@ -35,6 +35,7 @@ public class DataSource {
         lista.add("Dormir");
         lista.add("Estudar");
         lista.add("Brincar");
+        lista.add("Teste");
 
         return lista;
     }

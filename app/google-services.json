@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "206988563690",
+    "firebase_url": "https://rotinadivertida-1a26c-default-rtdb.firebaseio.com",
+    "project_id": "rotinadivertida-1a26c",
+    "storage_bucket": "rotinadivertida-1a26c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:206988563690:android:6d0e0c659fad3a8f947393",
+        "android_client_info": {
+          "package_name": "com.example.meuprojeto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "206988563690-q6fi7u6vepdo2qvgp3pfuu5lu6hpj7lu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.meuprojeto",
+            "certificate_hash": "f0b74c9aac3043fc4945e68a3c44c2f2c546ee7f"
+          }
+        },
+        {
+          "client_id": "206988563690-l7gf64ku27hh2k98bj54h8sot6pcc039.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu1Fu05nZ2OO7kaQuzPeKAjzmXbirJ7v0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "206988563690-l7gf64ku27hh2k98bj54h8sot6pcc039.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

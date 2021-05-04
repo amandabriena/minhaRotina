@@ -1,7 +1,9 @@
 package com.example.meuprojeto.model;
 
+import androidx.annotation.NonNull;
+
 public class Atividade {
-    private Integer id;
+    private String id;
     private String nome_atividade;
     private String horario;
     private String musica;
@@ -13,11 +15,11 @@ public class Atividade {
         this.nome_atividade = nome_atividade;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -43,5 +45,11 @@ public class Atividade {
 
     public void setMusica(String musica) {
         this.musica = musica;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return nome_atividade;
     }
 }

@@ -17,7 +17,6 @@ public class DashboardActivity extends AppCompatActivity {
 
     Usuario objUsuario;
     UsuarioController controleUsuario;
-
     //Declarando variáveis
     Button btnCadatrar;
     EditText nome, data, email, senha, genero;
