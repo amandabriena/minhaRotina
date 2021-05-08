@@ -1,11 +1,20 @@
 package com.example.meuprojeto.model;
 
 public class Usuario {
+    private String id;
     private String nome;
     private String data;
     private String email;
     private String genero;
     private String senha;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -46,4 +55,5 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
 }

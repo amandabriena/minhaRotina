@@ -14,23 +14,18 @@ import com.example.meuprojeto.model.Usuario;
 
 
 public class DashboardActivity extends AppCompatActivity {
-
-    Usuario objUsuario;
-    UsuarioController controleUsuario;
     //Declarando variáveis
     Button btnCadatrar;
-    EditText nome, data, email, senha, genero;
-    Button btGerAtividades;
-    Button btCadastrarAtv;
+    Button btGerAtividades, btCadastrarAtv, btEditar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        objUsuario = new Usuario();
-        controleUsuario = new UsuarioController();
         btGerAtividades = (Button) findViewById(R.id.btGerAtividades);
         btCadastrarAtv = (Button) findViewById(R.id.btAddAtividadeFora);
+        btEditar = (Button) findViewById(R.id.btEditar);
         btGerAtividades.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,26 +42,16 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(addAtividade);
             }
         });
+        btEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Direcionando a ação do botão para abrir a edição do usuário
+                Intent cadUsuario = new Intent(DashboardActivity.this, CadastrarUsuario.class);
+                startActivity(cadUsuario);
+            }
+        });
 
 
     }
-    //Função para incluir dados no objeto usuário
-    private void incluirDadosUsuario(){
-        objUsuario.setNome(nome.getText().toString());
-        objUsuario.setData(data.getText().toString());
-        objUsuario.setEmail(email.getText().toString());
-        objUsuario.setSenha(senha.getText().toString());
-        objUsuario.setGenero(genero.getText().toString());
 
-    }
-    //Função para limpar dados dos campos
-    public void limparDados(){
-        nome.setText("");
-        data.setText("");
-        email.setText("");
-        senha.setText("");
-        genero.setText("");
-
-        nome.requestFocus();
-    }
 }
