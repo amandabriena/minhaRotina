@@ -1,7 +1,6 @@
 package com.example.meuprojeto.view;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -9,10 +8,7 @@ import android.widget.ListView;
 
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.controller.AtividadeController;
-import com.example.meuprojeto.controller.RecyclerViewFragment;
-import com.example.meuprojeto.datasource.DataSource;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GerAtividadesActivity extends AppCompatActivity {

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DataSource {
 
-    public boolean persisirDados(Atividade obj){
+    public boolean adicionarAtividade(Atividade obj){
         if(true){
             //TODO: Adicionar Registros
         }else{

@@ -15,14 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
-
-            <ImageView
-                android:id="@+id/imgIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                app:srcCompat="@drawable/icon_user" />
-
             <Button
                 android:id="@+id/btAjuda"
                 android:layout_width="wrap_content"
@@ -40,6 +32,13 @@
             android:orientation="vertical"
             android:layout_gravity="center"
             >
+            <ImageView
+                android:id="@+id/imgIcon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                />
+
             <TextView
                 android:id="@+id/tatividade"
                 android:layout_width="wrap_content"
@@ -91,7 +90,14 @@
                 android:text="@string/dias_semana"
                 android:layout_marginTop="@dimen/margin_top_cadastro"
                 android:textAppearance="@style/label" />
-
+            <Button
+                android:id="@+id/btUploadImg"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:layout_gravity="right"
+                android:background="@drawable/button_round"
+                android:text="Upload Imagem" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

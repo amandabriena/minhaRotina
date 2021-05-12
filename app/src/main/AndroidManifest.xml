@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.CadastrarUsuario"></activity>
+        <activity android:name=".view.minhaRotinaActivity"></activity>
+        <activity android:name=".view.CadastrarUsuario" />
         <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

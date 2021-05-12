@@ -15,8 +15,7 @@ import com.example.meuprojeto.model.Usuario;
 
 public class DashboardActivity extends AppCompatActivity {
     //Declarando variáveis
-    Button btnCadatrar;
-    Button btGerAtividades, btCadastrarAtv, btEditar;
+    Button btGerAtividades, btCadastrarAtv, btEditar, btRotinaDiaria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +24,9 @@ public class DashboardActivity extends AppCompatActivity {
 
         btGerAtividades = (Button) findViewById(R.id.btGerAtividades);
         btCadastrarAtv = (Button) findViewById(R.id.btAddAtividadeFora);
+        btRotinaDiaria = (Button) findViewById(R.id.btRotinaDiaria);
         btEditar = (Button) findViewById(R.id.btEditar);
+
         btGerAtividades.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,7 +51,14 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(cadUsuario);
             }
         });
-
+        btRotinaDiaria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Direcionando para visão da rotina diária
+                Intent rotinaHoje = new Intent(DashboardActivity.this, minhaRotinaActivity.class);
+                startActivity(rotinaHoje);
+            }
+        });
 
     }
 
