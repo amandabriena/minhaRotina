@@ -24,6 +24,7 @@ public class Atividade {
     }
 
     public Atividade(String nome_atividade, String horario, String musica) {
+        this.id = UUID.randomUUID().toString();
         this.nome_atividade = nome_atividade;
         this.horario = horario;
         this.musica = musica;

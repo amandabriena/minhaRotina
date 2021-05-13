@@ -55,19 +55,6 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/edit_round"
                 android:inputType="date" />
-            <TextView
-                android:id="@+id/tgenero"
-                android:layout_width="wrap_content"
-                android:layout_height="26dp"
-                android:text="@string/genero"
-                android:textAppearance="@style/label" />
-
-            <EditText
-                android:id="@+id/genero"
-                android:layout_marginTop="8dp"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
-                android:background="@drawable/edit_round"/>
 
             <TextView
                 android:id="@+id/temail"
@@ -86,8 +73,8 @@
 
             <TextView
                 android:id="@+id/tsenha"
-                android:layout_width="71dp"
-                android:layout_height="23dp"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/senha"
                 android:textAppearance="@style/label"

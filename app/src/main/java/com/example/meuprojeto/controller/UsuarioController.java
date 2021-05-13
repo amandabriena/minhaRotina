@@ -24,7 +24,6 @@ public class UsuarioController {
         dadosUsuario += "Nome: "+this.usuario.getNome()+"\n";
         dadosUsuario += "Email: "+this.usuario.getEmail()+"\n";
         dadosUsuario += "Data: "+this.usuario.getData()+"\n";
-        dadosUsuario += "Genero: "+this.usuario.getGenero()+"\n";
         dadosUsuario += "Senha: "+this.usuario.getSenha()+"\n";
         return dadosUsuario;
     }

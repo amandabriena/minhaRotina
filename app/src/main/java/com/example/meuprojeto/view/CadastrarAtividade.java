@@ -6,10 +6,13 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.storage.StorageManager;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,6 +30,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -37,7 +43,8 @@ public class CadastrarAtividade extends AppCompatActivity {
 
     //Declarando variáveis
     EditText nome_atv, horario, musica;
-    Button btCadastrarAtividade, btUploadImg;
+    Button btCadastrarAtividade;
+    ImageButton btUploadImg;
     ImageView imgIcon;
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 71;
@@ -45,8 +52,6 @@ public class CadastrarAtividade extends AppCompatActivity {
     //Conexão com o db
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    //FirebaseStorage storage;
-    //StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +62,7 @@ public class CadastrarAtividade extends AppCompatActivity {
         musica = (EditText) findViewById(R.id.musica);
         //Atrelando variáveis as views
         btCadastrarAtividade = (Button) findViewById(R.id.btCadastrarAtividade);
-        btUploadImg = (Button) findViewById(R.id.btUploadImg);
+        btUploadImg = (ImageButton) findViewById(R.id.btUploadImg);
         imgIcon = (ImageView) findViewById(R.id.imgIcon);
 
 
@@ -66,17 +71,13 @@ public class CadastrarAtividade extends AppCompatActivity {
         btCadastrarAtividade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Direcionando a ação do botão para cadastrar nova atividade
-                objAtividade = new Atividade(nome_atv.getText().toString(), horario.getText().toString(), musica.getText().toString());
-                databaseReference.child("Atividade").child(objAtividade.getId()).setValue(objAtividade);
-                limparDadosAtv();
+                criarAtividade();
             }
         });
         btUploadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selecionarImagem();
-                uploadImage();
             }
         });
     }
@@ -86,7 +87,25 @@ public class CadastrarAtividade extends AppCompatActivity {
         startActivityForResult(intent, 0);
     }
 
-    private void uploadImage(){
+    private void uploadImagem(){
+        String fileName = UUID.randomUUID().toString();
+        final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/"+fileName);
+        ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.i("Teste", uri.toString());
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("Teste",e.getMessage(),e);
+            }
+        });
     }
 
     @Override
@@ -97,8 +116,9 @@ public class CadastrarAtividade extends AppCompatActivity {
             try{
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
                 imgIcon.setImageDrawable(new BitmapDrawable(bitmap));
+                btUploadImg.setAlpha(0);
             }catch (IOException e){
-
+                Toast.makeText(this,"Erro ao selecionar imagem! "+e, Toast.LENGTH_SHORT);
             }
         }
     }
@@ -113,14 +133,19 @@ public class CadastrarAtividade extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
     }*/
-    private void incluirDadosAtividade(){
+    private void criarAtividade(){
         //criando ID randomico e demais informações preenchidas:
-        objAtividade.setId(UUID.randomUUID().toString());
-        objAtividade.setNome_atividade(nome_atv.getText().toString());
-        objAtividade.setHorario(horario.getText().toString());
-        objAtividade.setMusica(musica.getText().toString());
-        databaseReference.child("Atividade").child(objAtividade.getId()).setValue(objAtividade);
-        limparDadosAtv();
+        String nome = nome_atv.getText().toString();
+        String hora = horario.getText().toString();
+        String musica_atv = musica.getText().toString();
+        if(nome == null || nome.isEmpty() || hora == null || hora.isEmpty() || musica_atv == null || musica_atv.isEmpty()){
+            Toast.makeText(this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT);
+        }else{
+            objAtividade = new Atividade(nome, hora, musica_atv);
+            databaseReference.child("Atividade").child(objAtividade.getId()).setValue(objAtividade);
+            uploadImagem();
+            limparDadosAtv();
+        }
     }
 
     //Função para limpar dados dos campos
