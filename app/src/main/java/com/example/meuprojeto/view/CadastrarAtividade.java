@@ -47,7 +47,6 @@ public class CadastrarAtividade extends AppCompatActivity {
     ImageButton btUploadImg;
     ImageView imgIcon;
     private Uri filePath;
-    private final int PICK_IMAGE_REQUEST = 71;
 
     //Conexão com o db
     FirebaseDatabase firebaseDatabase;

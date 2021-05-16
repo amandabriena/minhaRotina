@@ -5,13 +5,24 @@ import java.util.UUID;
 public class Usuario {
     private String id;
     private String nome;
+    private String imagemURL;
     private String data;
     private String email;
     private String senha;
 
-    public Usuario(String nome, String data, String email, String genero, String senha) {
-        this.id = UUID.randomUUID().toString();
+
+    public Usuario(String nome, String imagemURL, String data, String email, String senha) {
         this.nome = nome;
+        this.imagemURL = imagemURL;
+        this.data = data;
+        this.email = email;
+        this.senha = senha;
+    }
+
+    public Usuario(String id, String nome, String imagemURL, String data, String email, String senha) {
+        this.id = id;
+        this.nome = nome;
+        this.imagemURL = imagemURL;
         this.data = data;
         this.email = email;
         this.senha = senha;
@@ -60,4 +71,11 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public String getImagemURL() {
+        return imagemURL;
+    }
+
+    public void setImagemURL(String imagemURL) {
+        this.imagemURL = imagemURL;
+    }
 }

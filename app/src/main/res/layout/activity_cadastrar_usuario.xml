@@ -11,20 +11,41 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp"
         tools:ignore="MissingConstraints">
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="10dp">
+            <Button
+                android:id="@+id/btAjuda"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="false"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/button_round_border"
+                android:drawableRight="@android:drawable/ic_menu_help"
+                android:text="@string/btAjuda" />
+            <ImageButton
+                android:id="@+id/btUploadImgUser"
+                android:layout_width="310dp"
+                android:layout_height="200dp"
+                app:srcCompat="@drawable/add_img"
+                android:layout_margin="20dp"
+                android:layout_centerHorizontal="true"/>
             <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/icon_user" />
-        </LinearLayout>
+                android:id="@+id/imgUser"
+                android:layout_width="310dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="20dp"
+                android:scaleType="centerCrop"
+                />
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
             android:orientation="vertical"
             android:layout_gravity="center"
             >
