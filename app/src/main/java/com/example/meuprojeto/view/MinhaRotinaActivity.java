@@ -16,7 +16,7 @@ import com.example.meuprojeto.model.Atividade;
 import java.util.ArrayList;
 import java.util.List;
 
-public class minhaRotinaActivity extends AppCompatActivity {
+public class MinhaRotinaActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private List<Atividade> listaAtividades = new ArrayList<>();

@@ -84,26 +84,10 @@ public class CadastrarUsuario extends AppCompatActivity {
                 //Direcionando a ação do botão padastrar novo usuário:
                 criarUsuario();
 
-                /*
-                objUsuario= new Usuario();
-
-                objUsuario.setNome(nome.getText().toString());
-                objUsuario.setData(data.getText().toString());
-                objUsuario.setEmail(email.getText().toString());
-                objUsuario.setSenha(senha.getText().toString());
-                controleUsuario.incluirUsuario(objUsuario);
-                databaseReference.child("Usuario").child(objUsuario.getId()).setValue(objUsuario);*/
-
             }
         });
 
     }
-    /*
-    private void inicializarFirebase() {
-        FirebaseApp.initializeApp(CadastrarUsuario.this);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
-    }*/
 
     //Função para incluir dados no objeto usuário
     private void criarUsuario(){
@@ -122,37 +106,7 @@ public class CadastrarUsuario extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
                         Log.i("Sucesso", task.getResult().getUser().getUid());
-
-                        uploadImagem();
-
-                        String uid = FirebaseAuth.getInstance().getUid();
-                        String urlIMG = filePath.toString();
-                        objUsuario= new Usuario();
-
-                        objUsuario.setId(uid);
-                        objUsuario.setImagemURL(urlIMG);
-                        objUsuario.setNome(nome.getText().toString());
-                        objUsuario.setData(data.getText().toString());
-                        objUsuario.setEmail(email.getText().toString());
-                        objUsuario.setSenha(senha.getText().toString());
-
-                        controleUsuario.incluirUsuario(objUsuario);
-
-                        FirebaseFirestore.getInstance().collection("usuarios")
-                                .add(objUsuario)
-                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        Log.i("Usuario cadastrado", documentReference.getId());
-
-                                        limparDados();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.i("Erro ao cadastrar", e.getMessage());
-                            }
-                        });
+                        salvarUsuarioFirebase();
                     }
                 }
             })
@@ -163,6 +117,41 @@ public class CadastrarUsuario extends AppCompatActivity {
                         }
                     });
         }
+
+    }
+    private void salvarUsuarioFirebase(){
+        uploadImagem();
+
+        String uid = FirebaseAuth.getInstance().getUid();
+        String urlIMG = filePath.toString();
+        objUsuario= new Usuario();
+
+        objUsuario.setId(uid);
+        objUsuario.setImagemURL(urlIMG);
+        objUsuario.setNome(nome.getText().toString());
+        objUsuario.setData(data.getText().toString());
+        objUsuario.setEmail(email.getText().toString());
+        objUsuario.setSenha(senha.getText().toString());
+
+        controleUsuario.incluirUsuario(objUsuario);
+
+        FirebaseFirestore.getInstance().collection("usuarios")
+                .add(objUsuario)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.i("Usuario cadastrado", documentReference.getId());
+                        Intent intent = new Intent(CadastrarUsuario.this, DashboardActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        limparDados();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.i("Erro ao cadastrar", e.getMessage());
+            }
+        });
 
     }
     private void selecionarImagem(){

@@ -10,7 +10,8 @@
     <string name="proximo">PRÓXIMO</string>
 
     //Strings Página de Login
-    <string name="cadastro">Não possui uma conta? Cadastre-se</string>
+    <string name="cadastro">Não possui uma conta? </string>
+    <string name="btCadastre">Cadastre-se</string>
     <string name="acesse">Ou acesse com:</string>
     <string name="button">Entrar</string>
     <string name="btAjuda">AJUDA</string>

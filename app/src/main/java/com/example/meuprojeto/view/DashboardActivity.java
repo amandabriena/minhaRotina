@@ -1,16 +1,17 @@
 package com.example.meuprojeto.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.example.meuprojeto.R;
-import com.example.meuprojeto.controller.UsuarioController;
-import com.example.meuprojeto.model.Usuario;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class DashboardActivity extends AppCompatActivity {
@@ -21,6 +22,8 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        verificarAutenticacao();
 
         btGerAtividades = (Button) findViewById(R.id.btGerAtividades);
         btCadastrarAtv = (Button) findViewById(R.id.btAddAtividadeFora);
@@ -55,11 +58,33 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Direcionando para visão da rotina diária
-                Intent rotinaHoje = new Intent(DashboardActivity.this, minhaRotinaActivity.class);
+                Intent rotinaHoje = new Intent(DashboardActivity.this, MinhaRotinaActivity.class);
                 startActivity(rotinaHoje);
             }
         });
 
     }
 
+    private void verificarAutenticacao() {
+        if(FirebaseAuth.getInstance().getUid() == null){
+            Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.logout){
+            FirebaseAuth.getInstance().signOut();
+            verificarAutenticacao();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
