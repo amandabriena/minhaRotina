@@ -67,12 +67,11 @@ public class MinhaRotinaActivity extends AppCompatActivity {
                             List<DocumentSnapshot> docs = value.getDocuments();
                             for(DocumentSnapshot doc : docs){
                                 Atividade atv = doc.toObject(Atividade.class);
-
+                                Log.e("Teste", atv.getNome_atividade());
                                 listaAtividades.add(atv);
                             }
                         }
                     });
-            //Polícia-inglesa-do-norte (Sturnella militaris):
             //listaPassaros.add(new Passaro("Polícia-inglesa-do-norte", R.drawable.policia_inglesa_do_norte, "Sturnella militaris"));
             //listaAtividades.add(new Atividade("Escovar Dentes", R.drawable.escovar_dentes,"8:00","fada do Dente" ));
             //listaAtividades.add(new Atividade("Passarinho", R.drawable.policia_inglesa_do_norte,"8:10","Fada do Dente" ));

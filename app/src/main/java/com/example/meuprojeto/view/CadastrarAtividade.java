@@ -67,7 +67,6 @@ public class CadastrarAtividade extends AppCompatActivity {
         imgIcon = (ImageView) findViewById(R.id.imgIcon);
 
 
-        inicializarFirebase();
         //Capturando clique do botão cadastrar:
         btCadastrarAtividade.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,16 +123,7 @@ public class CadastrarAtividade extends AppCompatActivity {
         }
     }
 
-    private void inicializarFirebase() {
-        FirebaseApp.initializeApp(CadastrarAtividade.this);
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
-    }
-    /*
-    private void inicializarStorage(){
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-    }*/
+
     private void criarAtividade(){
         //criando ID randomico e demais informações preenchidas:
         String nome = nome_atv.getText().toString();
@@ -148,7 +138,7 @@ public class CadastrarAtividade extends AppCompatActivity {
             objAtividade = new Atividade();
 
             objAtividade.setImagemURL(urlIMG);
-            objAtividade.setMusica(nome);
+            objAtividade.setNome_atividade(nome);
             objAtividade.setHorario(hora);
             objAtividade.setMusica(musica_atv);
 
