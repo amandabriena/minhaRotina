@@ -5,9 +5,9 @@ import androidx.annotation.NonNull;
 import java.util.UUID;
 
 public class Atividade {
-    private String id;
+    private String id = UUID.randomUUID().toString();
     private String nome_atividade;
-    private int imagem;
+    private String imagemURL;
     private String horario;
     private String musica;
 
@@ -15,10 +15,10 @@ public class Atividade {
 
     }
 
-    public Atividade(String nome_atividade, int imagem, String horario, String musica) {
-        this.id = UUID.randomUUID().toString();
+    public Atividade(String nome_atividade, String imagemURL, String horario, String musica) {
+        //this.id = UUID.randomUUID().toString();
         this.nome_atividade = nome_atividade;
-        this.imagem = imagem;
+        this.imagemURL = imagemURL;
         this.horario = horario;
         this.musica = musica;
     }
@@ -66,12 +66,12 @@ public class Atividade {
         this.musica = musica;
     }
 
-    public int getImagem() {
-        return imagem;
+    public String getImagemURL() {
+        return imagemURL;
     }
 
-    public void setImagem(int imagem) {
-        this.imagem = imagem;
+    public void setImagemURL(String imagemURL) {
+        this.imagemURL = imagemURL;
     }
 
     @NonNull

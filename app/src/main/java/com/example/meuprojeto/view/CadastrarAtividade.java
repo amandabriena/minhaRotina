@@ -30,6 +30,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -137,12 +139,37 @@ public class CadastrarAtividade extends AppCompatActivity {
         String nome = nome_atv.getText().toString();
         String hora = horario.getText().toString();
         String musica_atv = musica.getText().toString();
+
         if(nome == null || nome.isEmpty() || hora == null || hora.isEmpty() || musica_atv == null || musica_atv.isEmpty()){
             Toast.makeText(this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT);
         }else{
-            objAtividade = new Atividade(nome, hora, musica_atv);
-            databaseReference.child("Atividade").child(objAtividade.getId()).setValue(objAtividade);
             uploadImagem();
+            String urlIMG = filePath.toString();
+            objAtividade = new Atividade();
+
+            objAtividade.setImagemURL(urlIMG);
+            objAtividade.setMusica(nome);
+            objAtividade.setHorario(hora);
+            objAtividade.setMusica(musica_atv);
+
+            FirebaseFirestore.getInstance().collection("atividades")
+                    .add(objAtividade)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.i("Atividade cadastrado", documentReference.getId());
+                            Intent intent = new Intent(CadastrarAtividade.this, DashboardActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            limparDadosAtv();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.i("Erro ao cadastrar", e.getMessage());
+                }
+            });
+
             limparDadosAtv();
         }
     }

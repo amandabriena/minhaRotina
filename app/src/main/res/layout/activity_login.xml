@@ -49,7 +49,7 @@
             <TextView
                 android:id="@+id/tsenha"
                 android:layout_width="71dp"
-                android:layout_height="23dp"
+                android:layout_height="26dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/senha"
                 android:textAppearance="@style/label"

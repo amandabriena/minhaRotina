@@ -54,12 +54,11 @@ public class LoginActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    Log.i("Sucesso ao logar", task.getResult().getUser().getUid());
-                                    Intent dashboard = new Intent(LoginActivity.this, DashboardActivity.class);
-                                    dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(dashboard);
-                                }
+                                Log.i("Sucesso ao logar", task.getResult().getUser().getUid());
+                                Intent dashboard = new Intent(LoginActivity.this, DashboardActivity.class);
+                                dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(dashboard);
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -35,7 +36,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final Atividade atividade = listaAtividades.get(position);
 
         holder.nome_atv.setText(atividade.getNome_atividade());
-        holder.imagem_atv.setBackgroundResource(atividade.getImagem());
+        Picasso.get().load(atividade.getImagemURL()).into(holder.imagem_atv);
+        //holder.imagem_atv.setBackgroundResource(atividade.getImagem());
         holder.horario_atv.setText(atividade.getHorario());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
