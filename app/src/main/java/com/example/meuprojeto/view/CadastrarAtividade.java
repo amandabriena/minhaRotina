@@ -96,7 +96,7 @@ public class CadastrarAtividade extends AppCompatActivity {
                 ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Log.i("Teste", uri.toString());
+                        Log.i("FILEURI", "URI: "+uri.toString());
                     }
                 });
             }
@@ -125,42 +125,63 @@ public class CadastrarAtividade extends AppCompatActivity {
 
 
     private void criarAtividade(){
-        //criando ID randomico e demais informações preenchidas:
         String nome = nome_atv.getText().toString();
         String hora = horario.getText().toString();
         String musica_atv = musica.getText().toString();
 
         if(nome == null || nome.isEmpty() || hora == null || hora.isEmpty() || musica_atv == null || musica_atv.isEmpty()){
             Toast.makeText(this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT);
-        }else{
-            uploadImagem();
-            String urlIMG = filePath.toString();
-            objAtividade = new Atividade();
-
-            objAtividade.setImagemURL(urlIMG);
-            objAtividade.setNome_atividade(nome);
-            objAtividade.setHorario(hora);
-            objAtividade.setMusica(musica_atv);
-
-            FirebaseFirestore.getInstance().collection("atividades")
-                    .add(objAtividade)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        }else {
+            //criando ID randomico e demais informações preenchidas:
+            String fileName = UUID.randomUUID().toString();
+            final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/" + fileName);
+            ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.i("Atividade cadastrado", documentReference.getId());
-                            Intent intent = new Intent(CadastrarAtividade.this, DashboardActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
+                        public void onSuccess(Uri uri) {
+                            Log.i("FILEURI", "URI: " + uri.toString());
+
+                            uploadImagem();
+                            //String urlIMG = filePath.toString();
+                            //Log.i("FILEURI", "File URI: "+urlImagem);
+                            objAtividade = new Atividade();
+
+                            objAtividade.setImagemURL(uri.toString());
+                            objAtividade.setNome_atividade(nome_atv.getText().toString());
+                            objAtividade.setHorario(horario.getText().toString());
+                            objAtividade.setMusica(musica.getText().toString());
+
+                            FirebaseFirestore.getInstance().collection("atividades")
+                                    .add(objAtividade)
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            Log.i("Atividade cadastrado", documentReference.getId());
+                                            Intent intent = new Intent(CadastrarAtividade.this, DashboardActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                            limparDadosAtv();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.i("Erro ao cadastrar", e.getMessage());
+                                }
+                            });
+
                             limparDadosAtv();
+
                         }
-                    }).addOnFailureListener(new OnFailureListener() {
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.i("Erro ao cadastrar", e.getMessage());
+                    Log.e("Teste", e.getMessage(), e);
                 }
             });
-
-            limparDadosAtv();
         }
     }
 

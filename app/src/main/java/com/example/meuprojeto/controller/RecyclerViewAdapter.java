@@ -2,17 +2,20 @@ package com.example.meuprojeto.controller;
 
 
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -20,6 +23,8 @@ import com.squareup.picasso.Picasso;
 
 import java.net.URI;
 import java.util.List;
+
+import io.grpc.Context;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
     private List<Atividade> listaAtividades;
@@ -37,21 +42,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        final Uri[] img = new Uri[1];
         final Atividade atividade = listaAtividades.get(position);
 
         holder.nome_atv.setText(atividade.getNome_atividade());
-        //Picasso.get().load(atividade.getImagemURL()).into(holder.imagem_atv);
-        //holder.imagem_atv.setBackgroundResource(atividade.getImagemURL());
         holder.horario_atv.setText(atividade.getHorario());
-        final StorageReference ref= FirebaseStorage.getInstance().getReference(atividade.getImagemURL());;
-        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                img[0] = uri;
-            }
-        });
-        holder.imagem_atv.setImageURI(img[0]);
+        Picasso.get().load(atividade.getImagemURL()).into(holder.imagem_atv);
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

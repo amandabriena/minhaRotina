@@ -72,9 +72,6 @@ public class MinhaRotinaActivity extends AppCompatActivity {
                             }
                         }
                     });
-            //listaPassaros.add(new Passaro("Polícia-inglesa-do-norte", R.drawable.policia_inglesa_do_norte, "Sturnella militaris"));
-            //listaAtividades.add(new Atividade("Escovar Dentes", R.drawable.escovar_dentes,"8:00","fada do Dente" ));
-            //listaAtividades.add(new Atividade("Passarinho", R.drawable.policia_inglesa_do_norte,"8:10","Fada do Dente" ));
             return null;
         }
         @Override
