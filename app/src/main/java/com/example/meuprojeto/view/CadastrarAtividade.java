@@ -23,6 +23,7 @@ import com.example.meuprojeto.controller.AtividadeController;
 import com.example.meuprojeto.model.Atividade;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -76,33 +77,12 @@ public class CadastrarAtividade extends AppCompatActivity {
             }
         });
     }
+
     private void selecionarImagem(){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, 0);
     }
-
-    private void uploadImagem(){
-        String fileName = UUID.randomUUID().toString();
-        final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/"+fileName);
-        ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Log.i("FILEURI", "URI: "+uri.toString());
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("Teste",e.getMessage(),e);
-            }
-        });
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -138,15 +118,16 @@ public class CadastrarAtividade extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             Log.i("FILEURI", "URI: " + uri.toString());
 
-                            uploadImagem();
-                            //String urlIMG = filePath.toString();
-                            //Log.i("FILEURI", "File URI: "+urlImagem);
+                            //Pegando o usuário que criou a atividade:
+                            String usuario_atv = FirebaseAuth.getInstance().getUid();
+
                             objAtividade = new Atividade();
 
                             objAtividade.setImagemURL(uri.toString());
                             objAtividade.setNomeAtividade(nome_atv.getText().toString());
                             objAtividade.setHorario(horario.getText().toString());
                             objAtividade.setMusica(musica.getText().toString());
+                            objAtividade.setIdUsuario(usuario_atv);
 
                             FirebaseFirestore.getInstance().collection("atividades")
                                     .add(objAtividade)

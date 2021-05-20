@@ -33,5 +33,9 @@
     <string name="btVolMax">AJUSTAR VOLUME MÁXIMO</string>
     <string name="btEditarPreferencias">EDITAR PREFERÊNCIAS</string>
 
+    //Strings Página Atividade
+    <string name="instrucaoAtv">Olá! São 8:00, hora de "Escovar os Dentes"!</string>
+    <string name="brDispensar">Dispensar</string>
+    <string name="brIniciar">Iniciar</string>
 
 </resources>

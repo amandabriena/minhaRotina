@@ -120,38 +120,56 @@ public class CadastrarUsuario extends AppCompatActivity {
 
     }
     private void salvarUsuarioFirebase(){
-        uploadImagem();
-
-        String uid = FirebaseAuth.getInstance().getUid();
-        String urlIMG = filePath.toString();
-        objUsuario= new Usuario();
-
-        objUsuario.setId(uid);
-        objUsuario.setImagemURL(urlIMG);
-        objUsuario.setNome(nome.getText().toString());
-        objUsuario.setData(data.getText().toString());
-        objUsuario.setEmail(email.getText().toString());
-        objUsuario.setSenha(senha.getText().toString());
-
-        controleUsuario.incluirUsuario(objUsuario);
-
-        FirebaseFirestore.getInstance().collection("usuarios")
-                .add(objUsuario)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        String fileName = UUID.randomUUID().toString();
+        final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/"+fileName);
+        ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.i("Usuario cadastrado", documentReference.getId());
-                        Intent intent = new Intent(CadastrarUsuario.this, DashboardActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        limparDados();
+                    public void onSuccess(Uri uri) {
+                        Log.i("Teste", uri.toString());
+                        String uid = FirebaseAuth.getInstance().getUid();
+                        String urlIMG = uri.toString();
+                        objUsuario= new Usuario();
+
+                        objUsuario.setId(uid);
+                        objUsuario.setImagemURL(urlIMG);
+                        objUsuario.setNome(nome.getText().toString());
+                        objUsuario.setData(data.getText().toString());
+                        objUsuario.setEmail(email.getText().toString());
+                        objUsuario.setSenha(senha.getText().toString());
+
+                        //controleUsuario.incluirUsuario(objUsuario);
+
+                        FirebaseFirestore.getInstance().collection("usuarios")
+                                .document(uid)
+                                .set(objUsuario)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Intent intent = new Intent(CadastrarUsuario.this, DashboardActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.i("Erro ao cadastrar", e.getMessage());
+                            }
+                        });
                     }
-                }).addOnFailureListener(new OnFailureListener() {
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.i("Erro ao cadastrar", e.getMessage());
+                Log.e("Teste",e.getMessage(),e);
             }
         });
+
+
 
     }
     private void selecionarImagem(){

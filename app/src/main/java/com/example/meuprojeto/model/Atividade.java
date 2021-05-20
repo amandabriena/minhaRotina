@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public class Atividade {
     private String id = UUID.randomUUID().toString();
+    private String idUsuario;
     private String nomeAtividade;
     private String imagemURL;
     private String horario;
@@ -49,6 +50,30 @@ public class Atividade {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public ArrayList<String> getDias_semana() {
+        return dias_semana;
+    }
+
+    public void setDias_semana(ArrayList<String> dias_semana) {
+        this.dias_semana = dias_semana;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public String getNomeAtividade() {

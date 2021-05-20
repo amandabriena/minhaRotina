@@ -5,17 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.meuprojeto.R;
-import com.example.meuprojeto.controller.RecyclerViewAdapter;
 import com.example.meuprojeto.model.Atividade;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -37,16 +39,16 @@ public class MinhaRotinaActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         new CarregarListaAsynctask().execute();
         //PASSANDO PARA OUTRA PÁGINA AO CLICAR NA ATIVIDADE
-    /*
-    recyclerViewAdapter.setOnItemClickListener(new ClickListener<Passaro>() {
+
+    recyclerViewAdapter.setOnItemClickListener(new ClickListener<Atividade>() {
         @Override
         public void onItemClick(Atividade atividade) {
-            Intent intent = new Intent(MainActivity.this, PaginaBuscaActivity.class);
-            intent.putExtra(Constantes.NOME_PASSARO_CHAVE, atividade.getNome());
+            Intent intent = new Intent(MinhaRotinaActivity.this, com.example.meuprojeto.view.Atividade.class);
+            intent.putExtra("idAtividade", atividade.getId());
             startActivity(intent);
-            Toast.makeText(MainActivity.this, passaro.getNome(), Toast.LENGTH_LONG).show();
+            Toast.makeText(MinhaRotinaActivity.this, atividade.getId(), Toast.LENGTH_LONG).show();
         }
-    });*/
+    });
         recyclerView.setAdapter(recyclerViewAdapter);
     }
     public class CarregarListaAsynctask extends AsyncTask<Void, Void, Void> {
@@ -54,7 +56,7 @@ public class MinhaRotinaActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             // carregar do banco
-            FirebaseFirestore.getInstance().collection("/atividades")
+            FirebaseFirestore.getInstance().collection("/atividades").orderBy("horario", Query.Direction.ASCENDING)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
