@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.controller.RecyclerViewAdapter;
@@ -67,7 +65,7 @@ public class MinhaRotinaActivity extends AppCompatActivity {
                             List<DocumentSnapshot> docs = value.getDocuments();
                             for(DocumentSnapshot doc : docs){
                                 Atividade atv = doc.toObject(Atividade.class);
-                                Log.e("Teste", atv.getNome_atividade());
+                                Log.e("Teste", atv.getNomeAtividade());
                                 listaAtividades.add(atv);
                             }
                         }

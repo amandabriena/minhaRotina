@@ -2,36 +2,45 @@ package com.example.meuprojeto.model;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Atividade {
     private String id = UUID.randomUUID().toString();
-    private String nome_atividade;
+    private String nomeAtividade;
     private String imagemURL;
     private String horario;
     private String musica;
+    private ArrayList<String> dias_semana;
+    private int status;
+    /*Status da atividade poderá ser:
+    1- em aberto
+    2- concluída
+    3- não realizada
+    */
+
 
     public Atividade(){
 
     }
 
-    public Atividade(String nome_atividade, String imagemURL, String horario, String musica) {
+    public Atividade(String nomeAtividade, String imagemURL, String horario, String musica) {
         //this.id = UUID.randomUUID().toString();
-        this.nome_atividade = nome_atividade;
+        this.nomeAtividade = nomeAtividade;
         this.imagemURL = imagemURL;
         this.horario = horario;
         this.musica = musica;
     }
 
-    public Atividade(String nome_atividade, String horario, String musica) {
+    public Atividade(String nomeAtividade, String horario, String musica) {
         this.id = UUID.randomUUID().toString();
-        this.nome_atividade = nome_atividade;
+        this.nomeAtividade = nomeAtividade;
         this.horario = horario;
         this.musica = musica;
     }
 
-    public Atividade(String nome_atividade){
-        this.nome_atividade = nome_atividade;
+    public Atividade(String nomeAtividade){
+        this.nomeAtividade = nomeAtividade;
     }
 
     public String getId() {
@@ -42,12 +51,12 @@ public class Atividade {
         this.id = id;
     }
 
-    public String getNome_atividade() {
-        return nome_atividade;
+    public String getNomeAtividade() {
+        return nomeAtividade;
     }
 
-    public void setNome_atividade(String nome_atividade) {
-        this.nome_atividade = nome_atividade;
+    public void setNomeAtividade(String nomeAtividade) {
+        this.nomeAtividade = nomeAtividade;
     }
 
     public String getHorario() {
@@ -77,6 +86,6 @@ public class Atividade {
     @NonNull
     @Override
     public String toString() {
-        return nome_atividade;
+        return nomeAtividade;
     }
 }

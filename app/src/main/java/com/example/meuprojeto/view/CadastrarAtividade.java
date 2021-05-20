@@ -1,12 +1,10 @@
 package com.example.meuprojeto.view;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.storage.StorageManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -23,11 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.controller.AtividadeController;
 import com.example.meuprojeto.model.Atividade;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -149,7 +144,7 @@ public class CadastrarAtividade extends AppCompatActivity {
                             objAtividade = new Atividade();
 
                             objAtividade.setImagemURL(uri.toString());
-                            objAtividade.setNome_atividade(nome_atv.getText().toString());
+                            objAtividade.setNomeAtividade(nome_atv.getText().toString());
                             objAtividade.setHorario(horario.getText().toString());
                             objAtividade.setMusica(musica.getText().toString());
 
