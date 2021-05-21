@@ -129,23 +129,24 @@ public class CadastrarAtividade extends AppCompatActivity {
                             objAtividade.setMusica(musica.getText().toString());
                             objAtividade.setIdUsuario(usuario_atv);
 
+
                             FirebaseFirestore.getInstance().collection("atividades")
-                                    .add(objAtividade)
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    .document(objAtividade.getId())
+                                    .set(objAtividade)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
-                                        public void onSuccess(DocumentReference documentReference) {
-                                            Log.i("Atividade cadastrado", documentReference.getId());
+                                        public void onSuccess(Void aVoid) {
                                             Intent intent = new Intent(CadastrarAtividade.this, DashboardActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
-                                            limparDadosAtv();
                                         }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.i("Erro ao cadastrar", e.getMessage());
-                                }
-                            });
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.i("Erro ao cadastrar", e.getMessage());
+                                        }
+                                    });
 
                             limparDadosAtv();
 

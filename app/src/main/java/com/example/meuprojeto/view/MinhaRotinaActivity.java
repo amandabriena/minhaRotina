@@ -43,10 +43,10 @@ public class MinhaRotinaActivity extends AppCompatActivity {
     recyclerViewAdapter.setOnItemClickListener(new ClickListener<Atividade>() {
         @Override
         public void onItemClick(Atividade atividade) {
-            Intent intent = new Intent(MinhaRotinaActivity.this, com.example.meuprojeto.view.Atividade.class);
+            Intent intent = new Intent(MinhaRotinaActivity.this, AtividadeActivity.class);
             intent.putExtra("idAtividade", atividade.getId());
             startActivity(intent);
-            Toast.makeText(MinhaRotinaActivity.this, atividade.getId(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(MinhaRotinaActivity.this, atividade.getId(), Toast.LENGTH_LONG).show();
         }
     });
         recyclerView.setAdapter(recyclerViewAdapter);

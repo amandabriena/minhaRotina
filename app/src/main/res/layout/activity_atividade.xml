@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.Atividade">
+    tools:context=".view.AtividadeActivity">
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -35,16 +35,18 @@
         tools:ignore="MissingConstraints">
 
         <TextView
+            android:id="@+id/textoAtv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/instrucaoAtv"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="30dp"
+            android:textAlignment="center"
             android:textAppearance="@style/label_maior" />
 
         <ImageView
-            android:id="@+id/imgAtividade"
-            android:layout_width="310dp"
-            android:layout_height="200dp"
+            android:id="@+id/imgAtv"
+            android:layout_width="350dp"
+            android:layout_height="250dp"
             android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
@@ -52,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_marginTop="370dp">
+        android:layout_marginTop="480dp">
         <Button
             android:id="@+id/btDispensar"
             android:layout_width="100dp"
