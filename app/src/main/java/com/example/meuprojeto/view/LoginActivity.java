@@ -46,27 +46,28 @@ public class LoginActivity extends AppCompatActivity {
                 //Validando dados de email e senha para login:
                 String email_login = email.getText().toString();
                 String senha_login = senha.getText().toString();
-                if(email_login == null || email_login.isEmpty()
-                        || senha_login == null || senha_login.isEmpty()){
-                    Toast.makeText(LoginActivity.this,"Por favor, preencha todos os campos de email e senha!", Toast.LENGTH_SHORT);
-                }
-                FirebaseAuth.getInstance().signInWithEmailAndPassword(email_login,senha_login)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.i("Sucesso ao logar", task.getResult().getUser().getUid());
-                                Intent dashboard = new Intent(LoginActivity.this, DashboardActivity.class);
-                                dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                startActivity(dashboard);
+                if(email_login.isEmpty() || senha_login.isEmpty()){
+                    Toast.makeText(LoginActivity.this,"Por favor, preencha todos os campos de email e senha!", Toast.LENGTH_SHORT).show();
+                }else{
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(email_login,senha_login)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    Log.i("Sucesso ao logar", task.getResult().getUser().getUid());
+                                    Intent dashboard = new Intent(LoginActivity.this, DashboardActivity.class);
+                                    dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivity(dashboard);
 
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("Erro ao logar", e.getMessage());
-                    }
-                });
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.e("Erro ao logar", e.getMessage());
+                                }
+                            });
+                }
+
             }
         });
     }

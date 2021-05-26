@@ -38,4 +38,7 @@
     <string name="brDispensar">Dispensar</string>
     <string name="brIniciar">Iniciar</string>
 
+    //Página de minha rotina
+    <string name="espacoPais">Espaço para Pais</string>
+
 </resources>

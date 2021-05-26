@@ -95,9 +95,8 @@ public class CadastrarUsuario extends AppCompatActivity {
         String data_nasc = data.getText().toString();
         String email_user = email.getText().toString();
         String senha_user = senha.getText().toString();
-        if(nome_user == null || nome_user.isEmpty() || data_nasc == null || data_nasc.isEmpty() || email_user == null || email_user.isEmpty()
-        || senha_user == null || senha_user.isEmpty()){
-            Toast.makeText(this,"Por favor, preencha todos os campos!", Toast.LENGTH_SHORT);
+        if( nome_user.isEmpty() || data_nasc.isEmpty()  || email_user.isEmpty() || senha_user.isEmpty()){
+            Toast.makeText(this,"Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
         }else{
             //AUTENTICAÇÃO DE USUÁRIOCOM O FIREBASE:
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_user,senha_user)

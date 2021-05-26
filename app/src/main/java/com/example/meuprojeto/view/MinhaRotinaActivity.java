@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.meuprojeto.R;
@@ -27,12 +29,14 @@ public class MinhaRotinaActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private List<Atividade> listaAtividades = new ArrayList<>();
+    Button btEspacoPais;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_minha_rotina);
 
+        btEspacoPais = (Button) findViewById(R.id.btEspacoPais);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerViewAdapter = new RecyclerViewAdapter(listaAtividades);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -50,6 +54,17 @@ public class MinhaRotinaActivity extends AppCompatActivity {
         }
     });
         recyclerView.setAdapter(recyclerViewAdapter);
+
+
+        btEspacoPais.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Direcionando para tela de gerenciamento de pais ou responsáveis
+                Intent pais = new Intent(MinhaRotinaActivity.this, DashboardActivity.class);
+                pais.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(pais);
+            }
+        });
     }
     public class CarregarListaAsynctask extends AsyncTask<Void, Void, Void> {
 

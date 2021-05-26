@@ -104,8 +104,8 @@ public class CadastrarAtividade extends AppCompatActivity {
         String hora = horario.getText().toString();
         String musica_atv = musica.getText().toString();
 
-        if(nome == null || nome.isEmpty() || hora == null || hora.isEmpty() || musica_atv == null || musica_atv.isEmpty()){
-            Toast.makeText(this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT);
+        if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
+            Toast.makeText(this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT).show();
         }else {
             //criando ID randomico e demais informações preenchidas:
             String fileName = UUID.randomUUID().toString();
