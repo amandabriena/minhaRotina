@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.controller.UsuarioController;
 import com.example.meuprojeto.model.Usuario;
+import com.example.meuprojeto.util.MaskEditUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -71,6 +72,10 @@ public class CadastrarUsuario extends AppCompatActivity {
 
         btUploadImg = (Button) findViewById(R.id.btUploadImgUser);
         imgIcon = (ImageView) findViewById(R.id.imgUser);
+
+        //Adicionando máscara de data:
+        data.addTextChangedListener(MaskEditUtil.mask(data, MaskEditUtil.FORMAT_DATE));
+
 
         btUploadImg.setOnClickListener(new View.OnClickListener() {
             @Override

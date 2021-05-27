@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.controller.AtividadeController;
 import com.example.meuprojeto.model.Atividade;
+import com.example.meuprojeto.util.MaskEditUtil;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -56,14 +57,17 @@ public class CadastrarAtividade extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastrar_atividade);
+
+        //Atrelando variáveis as views
         nome_atv = (EditText) findViewById(R.id.nome_atividade);
         horario = (EditText) findViewById(R.id.horario);
         musica = (EditText) findViewById(R.id.musica);
-        //Atrelando variáveis as views
         btCadastrarAtividade = (Button) findViewById(R.id.btCadastrarAtividade);
         btUploadImg = (ImageButton) findViewById(R.id.btUploadImg);
         imgIcon = (ImageView) findViewById(R.id.imgIcon);
 
+        //Adicionando máscara de horário:
+        horario.addTextChangedListener(MaskEditUtil.mask(horario, MaskEditUtil.FORMAT_HOUR));
 
         //Capturando clique do botão cadastrar:
         btCadastrarAtividade.setOnClickListener(new View.OnClickListener() {
