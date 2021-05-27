@@ -5,18 +5,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.meuprojeto.R;
+import com.example.meuprojeto.model.Usuario;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 
 public class DashboardActivity extends AppCompatActivity {
     //Declarando variáveis
     Button btGerAtividades, btCadastrarAtv, btEditar, btRotinaDiaria;
+    ImageView imgIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +35,31 @@ public class DashboardActivity extends AppCompatActivity {
 
         verificarAutenticacao();
 
+        imgIcon = (ImageView) findViewById(R.id.imgIcon);
         btGerAtividades = (Button) findViewById(R.id.btGerAtividades);
         btCadastrarAtv = (Button) findViewById(R.id.btAddAtividadeFora);
         btRotinaDiaria = (Button) findViewById(R.id.btRotinaDiaria);
         btEditar = (Button) findViewById(R.id.btEditar);
+
+        //Pegando imagem de icone do usuário
+        DocumentReference docRef = FirebaseFirestore.getInstance().collection("/usuarios").document(FirebaseAuth.getInstance().getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d("Teste", "DocumentSnapshot data: " + document.getData());
+                        Usuario user = document.toObject(com.example.meuprojeto.model.Usuario.class);
+                        Picasso.get().load(user.getImagemURL()).into(imgIcon);
+                    } else {
+                        Log.d("Teste", "Atividade não encontrada");
+                    }
+                } else {
+                    Log.d("Teste", "Falha: ", task.getException());
+                }
+            }
+        });
 
         btGerAtividades.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +97,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void verificarAutenticacao() {
-        if(FirebaseAuth.getInstance().getUid() == null){
+        if(FirebaseAuth.getInstance().getUid().isEmpty()){
             Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);

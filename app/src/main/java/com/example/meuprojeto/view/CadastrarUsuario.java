@@ -36,6 +36,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -45,9 +46,10 @@ public class CadastrarUsuario extends AppCompatActivity {
     //Declarando variáveis
     Button btProximo;
     EditText nome, data, email, senha;
-    ImageButton btUploadImg;
+    Button btUploadImg;
     ImageView imgIcon;
     private Uri filePath;
+    private byte[] dataIMG;
 
     /*
     FirebaseDatabase firebaseDatabase;
@@ -67,7 +69,7 @@ public class CadastrarUsuario extends AppCompatActivity {
         email = (EditText) findViewById(R.id.email);
         senha = (EditText) findViewById(R.id.senha);
 
-        btUploadImg = (ImageButton) findViewById(R.id.btUploadImgUser);
+        btUploadImg = (Button) findViewById(R.id.btUploadImgUser);
         imgIcon = (ImageView) findViewById(R.id.imgUser);
 
         btUploadImg.setOnClickListener(new View.OnClickListener() {
@@ -121,7 +123,8 @@ public class CadastrarUsuario extends AppCompatActivity {
     private void salvarUsuarioFirebase(){
         String fileName = UUID.randomUUID().toString();
         final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/"+fileName);
-        ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        UploadTask uploadTask2 = ref.putBytes(dataIMG);
+        uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -177,26 +180,6 @@ public class CadastrarUsuario extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
-    private void uploadImagem(){
-        String fileName = UUID.randomUUID().toString();
-        final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/"+fileName);
-        ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Log.i("Teste", uri.toString());
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.e("Teste",e.getMessage(),e);
-            }
-        });
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -205,6 +188,11 @@ public class CadastrarUsuario extends AppCompatActivity {
             filePath = data.getData();
             try{
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
+                //Comprimindo o tamanho da imagem:
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                dataIMG = baos.toByteArray();
+
                 imgIcon.setImageDrawable(new BitmapDrawable(bitmap));
                 btUploadImg.setAlpha(0);
             }catch (IOException e){

@@ -2,6 +2,7 @@
     <string name="app_name">Minha Rotina</string>
 
     //String da Pagina de Cadastro
+    <string name="imagemUsuario">SELECIONAR FOTO</string>
     <string name="e_mail">E-mail:</string>
     <string name="nome">Nome:</string>
     <string name="data">Data de Nascimento:</string>

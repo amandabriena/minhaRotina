@@ -32,6 +32,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -45,6 +46,7 @@ public class CadastrarAtividade extends AppCompatActivity {
     ImageButton btUploadImg;
     ImageView imgIcon;
     private Uri filePath;
+    private byte[] dataIMG;
 
     //Conexão com o db
     FirebaseDatabase firebaseDatabase;
@@ -90,6 +92,11 @@ public class CadastrarAtividade extends AppCompatActivity {
             filePath = data.getData();
             try{
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),filePath);
+                //Comprimindo o tamanho da imagem:
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+                dataIMG = baos.toByteArray();
+
                 imgIcon.setImageDrawable(new BitmapDrawable(bitmap));
                 btUploadImg.setAlpha(0);
             }catch (IOException e){
@@ -107,13 +114,15 @@ public class CadastrarAtividade extends AppCompatActivity {
         if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
             Toast.makeText(this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT).show();
         }else {
-            //criando ID randomico e demais informações preenchidas:
+            //criando ID randomico e demais informações preenchidas para upload da imagem no firebase:
             String fileName = UUID.randomUUID().toString();
             final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/" + fileName);
-            ref.putFile(filePath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            UploadTask uploadTask2 = ref.putBytes(dataIMG);
+            uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
+                        ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
                             Log.i("FILEURI", "URI: " + uri.toString());
@@ -156,9 +165,11 @@ public class CadastrarAtividade extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    //Toast.makeText(Profilepic.this, "Upload Failed -> " + e, Toast.LENGTH_LONG).show();
                     Log.e("Teste", e.getMessage(), e);
                 }
             });
+
         }
     }
 
