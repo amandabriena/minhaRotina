@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.CadastrarAtividade">
+    tools:context=".controller.CadastrarAtividade">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -39,6 +39,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_margin="20dp"
                 android:scaleType="centerCrop"
+
                 />
         </RelativeLayout>
 
@@ -102,34 +103,132 @@
                 android:textAppearance="@style/label" />
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <CheckBox android:id="@+id/checkbox_seg"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp">
+
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SEG"
-                    />
-                <CheckBox android:id="@+id/checkbox_ter"
+                    android:padding="3dp">
+                    <TextView
+                        android:id="@+id/dom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dom"
+                        />
+                    <CheckBox
+                        android:id="@+id/checkbox_dom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/dom"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TER"
-                    />
-                <CheckBox android:id="@+id/checkbox_qua"
+                    android:padding="3dp">
+                    <TextView
+                        android:id="@+id/seg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/seg"
+                        />
+                    <CheckBox
+                        android:id="@+id/checkbox_seg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/seg"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="QUA"
-                   />
-                <CheckBox android:id="@+id/checkbox_qui"
+                    android:padding="3dp">
+                    <TextView
+                        android:id="@+id/ter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ter"
+                        />
+                    <CheckBox
+                        android:id="@+id/checkbox_ter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/ter"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="QUI"
-                    />
-                <CheckBox android:id="@+id/checkbox_sex"
+                    android:padding="3dp">
+                    <TextView
+                        android:id="@+id/qua"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/qua"
+                        />
+                    <CheckBox
+                        android:id="@+id/checkbox_qua"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/qua"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SEX"
-                    />
+                    android:padding="3dp">
+                    <TextView
+                        android:id="@+id/qui"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/qui"
+                        />
+                    <CheckBox
+                        android:id="@+id/checkbox_qui"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/qui"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp">
+                    <TextView
+                        android:id="@+id/sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sex"
+                        />
+                    <CheckBox
+                        android:id="@+id/checkbox_sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/sex"
+                        />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="3dp">
+                    <TextView
+                        android:id="@+id/sab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sab"
+                        />
+                    <CheckBox
+                        android:id="@+id/checkbox_sab"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/sab"
+                        />
+                </RelativeLayout>
+
             </LinearLayout>
             <Button
                 android:id="@+id/btCadastrarAtividade"

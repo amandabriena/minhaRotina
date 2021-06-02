@@ -11,20 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.AtividadeActivity"></activity>
-        <activity android:name=".view.LoginActivity" />
-        <activity android:name=".view.MinhaRotinaActivity" />
-        <activity android:name=".view.CadastrarUsuario" />
-        <activity android:name=".view.SplashActivity">
+        <activity android:name=".controller.CadastrarPassoAtividadeActivity"></activity>
+        <activity android:name=".controller.AtividadeActivity" />
+        <activity android:name=".controller.LoginActivity" />
+        <activity android:name=".controller.MinhaRotinaActivity" />
+        <activity android:name=".controller.CadastrarUsuario" />
+        <activity android:name=".controller.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.CadastrarAtividade" />
-        <activity android:name=".view.GerAtividadesActivity" />
-        <activity android:name=".view.DashboardActivity" />
+        <activity android:name=".controller.CadastrarAtividade" />
+        <activity android:name=".controller.GerAtividadesActivity" />
+        <activity android:name=".controller.DashboardActivity" />
     </application>
 
 </manifest>

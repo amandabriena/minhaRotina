@@ -1,4 +1,4 @@
-package com.example.meuprojeto.view;
+package com.example.meuprojeto.controller;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -19,7 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.meuprojeto.R;
-import com.example.meuprojeto.controller.AtividadeController;
+import com.example.meuprojeto.datasource.AtividadeController;
 import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.util.MaskEditUtil;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,7 +27,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -114,7 +113,28 @@ public class CadastrarAtividade extends AppCompatActivity {
         String nome = nome_atv.getText().toString();
         String hora = horario.getText().toString();
         String musica_atv = musica.getText().toString();
+        /*
+        public void onCheckboxClicked(View view) {
+            // Is the view now checked?
+            boolean checked = ((CheckBox) view).isChecked();
 
+            // Check which checkbox was clicked
+            switch(view.getId()) {
+                case R.id.checkbox_dom:
+                    if (checked)
+                    // Put some meat on the sandwich
+            else
+                    // Remove the meat
+                    break;
+                case R.id.checkbox_seg:
+                    if (checked)
+                    // Cheese me
+            else
+                    // I'm lactose intolerant
+                    break;
+                // TODO: Veggie sandwich
+            }
+        }*/
         if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
             Toast.makeText(this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT).show();
         }else {

@@ -23,6 +23,13 @@
     <string name="horario">Horário:</string>
     <string name="musica">Música:</string>
     <string name="dias_semana">Dias da Semana:</string>
+    <string name="dom">DOM</string>
+    <string name="seg">SEG</string>
+    <string name="ter">TER</string>
+    <string name="qua">QUA</string>
+    <string name="qui">QUI</string>
+    <string name="sex">SEX</string>
+    <string name="sab">SÁB</string>
 
     //Strings Página Dashboard (menu)
     <string name="btEditar">EDITAR</string>
@@ -41,5 +48,10 @@
 
     //Página de minha rotina
     <string name="espacoPais">Espaço para Pais</string>
+
+    //Página Gerenciador de Atividades
+    <string name="btGerEditar">EDITAR</string>
+    <string name="btGerExcluir">EXCLUIR</string>
+
 
 </resources>

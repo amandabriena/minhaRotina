@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardViewGer"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_margin="8dp"
+    cardView:cardCornerRadius="8dp"
+    cardView:cardElevation="20dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imagem_atv_ger"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            cardView:layout_constraintStart_toStartOf="parent"
+            cardView:layout_constraintTop_toTopOf="parent"
+            tools:background="@tools:sample/backgrounds/scenic" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            cardView:layout_constraintStart_toEndOf="@+id/imagem_atv_ger">
+
+            <TextView
+                android:id="@+id/nome_atv_ger"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-smallcaps"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:padding="5dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                cardView:layout_constraintBottom_toBottomOf="parent"
+                cardView:layout_constraintLeft_toRightOf="@id/imagem_atv"
+                cardView:layout_constraintRight_toRightOf="parent"
+                cardView:layout_constraintTop_toTopOf="parent" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-smallcaps"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:padding="5dp"
+                cardView:layout_constraintBottom_toBottomOf="@id/nome_atv_ger"
+                cardView:layout_constraintLeft_toRightOf="@id/imagem_atv_ger"
+                cardView:layout_constraintRight_toRightOf="parent"
+                >
+                <Button
+                    android:id="@+id/btGerEditar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btGerEditar"
+                    android:background="@drawable/button_round_border"
+                    android:layout_marginStart="20dp"
+                    />
+                <Button
+                    android:id="@+id/btGerExcluir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btGerExcluir"
+                    android:background="@drawable/button_round_border"
+                    android:layout_marginStart="5dp"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

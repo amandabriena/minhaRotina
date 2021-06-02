@@ -1,4 +1,4 @@
-package com.example.meuprojeto.view;
+package com.example.meuprojeto.controller;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,24 +14,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.meuprojeto.R;
-import com.example.meuprojeto.controller.UsuarioController;
+import com.example.meuprojeto.datasource.UsuarioController;
 import com.example.meuprojeto.model.Usuario;
 import com.example.meuprojeto.util.MaskEditUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;

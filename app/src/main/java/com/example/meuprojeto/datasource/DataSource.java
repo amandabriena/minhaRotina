@@ -26,17 +26,5 @@ public class DataSource {
         return true;
     }
 
-    public List<String> listarAtividades(){
-        //TODO: Listar atividades
-        List<String> lista = new ArrayList<>();
 
-        lista.add("Acordar");
-        lista.add("Tomar Banho");
-        lista.add("Dormir");
-        lista.add("Estudar");
-        lista.add("Brincar");
-        lista.add("Teste");
-
-        return lista;
-    }
 }
