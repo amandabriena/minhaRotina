@@ -53,5 +53,11 @@
     <string name="btGerEditar">EDITAR</string>
     <string name="btGerExcluir">EXCLUIR</string>
 
+    //Página Cadastrar Passo Atividade
+    <string name="btFinalizar">Finalizar</string>
+    <string name="btAddPassos">Adicionar Mais Passos</string>
+    <string name="descricao">Descrição:</string>
+    <string name="som">Som:</string>
+
 
 </resources>

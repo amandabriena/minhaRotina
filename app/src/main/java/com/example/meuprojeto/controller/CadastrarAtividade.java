@@ -169,7 +169,7 @@ public class CadastrarAtividade extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Intent intent = new Intent(CadastrarAtividade.this, DashboardActivity.class);
+                                            Intent intent = new Intent(CadastrarAtividade.this, CadastrarPassoAtividadeActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
                                         }
