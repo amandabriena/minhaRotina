@@ -42,7 +42,7 @@ public class CadastrarAtividade extends AppCompatActivity {
 
     //Declarando variáveis
     EditText nome_atv, horario, musica;
-    Button btCadastrarAtividade;
+    Button btCadastrarAtividade, btAddPassos;
     ImageButton btUploadImg;
     ImageView imgIcon;
     private Uri filePath;
@@ -62,8 +62,12 @@ public class CadastrarAtividade extends AppCompatActivity {
         horario = (EditText) findViewById(R.id.horario);
         musica = (EditText) findViewById(R.id.musica);
         btCadastrarAtividade = (Button) findViewById(R.id.btCadastrarAtividade);
+        btAddPassos = (Button) findViewById(R.id.btAdicionarPasso);
         btUploadImg = (ImageButton) findViewById(R.id.btUploadImg);
         imgIcon = (ImageView) findViewById(R.id.imgIcon);
+
+        objAtividade = new Atividade();
+
 
         //Adicionando máscara de horário:
         horario.addTextChangedListener(MaskEditUtil.mask(horario, MaskEditUtil.FORMAT_HOUR));
@@ -73,6 +77,21 @@ public class CadastrarAtividade extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 criarAtividade();
+                Intent intent = new Intent(CadastrarAtividade.this, DashboardActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+        btAddPassos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                criarAtividade();
+                Intent cadPasso = new Intent(CadastrarAtividade.this, CadastrarPassoAtividadeActivity.class);
+                //Passando informações da atividade para cadastrar os passos
+                cadPasso.putExtra("idAtividade", objAtividade.getId());
+                cadPasso.putExtra("nomeAtividade", nome_atv.getText().toString());
+                cadPasso.putExtra("numPasso", "1");
+                startActivity(cadPasso);
             }
         });
         btUploadImg.setOnClickListener(new View.OnClickListener() {
@@ -154,27 +173,20 @@ public class CadastrarAtividade extends AppCompatActivity {
                             //Pegando o usuário que criou a atividade:
                             String usuario_atv = FirebaseAuth.getInstance().getUid();
 
-                            objAtividade = new Atividade();
+
 
                             objAtividade.setImagemURL(uri.toString());
                             objAtividade.setNomeAtividade(nome_atv.getText().toString());
                             objAtividade.setHorario(horario.getText().toString());
                             objAtividade.setMusica(musica.getText().toString());
                             objAtividade.setIdUsuario(usuario_atv);
-
-
                             FirebaseFirestore.getInstance().collection("atividades")
                                     .document(objAtividade.getId())
                                     .set(objAtividade)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Intent cadPasso = new Intent(CadastrarAtividade.this, CadastrarPassoAtividadeActivity.class);
-                                            //Passando informações da atividade para cadastrar os passos
-                                            cadPasso.putExtra("idAtividade", objAtividade.getId());
-                                            cadPasso.putExtra("nomeAtividade", objAtividade.getNomeAtividade());
-                                            cadPasso.putExtra("numPasso", "1");
-                                            startActivity(cadPasso);
+                                            Log.e("Atividade cadastrada", objAtividade.getId());
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
