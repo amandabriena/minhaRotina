@@ -25,9 +25,13 @@ import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.Passo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -66,12 +70,15 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         btUploadImg = (ImageButton) findViewById(R.id.btUploadImgPasso);
         imgPasso = (ImageView) findViewById(R.id.imgPasso);
 
+        objPasso = new Passo();
+
         //Pegando informações da atividade que está sendo cadastrada:
         idAtividade = getIntent().getStringExtra("idAtividade");
         final String atividadeAtual = getIntent().getStringExtra("nomeAtividade");
         String num = getIntent().getStringExtra("numPasso");
+        objPasso.setNumOrdem(num);
         numPasso = Integer.parseInt(num);
-        ordemPasso.setText("Passo "+numPasso+":");
+        ordemPasso.setText("Passo "+num);
         atv_atual.setText(atividadeAtual);
 
 
@@ -84,23 +91,23 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         btAddPassos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Direcionando para tela de gerenciamento de pais ou responsáveis
+                //Direcionando para cadastrar mais passos
                 adicionarPasso();
                 Intent add = new Intent(CadastrarPassoAtividadeActivity.this, CadastrarPassoAtividadeActivity.class);
                 //Passando número de ordem do passo
                 numPasso++;
-                add.putExtra("numPasso", numPasso+"");
+                Log.e("Acrescimo passo ", "ac num: "+numPasso);
                 add.putExtra("idAtividade", idAtividade);
                 add.putExtra("nomeAtividade", atividadeAtual);
+                add.putExtra("numPasso", numPasso+"");
                 startActivity(add);
             }
         });
         btFinalizarPassos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Direcionando para tela de finaliza
+                //Direcionando para tela de  de dashboard ao finalizar cadastros
                 adicionarPasso();
-
                 Intent intent = new Intent(CadastrarPassoAtividadeActivity.this, DashboardActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -138,26 +145,53 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         if(descricao_passo.isEmpty() || som_passo.isEmpty()){
             Toast.makeText(this,"Preencha todos os campos para criar o Passo!", Toast.LENGTH_SHORT).show();
         }
-            final String numOrdem = numPasso+"";
+        String fileName = UUID.randomUUID().toString();
+        final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/passos/" + fileName);
+        UploadTask uploadTask2 = ref.putBytes(dataIMG);
+        uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-            objPasso = new Passo(numOrdem, descricao_passo, som_passo);
+                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.i("FILEURI", "URI: " + uri.toString());
 
-            FirebaseFirestore.getInstance().collection("atividades").document(idAtividade).collection("passos")
-                    .document(objPasso.getNumOrdem())
-                    .set(objPasso)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            Log.e("Passo", objPasso.getDescricaoPasso());
-                            Log.e("Passo ID ", numOrdem);
+                        //final String numOrdem = numPasso+"";
 
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.i("Erro ao cadastrar", e.getMessage());
-                        }
-                    });
+                        //objPasso = new Passo(numOrdem, descricao.getText().toString(),uri.toString(), som.getText().toString());
+                        objPasso.setDescricaoPasso(descricao.getText().toString());
+                        objPasso.setAudio(som.getText().toString());
+                        objPasso.setImagemURL(uri.toString());
+
+                        FirebaseFirestore.getInstance().collection("atividades").document(idAtividade).collection("passos")
+                                .document(objPasso.getNumOrdem())
+                                .set(objPasso)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.e("Passo e ID", objPasso.getDescricaoPasso()+" id:"+objPasso.getNumOrdem());
+                                        Log.e("numPasso ", numPasso+"");
+
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.i("Erro ao cadastrar", e.getMessage());
+                                    }
+                                });
+
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //Toast.makeText(Profilepic.this, "Upload Failed -> " + e, Toast.LENGTH_LONG).show();
+                Log.e("Teste", e.getMessage(), e);
+            }
+        });
+
     }
 }

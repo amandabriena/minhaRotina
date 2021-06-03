@@ -159,7 +159,7 @@ public class CadastrarAtividade extends AppCompatActivity {
         }else {
             //criando ID randomico e demais informações preenchidas para upload da imagem no firebase:
             String fileName = UUID.randomUUID().toString();
-            final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/" + fileName);
+            final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/atividades/" + fileName);
             UploadTask uploadTask2 = ref.putBytes(dataIMG);
             uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -172,7 +172,6 @@ public class CadastrarAtividade extends AppCompatActivity {
 
                             //Pegando o usuário que criou a atividade:
                             String usuario_atv = FirebaseAuth.getInstance().getUid();
-
 
 
                             objAtividade.setImagemURL(uri.toString());

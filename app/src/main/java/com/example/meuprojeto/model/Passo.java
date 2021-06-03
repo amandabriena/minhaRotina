@@ -8,16 +8,13 @@ public class Passo {
     private String imagemURL;
     private String audio;
 
+    public Passo() {
+    }
+
     public Passo(String numOrdem, String descricaoPasso, String imagemURL, String audio) {
         this.numOrdem = numOrdem;
         this.descricaoPasso = descricaoPasso;
         this.imagemURL = imagemURL;
-        this.audio = audio;
-    }
-
-    public Passo(String numOrdem, String descricaoPasso, String audio) {
-        this.numOrdem = numOrdem;
-        this.descricaoPasso = descricaoPasso;
         this.audio = audio;
     }
 
