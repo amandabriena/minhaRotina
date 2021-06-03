@@ -27,9 +27,8 @@
         <TextView
             android:id="@+id/atividade_atual"
             android:layout_width="wrap_content"
-            android:layout_height="26dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="@string/atividade"
             android:layout_centerHorizontal="true"
             android:textAppearance="@style/label_maior" />
         <ImageButton

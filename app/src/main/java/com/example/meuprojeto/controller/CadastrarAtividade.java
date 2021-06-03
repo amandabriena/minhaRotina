@@ -169,9 +169,12 @@ public class CadastrarAtividade extends AppCompatActivity {
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Intent intent = new Intent(CadastrarAtividade.this, CadastrarPassoAtividadeActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            startActivity(intent);
+                                            Intent cadPasso = new Intent(CadastrarAtividade.this, CadastrarPassoAtividadeActivity.class);
+                                            //Passando informações da atividade para cadastrar os passos
+                                            cadPasso.putExtra("idAtividade", objAtividade.getId());
+                                            cadPasso.putExtra("nomeAtividade", objAtividade.getNomeAtividade());
+                                            cadPasso.putExtra("numPasso", "1");
+                                            startActivity(cadPasso);
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -180,8 +183,6 @@ public class CadastrarAtividade extends AppCompatActivity {
                                             Log.i("Erro ao cadastrar", e.getMessage());
                                         }
                                     });
-
-                            limparDadosAtv();
 
                         }
                     });
@@ -197,10 +198,4 @@ public class CadastrarAtividade extends AppCompatActivity {
         }
     }
 
-    //Função para limpar dados dos campos
-    public void limparDadosAtv(){
-        nome_atv.setText("");
-        horario.setText("");
-        musica.setText("");
-    }
 }

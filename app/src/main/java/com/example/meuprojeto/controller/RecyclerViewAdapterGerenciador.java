@@ -34,7 +34,7 @@ public class RecyclerViewAdapterGerenciador extends RecyclerView.Adapter<Recycle
         final Atividade atividade = listaAtividadesGer.get(position);
 
         holder.nome_atv_ger.setText(atividade.getNomeAtividade());
-        //holder.horario_atv_ger.setText(atividade.getHorario());
+        holder.horario_atv_ger.setText(atividade.getHorario());
         Picasso.get().load(atividade.getImagemURL()).into(holder.imagem_atv_ger);
 
         holder.cardViewGer.setOnClickListener(new View.OnClickListener() {
@@ -59,13 +59,13 @@ public class RecyclerViewAdapterGerenciador extends RecyclerView.Adapter<Recycle
 
         private TextView nome_atv_ger;
         private ImageView imagem_atv_ger;
-        //private TextView horario_atv_ger;
+        private TextView horario_atv_ger;
         private CardView cardViewGer;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             nome_atv_ger = itemView.findViewById(R.id.nome_atv_ger);
-            //horario_atv_ger = itemView.findViewById(R.id.horario_atv);
+            horario_atv_ger = itemView.findViewById(R.id.horario_atv_ger);
             imagem_atv_ger = itemView.findViewById(R.id.imagem_atv_ger);
             cardViewGer = itemView.findViewById(R.id.cardViewGer);
         }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardViewGer"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="110dp"
     android:layout_margin="8dp"
     cardView:cardCornerRadius="8dp"
     cardView:cardElevation="20dp">
@@ -32,7 +32,7 @@
                 android:id="@+id/nome_atv_ger"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="8dp"
+                android:layout_marginStart="18dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-smallcaps"
                 android:gravity="center_vertical"
@@ -45,11 +45,28 @@
                 cardView:layout_constraintLeft_toRightOf="@id/imagem_atv"
                 cardView:layout_constraintRight_toRightOf="parent"
                 cardView:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/horario_atv_ger"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="18dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif-smallcaps"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:padding="5dp"
+                android:textAppearance="@style/label_menor"
+                android:textColor="@android:color/black"
+                cardView:layout_constraintBottom_toBottomOf="parent"
+                cardView:layout_constraintLeft_toRightOf="@id/imagem_atv"
+                cardView:layout_constraintRight_toRightOf="parent"
+                cardView:layout_constraintTop_toTopOf="parent" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-smallcaps"
                 android:gravity="center_vertical"
@@ -63,16 +80,18 @@
                     android:id="@+id/btGerEditar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/btGerEditar"
-                    android:background="@drawable/button_round_border"
+                    android:drawableTop="@drawable/ic_edit"
+                    android:drawablePadding="2dp"
+                    android:background="@drawable/button_round_edit"
                     android:layout_marginStart="20dp"
                     />
                 <Button
                     android:id="@+id/btGerExcluir"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/btGerExcluir"
-                    android:background="@drawable/button_round_border"
+                    android:drawableTop="@drawable/ic_delete"
+                    android:drawablePadding="2dp"
+                    android:background="@drawable/button_round_delete"
                     android:layout_marginStart="5dp"
                     />
             </LinearLayout>
