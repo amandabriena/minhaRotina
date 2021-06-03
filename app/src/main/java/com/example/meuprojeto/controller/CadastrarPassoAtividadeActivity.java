@@ -37,7 +37,7 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
     Passo objPasso;
 
     //Declarando variáveis
-    TextView atv_atual;
+    TextView atv_atual, ordemPasso;
     EditText descricao, som;
     Button btFinalizarPassos, btAddPassos;
     ImageButton btUploadImg;
@@ -59,6 +59,7 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         som = (EditText) findViewById(R.id.som);
 
         atv_atual = (TextView) findViewById(R.id.atividade_atual);
+        ordemPasso = (TextView) findViewById(R.id.ordemPasso);
 
         btFinalizarPassos = (Button) findViewById(R.id.btFinalizar);
         btAddPassos = (Button) findViewById(R.id.btAddPassos);
@@ -70,7 +71,8 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         final String atividadeAtual = getIntent().getStringExtra("nomeAtividade");
         String num = getIntent().getStringExtra("numPasso");
         numPasso = Integer.parseInt(num);
-        atv_atual.setText(numPasso+"");
+        ordemPasso.setText("Passo "+numPasso+":");
+        atv_atual.setText(atividadeAtual);
 
 
         btUploadImg.setOnClickListener(new View.OnClickListener() {

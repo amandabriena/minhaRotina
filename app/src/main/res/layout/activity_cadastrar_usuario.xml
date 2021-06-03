@@ -40,7 +40,7 @@
                 android:layout_width="@dimen/image_icon_size"
                 android:layout_height="@dimen/image_icon_size"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="20dp"
+                android:layout_margin="30dp"
                 android:scaleType="centerCrop"
                 />
         </RelativeLayout>

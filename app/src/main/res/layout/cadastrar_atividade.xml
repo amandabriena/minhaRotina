@@ -5,51 +5,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controller.CadastrarAtividade">
-    <FrameLayout
+    <RelativeLayout
+        android:id="@+id/responsive"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
-        tools:ignore="MissingConstraints">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-            <Button
-                android:id="@+id/btAjuda"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/button_round_border"
-                android:drawableRight="@android:drawable/ic_menu_help"
-                android:text="@string/btAjuda" />
-            <ImageButton
-                android:id="@+id/btUploadImg"
-                android:layout_width="310dp"
-                android:layout_height="200dp"
-                app:srcCompat="@drawable/add_img"
-                android:layout_margin="20dp"
-                android:layout_centerHorizontal="true"/>
-            <ImageView
-                android:id="@+id/imgIcon"
-                android:layout_width="310dp"
-                android:layout_height="200dp"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="20dp"
-                android:scaleType="centerCrop"
-
-                />
-        </RelativeLayout>
-
-        <LinearLayout
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="2"
+        android:layout_marginTop="10dp">
+        <Button
+            android:id="@+id/btAjuda"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:layout_marginTop="40dp"
-            >
+            android:layout_height="30dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/button_round_border"
+            android:drawableRight="@android:drawable/ic_menu_help"
+            android:text="@string/btAjuda" />
+        <ImageButton
+            android:id="@+id/btUploadImg"
+            android:layout_width="310dp"
+            android:layout_height="200dp"
+            app:srcCompat="@drawable/add_img"
+            android:layout_margin="20dp"
+            android:layout_centerHorizontal="true"/>
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="310dp"
+            android:layout_height="200dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:scaleType="centerCrop"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/responsive"
+        app:layout_constraintVertical_weight="3"
+        >
             <TextView
                 android:id="@+id/tatividade"
                 android:layout_width="wrap_content"
@@ -102,146 +101,40 @@
                 android:layout_marginTop="@dimen/margin_top_cadastro"
                 android:textAppearance="@style/label" />
 
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp">
-                    <TextView
-                        android:id="@+id/dom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/dom"
-                        />
-                    <CheckBox
-                        android:id="@+id/checkbox_dom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/dom"
-                        />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp">
-                    <TextView
-                        android:id="@+id/seg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/seg"
-                        />
-                    <CheckBox
-                        android:id="@+id/checkbox_seg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/seg"
-                        />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp">
-                    <TextView
-                        android:id="@+id/ter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ter"
-                        />
-                    <CheckBox
-                        android:id="@+id/checkbox_ter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/ter"
-                        />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp">
-                    <TextView
-                        android:id="@+id/qua"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/qua"
-                        />
-                    <CheckBox
-                        android:id="@+id/checkbox_qua"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/qua"
-                        />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp">
-                    <TextView
-                        android:id="@+id/qui"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/qui"
-                        />
-                    <CheckBox
-                        android:id="@+id/checkbox_qui"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/qui"
-                        />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp">
-                    <TextView
-                        android:id="@+id/sex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sex"
-                        />
-                    <CheckBox
-                        android:id="@+id/checkbox_sex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/sex"
-                        />
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="3dp">
-                    <TextView
-                        android:id="@+id/sab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sab"
-                        />
-                    <CheckBox
-                        android:id="@+id/checkbox_sab"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/sab"
-                        />
-                </RelativeLayout>
-
-            </LinearLayout>
-            <Button
-                android:id="@+id/btCadastrarAtividade"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="center"
-                android:background="@drawable/button_round"
-                android:text="Pronto!" />
 
         </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/form"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_margin="15dp"
+        app:layout_constraintVertical_weight="1">
+        <Button
+            android:id="@+id/btAdicionarPasso"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_round"
+            android:layout_margin="5dp"
+            android:text="@string/btAddPasso" />
+        <Button
+            android:id="@+id/btCadastrarAtividade"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_round"
+            android:layout_margin="5dp"
+            android:text="@string/btCadAtv"/>
+                
+            </LinearLayout>
 
 
 
-    </FrameLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,14 +35,15 @@
             android:layout_below="@+id/atividade_atual"
             android:id="@+id/btUploadImgPasso"
             android:layout_width="310dp"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             app:srcCompat="@drawable/add_img"
             android:layout_margin="20dp"
             android:layout_centerHorizontal="true"/>
         <ImageView
+            android:layout_below="@+id/atividade_atual"
             android:id="@+id/imgPasso"
             android:layout_width="310dp"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_centerHorizontal="true"
             android:layout_margin="20dp"
             android:scaleType="centerCrop"
@@ -58,6 +59,12 @@
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/responsive"
         app:layout_constraintVertical_weight="3">
+        <TextView
+            android:id="@+id/ordemPasso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textAppearance="@style/label" />
 
         <TextView
             android:id="@+id/tdescricao"
@@ -104,18 +111,20 @@
         <Button
             android:id="@+id/btAddPassos"
             android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
             android:background="@drawable/button_round"
-            android:text="@string/btAddPassos"
-            android:textAlignment="center" />
+            android:layout_margin="5dp"
+            android:text="@string/btAddPassos" />
         <Button
             android:id="@+id/btFinalizar"
             android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
-            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
             android:background="@drawable/button_round"
+            android:layout_margin="5dp"
             android:text="@string/btFinalizar" />
 
     </LinearLayout>

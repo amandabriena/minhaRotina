@@ -34,7 +34,7 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        verificarAutenticacao();
+        //verificarAutenticacao();
 
         imgIcon = (ImageView) findViewById(R.id.imgIcon);
         btGerAtividades = (Button) findViewById(R.id.btGerAtividades);

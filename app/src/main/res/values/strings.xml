@@ -30,6 +30,8 @@
     <string name="qui">QUI</string>
     <string name="sex">SEX</string>
     <string name="sab">SÁB</string>
+    <string name="btAddPasso">Adicionar Passo a Passo</string>
+    <string name="btCadAtv">Cadastrar Atividade Apenas</string>
 
     //Strings Página Dashboard (menu)
     <string name="btEditar">EDITAR</string>
