@@ -59,8 +59,7 @@ public class MinhaRotinaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Direcionando para tela de gerenciamento de pais ou responsáveis
-                Intent pais = new Intent(MinhaRotinaActivity.this, DashboardActivity.class);
-                pais.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent pais = new Intent(MinhaRotinaActivity.this, PopUpResponsaveis.class);
                 startActivity(pais);
             }
         });

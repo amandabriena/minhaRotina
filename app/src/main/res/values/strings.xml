@@ -67,4 +67,8 @@
     <string name="btAnterior">Anterior</string>
     <string name="btProximo">Próximo</string>
 
+    //Pop up window
+    <string name="btResponsavel">Acessar</string>
+    <string name="senhaResponsavel">Informe a senha para acessar ao espaço dos responsáveis:</string>
+
 </resources>
