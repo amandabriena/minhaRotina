@@ -6,5 +6,7 @@
     <dimen name="margin_bts_dashboard">10dp</dimen>
     <dimen name="padding_bts_dashboard">20dp</dimen>
     <dimen name="image_icon_size">150dp</dimen>
+    <dimen name="padding_icons">5dp</dimen>
+    <dimen name="padding_icons_button">10dp</dimen>
 
 </resources>

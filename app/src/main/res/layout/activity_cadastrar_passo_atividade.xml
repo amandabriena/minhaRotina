@@ -96,7 +96,10 @@
             android:layout_width="@dimen/width_edit"
             android:layout_height="@dimen/height_edit"
             android:layout_marginTop="@dimen/margin_top_cadastro"
-            android:background="@drawable/edit_round" />
+            android:background="@drawable/edit_round"
+            android:drawableEnd="@drawable/ic_voice"
+            android:padding="@dimen/padding_icons"
+            />
 
 
     </LinearLayout>

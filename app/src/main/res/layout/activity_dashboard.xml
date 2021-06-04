@@ -42,7 +42,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/button_round_border"
-                android:drawableRight="@android:drawable/ic_menu_edit"
+                android:drawableEnd="@android:drawable/ic_menu_edit"
                 android:text="@string/btEditar" />
         </RelativeLayout>
         <LinearLayout
@@ -59,14 +59,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/button_round_border2"
-                android:text="@string/btRotinaDiaria" />
+                android:text="@string/btRotinaDiaria"
+                android:drawableEnd="@drawable/ic_schedule"
+                android:padding="@dimen/padding_icons_button"
+                />
             <Button
                 android:id="@+id/btGerAtividades"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_bts_dashboard"
                 android:background="@drawable/button_round_border2"
-                android:text="@string/btGerAtividades" />
+                android:text="@string/btGerAtividades"
+                android:drawableEnd="@drawable/ic_build"
+                android:padding="@dimen/padding_icons_button"
+                />
             <Button
                 android:id="@+id/btAddAtividadeFora"
                 android:layout_width="match_parent"
@@ -102,6 +108,16 @@
                 android:layout_marginTop="@dimen/margin_bts_dashboard"
                 android:background="@drawable/button_round_border2"
                 android:text="@string/btVolMax" />
+            <Button
+                android:id="@+id/btVoltarCrianca"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin_bts_dashboard"
+                android:background="@drawable/button_round_border"
+                android:text="@string/btVoltarCrianca"
+                android:drawableStart="@drawable/ic_back"
+                android:padding="@dimen/padding_icons_button"
+                />
 
         </LinearLayout>
 

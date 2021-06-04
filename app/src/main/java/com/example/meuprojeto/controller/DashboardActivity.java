@@ -26,7 +26,7 @@ import com.squareup.picasso.Picasso;
 
 public class DashboardActivity extends AppCompatActivity {
     //Declarando variáveis
-    Button btGerAtividades, btCadastrarAtv, btEditar, btRotinaDiaria;
+    Button btGerAtividades, btCadastrarAtv, btEditar, btRotinaDiaria, btVoltar;
     ImageView imgIcon;
 
     @Override
@@ -41,6 +41,7 @@ public class DashboardActivity extends AppCompatActivity {
         btCadastrarAtv = (Button) findViewById(R.id.btAddAtividadeFora);
         btRotinaDiaria = (Button) findViewById(R.id.btRotinaDiaria);
         btEditar = (Button) findViewById(R.id.btEditar);
+        btVoltar = (Button) findViewById(R.id.btVoltarCrianca);
 
         //Pegando imagem de icone do usuário
         DocumentReference docRef = FirebaseFirestore.getInstance().collection("/usuarios").document(FirebaseAuth.getInstance().getUid());
@@ -92,6 +93,15 @@ public class DashboardActivity extends AppCompatActivity {
                 //Direcionando para visão da rotina diária
                 Intent rotinaHoje = new Intent(DashboardActivity.this, MinhaRotinaActivity.class);
                 startActivity(rotinaHoje);
+            }
+        });
+        btVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Direcionando para espaço infantil
+                Intent intent = new Intent(DashboardActivity.this, MinhaRotinaActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 

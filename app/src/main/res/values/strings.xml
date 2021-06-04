@@ -42,6 +42,7 @@
     <string name="btTempoMax">TEMPO MÁXIMO DE USO</string>
     <string name="btVolMax">AJUSTAR VOLUME MÁXIMO</string>
     <string name="btEditarPreferencias">EDITAR PREFERÊNCIAS</string>
+    <string name="btVoltarCrianca">VOLTAR PARA ESPAÇO INFANTIL</string>
 
     //Strings Página Atividade
     <string name="instrucaoAtv">Olá! São 8:00, hora de "Escovar os Dentes"!</string>
