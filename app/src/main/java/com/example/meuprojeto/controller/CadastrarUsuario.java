@@ -40,9 +40,8 @@ public class CadastrarUsuario extends AppCompatActivity {
     Usuario objUsuario;
     UsuarioController controleUsuario;
     //Declarando variáveis
-    Button btProximo;
+    Button btCadastrar, btUploadImg;
     EditText nome, data, email, senha;
-    Button btUploadImg;
     ImageView imgIcon;
     private Uri filePath;
     private byte[] dataIMG;
@@ -58,7 +57,7 @@ public class CadastrarUsuario extends AppCompatActivity {
         setContentView(R.layout.activity_cadastrar_usuario);
 
         controleUsuario = new UsuarioController();
-        btProximo = (Button) findViewById(R.id.btProximo);
+        btCadastrar = (Button) findViewById(R.id.btCadastrar);
 
         nome = (EditText) findViewById(R.id.nome);
         data = (EditText) findViewById(R.id.data);
@@ -80,7 +79,7 @@ public class CadastrarUsuario extends AppCompatActivity {
         });
         //inicializarFirebase();
         //Capturando clique do botão cadastrar:
-        btProximo.setOnClickListener(new View.OnClickListener() {
+        btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Direcionando a ação do botão padastrar novo usuário:

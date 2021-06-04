@@ -114,12 +114,12 @@
                 android:inputType="textPassword" />
 
             <Button
-                android:id="@+id/btProximo"
+                android:id="@+id/btCadastrar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/button_round_border"
-                android:text="@string/proximo"
+                android:text="@string/cadastrar"
                 android:layout_marginTop="20dp"
                 />
 

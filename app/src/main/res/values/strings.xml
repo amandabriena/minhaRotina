@@ -8,7 +8,7 @@
     <string name="data">Data de Nascimento:</string>
     <string name="genero">Gênero:</string>
     <string name="senha">Senha:</string>
-    <string name="proximo">PRÓXIMO</string>
+    <string name="cadastrar">CADASTRAR</string>
 
     //Strings Página de Login
     <string name="cadastro">Não possui uma conta? </string>
@@ -61,5 +61,9 @@
     <string name="descricao">Descrição:</string>
     <string name="som">Som:</string>
 
+    //Pagina Passo Atividade
+    <string name="btOuvir">OUVIR</string>
+    <string name="btAnterior">Anterior</string>
+    <string name="btProximo">Próximo</string>
 
 </resources>

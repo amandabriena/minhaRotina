@@ -34,6 +34,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class CadastrarAtividade extends AppCompatActivity {
@@ -127,33 +128,31 @@ public class CadastrarAtividade extends AppCompatActivity {
         }
     }
 
+    public void onCheckboxClicked(View view) {
+        ArrayList<String>
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkbox_dom:
+                if (checked)
+                // Put some meat on the sandwich
+            case R.id.checkbox_seg:
+                if (checked)
+                // Cheese me
+            else
+                // I'm lactose intolerant
+                break;
+            // TODO: Veggie sandwich
+        }
+    }
 
     private void criarAtividade(){
         String nome = nome_atv.getText().toString();
         String hora = horario.getText().toString();
         String musica_atv = musica.getText().toString();
-        /*
-        public void onCheckboxClicked(View view) {
-            // Is the view now checked?
-            boolean checked = ((CheckBox) view).isChecked();
 
-            // Check which checkbox was clicked
-            switch(view.getId()) {
-                case R.id.checkbox_dom:
-                    if (checked)
-                    // Put some meat on the sandwich
-            else
-                    // Remove the meat
-                    break;
-                case R.id.checkbox_seg:
-                    if (checked)
-                    // Cheese me
-            else
-                    // I'm lactose intolerant
-                    break;
-                // TODO: Veggie sandwich
-            }
-        }*/
         if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
             Toast.makeText(this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT).show();
         }else {
