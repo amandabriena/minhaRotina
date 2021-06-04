@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.datasource.AtividadeController;
 import com.example.meuprojeto.model.Atividade;
+import com.example.meuprojeto.model.DiaSemana;
 import com.example.meuprojeto.util.MaskEditUtil;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,11 +37,12 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class CadastrarAtividade extends AppCompatActivity {
     Atividade objAtividade;
-    AtividadeController controleAtividade;
+    private List<String> listaDiasSemana = new ArrayList<>();
 
     //Declarando variáveis
     EditText nome_atv, horario, musica;
@@ -128,23 +131,34 @@ public class CadastrarAtividade extends AppCompatActivity {
         }
     }
 
-    public void onCheckboxClicked(View view) {
-        ArrayList<String>
-        // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
-
-        // Check which checkbox was clicked
-        switch(view.getId()) {
-            case R.id.checkbox_dom:
-                if (checked)
-                // Put some meat on the sandwich
-            case R.id.checkbox_seg:
-                if (checked)
-                // Cheese me
-            else
-                // I'm lactose intolerant
-                break;
-            // TODO: Veggie sandwich
+    public void diasMarcados() {
+        CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox_dom);
+        if( checkBox.isChecked()){
+            listaDiasSemana.add("Dom");
+        }
+        checkBox = (CheckBox) findViewById(R.id.checkbox_seg);
+        if( checkBox.isChecked()){
+            listaDiasSemana.add("Seg");
+        }
+        checkBox = (CheckBox) findViewById(R.id.checkbox_ter);
+        if( checkBox.isChecked()){
+            listaDiasSemana.add("Ter");
+        }
+        checkBox = (CheckBox) findViewById(R.id.checkbox_qua);
+        if( checkBox.isChecked()){
+            listaDiasSemana.add("Qua");
+        }
+        checkBox = (CheckBox) findViewById(R.id.checkbox_qui);
+        if( checkBox.isChecked()){
+            listaDiasSemana.add("Qui");
+        }
+        checkBox = (CheckBox) findViewById(R.id.checkbox_sex);
+        if( checkBox.isChecked()){
+            listaDiasSemana.add("Sex");
+        }
+        checkBox = (CheckBox) findViewById(R.id.checkbox_sab);
+        if( checkBox.isChecked()){
+            listaDiasSemana.add("Sab");
         }
     }
 
@@ -152,6 +166,7 @@ public class CadastrarAtividade extends AppCompatActivity {
         String nome = nome_atv.getText().toString();
         String hora = horario.getText().toString();
         String musica_atv = musica.getText().toString();
+        diasMarcados();
 
         if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
             Toast.makeText(this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT).show();
@@ -185,6 +200,30 @@ public class CadastrarAtividade extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.e("Atividade cadastrada", objAtividade.getId());
+                                            //int i = 1;
+                                            for(int i = 0; i <listaDiasSemana.size(); i++){
+                                                String dia = listaDiasSemana.get(i);
+                                                String valor = String.valueOf(i);
+                                                DiaSemana diaS = new DiaSemana(valor, dia);
+                                                FirebaseFirestore.getInstance().collection("atividades").document(objAtividade.getId())
+                                                        .collection("diasSemana")
+                                                        .document(valor)
+                                                        .set(diaS)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.e("DIA X", " DIA: X");
+
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Log.i("Erro ao cadastrar", e.getMessage());
+                                                            }
+                                                        });
+
+                                            }
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
