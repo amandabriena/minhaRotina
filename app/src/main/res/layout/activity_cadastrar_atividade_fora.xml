@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.CadastrarAtividadeFora">
+    <RelativeLayout
+        android:id="@+id/responsive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="2"
+        android:layout_marginTop="10dp">
+        <Button
+            android:id="@+id/btAjuda"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/button_round_border"
+            android:drawableRight="@android:drawable/ic_menu_help"
+            android:text="@string/btAjuda" />
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/responsive"
+        android:layout_marginTop="100dp"
+        app:layout_constraintVertical_weight="3"
+        >
+    <TextView
+        android:id="@+id/descricao"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:text="@string/descricaoAtv"
+        android:textAppearance="@style/label" />
+
+    <EditText
+        android:id="@+id/descricaoAtvFora"
+        android:layout_width="@dimen/width_edit"
+        android:layout_height="@dimen/height_edit"
+        android:layout_marginTop="@dimen/margin_top_cadastro"
+        android:background="@drawable/edit_round" />
+
+    <TextView
+        android:id="@+id/data"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:text="@string/data"
+        android:layout_marginTop="@dimen/margin_top_cadastro"
+        android:textAppearance="@style/label" />
+
+    <EditText
+        android:id="@+id/dataAtvFora"
+        android:layout_width="@dimen/width_edit"
+        android:layout_height="@dimen/height_edit"
+        android:layout_marginTop="@dimen/margin_top_cadastro"
+        android:background="@drawable/edit_round"
+        android:inputType="date"/>
+
+    <TextView
+        android:id="@+id/tdataPreparacaoa"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:text="@string/dataPreparacao"
+        android:layout_marginTop="@dimen/margin_top_cadastro"
+        android:textAppearance="@style/label" />
+
+    <EditText
+        android:id="@+id/dataPreparacao"
+        android:layout_width="@dimen/width_edit"
+        android:layout_height="@dimen/height_edit"
+        android:layout_marginTop="@dimen/margin_top_cadastro"
+        android:background="@drawable/edit_round"
+        android:inputType="date"/>
+        <TextView
+            android:id="@+id/thorario"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:text="@string/horarioPreparacao"
+            android:layout_marginTop="@dimen/margin_top_cadastro"
+            android:textAppearance="@style/label" />
+
+        <EditText
+            android:id="@+id/horarioPreparacao"
+            android:layout_width="@dimen/width_edit"
+            android:layout_height="@dimen/height_edit"
+            android:layout_marginTop="@dimen/margin_top_cadastro"
+            android:background="@drawable/edit_round" />
+        <Button
+            android:id="@+id/btCadastrarAtvFora"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_round"
+            android:text="@string/cadastrar"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,26 +1,31 @@
 package com.example.meuprojeto.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class AtividadeAgendada extends Atividade {
-    private Date data_agendada;
-    private Date data_previa;
+    //alterar datas para tipo Date
+    private String data;
+    private String dataPrevia;
     private String urlVideo;
 
-    public Date getData_agendada() {
-        return data_agendada;
+    public AtividadeAgendada() {
     }
 
-    public void setData_agendada(Date data_agendada) {
-        this.data_agendada = data_agendada;
+    public String getData() {
+        return data;
     }
 
-    public Date getData_previa() {
-        return data_previa;
+    public void setData(String data) {
+        this.data = data;
     }
 
-    public void setData_previa(Date data_previa) {
-        this.data_previa = data_previa;
+    public String getDataPrevia() {
+        return dataPrevia;
+    }
+
+    public void setDataPrevia(String dataPrevia) {
+        this.dataPrevia = dataPrevia;
     }
 
     public String getUrlVideo() {

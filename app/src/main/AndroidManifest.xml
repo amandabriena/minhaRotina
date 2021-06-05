@@ -11,9 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.PopUpResponsaveis"
-            android:theme="@style/AppTheme.CustomTheme"
-            ></activity>
+        <activity android:name=".controller.CadastrarAtividadeFora"></activity>
+        <activity
+            android:name=".controller.PopUpResponsaveis"
+            android:theme="@style/AppTheme.CustomTheme" />
         <activity android:name=".controller.PassosAtividadeActivity" />
         <activity android:name=".controller.CadastrarPassoAtividadeActivity" />
         <activity android:name=".controller.AtividadeActivity" />

@@ -5,10 +5,10 @@
     <string name="imagemUsuario">SELECIONAR FOTO</string>
     <string name="e_mail">E-mail:</string>
     <string name="nome">Nome:</string>
-    <string name="data">Data de Nascimento:</string>
+    <string name="dataNascimento">Data de Nascimento:</string>
     <string name="genero">Gênero:</string>
     <string name="senha">Senha:</string>
-    <string name="cadastrar">CADASTRAR</string>
+    <string name="cadastrar">CADASTRAR!</string>
 
     //Strings Página de Login
     <string name="cadastro">Não possui uma conta? </string>
@@ -70,5 +70,11 @@
     //Pop up window
     <string name="btResponsavel">Acessar</string>
     <string name="senhaResponsavel">Informe a senha para acessar ao espaço dos responsáveis:</string>
+
+    //Página Cadastro Atividade Fora da Rotina
+    <string name="descricaoAtv">Descrição da atividade:</string>
+    <string name="dataPreparacao">Data anterior para preparação:</string>
+    <string name="horarioPreparacao">Horário para preparação:</string>
+    <string name="data">Data:</string>
 
 </resources>
