@@ -64,6 +64,7 @@ public class PopUpResponsaveis extends AppCompatActivity {
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     view.setBackgroundResource(R.drawable.popup_error);
+                                    senha.setBackgroundResource(R.drawable.button_round_delete);
                                     Toast.makeText(PopUpResponsaveis.this,"SENHA INCORRETA!", Toast.LENGTH_LONG).show();
                                 }
 
