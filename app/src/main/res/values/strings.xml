@@ -36,7 +36,7 @@
     //Strings Página Dashboard (menu)
     <string name="btEditar">EDITAR</string>
     <string name="btRotinaDiaria">MINHA ROTINA DE HOJE</string>
-    <string name="btGerAtividades">GERENCIAR ATIVIDADES</string>
+    <string name="btGerAtividades">GERENCIAR ROTINA</string>
     <string name="btAddAtividadeFora">ADICIONAR ATIVIDADE FORA DA ROTINA</string>
     <string name="btAtvsAgendadas">VER ATIVIDADES AGENDADAS</string>
     <string name="btTempoMax">TEMPO MÁXIMO DE USO</string>

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".controller.PopUpResponsaveis">
     <RelativeLayout
+        android:id="@+id/popup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -36,10 +37,11 @@
             android:id="@+id/btAcessarResponsavel"
             android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button_round_border2"
             android:layout_below="@+id/senhaResponsavel"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_marginStart="50dp"
+            android:background="@drawable/button_round_border2"
             android:text="@string/btResponsavel" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
