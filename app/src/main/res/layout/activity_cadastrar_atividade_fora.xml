@@ -37,7 +37,7 @@
     <TextView
         android:id="@+id/descricao"
         android:layout_width="wrap_content"
-        android:layout_height="26dp"
+        android:layout_height="wrap_content"
         android:text="@string/descricaoAtv"
         android:textAppearance="@style/label" />
 
@@ -51,7 +51,7 @@
     <TextView
         android:id="@+id/data"
         android:layout_width="wrap_content"
-        android:layout_height="26dp"
+        android:layout_height="wrap_content"
         android:text="@string/data"
         android:layout_marginTop="@dimen/margin_top_cadastro"
         android:textAppearance="@style/label" />
@@ -67,7 +67,7 @@
     <TextView
         android:id="@+id/tdataPreparacaoa"
         android:layout_width="wrap_content"
-        android:layout_height="26dp"
+        android:layout_height="wrap_content"
         android:text="@string/dataPreparacao"
         android:layout_marginTop="@dimen/margin_top_cadastro"
         android:textAppearance="@style/label" />
@@ -82,7 +82,7 @@
         <TextView
             android:id="@+id/thorario"
             android:layout_width="wrap_content"
-            android:layout_height="26dp"
+            android:layout_height="wrap_content"
             android:text="@string/horarioPreparacao"
             android:layout_marginTop="@dimen/margin_top_cadastro"
             android:textAppearance="@style/label" />
