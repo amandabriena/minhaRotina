@@ -93,6 +93,7 @@
             android:drawableEnd="@drawable/ic_next"
             android:padding="@dimen/padding_icons"
             android:text="@string/btProximo" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

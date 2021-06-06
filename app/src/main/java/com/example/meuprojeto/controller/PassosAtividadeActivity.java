@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
@@ -27,7 +28,7 @@ public class PassosAtividadeActivity extends AppCompatActivity {
     String idAtividade;
     int numPasso;
     TextView passoAtual, descricaoPasso;
-    Button btAnterior, btProximo;
+    Button btAnterior, btProximo, btConcluido;
     ImageView imgPasso;
 
     @Override
@@ -84,7 +85,7 @@ public class PassosAtividadeActivity extends AppCompatActivity {
                 }
             });
         }else if(numPasso>3){
-            btProximo.setAlpha(0);
+            btProximo.setText("CONCLUÍDO");
             btAnterior.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,6 +95,16 @@ public class PassosAtividadeActivity extends AppCompatActivity {
                     intent.putExtra("idAtividade", idAtividade);
                     intent.putExtra("numPasso", numPasso+"");
                     startActivity(intent);
+                }
+            });
+            btProximo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Direcionando a ação do botão para abrir a tela de atividades
+                    Intent dashboard = new Intent(PassosAtividadeActivity.this, MinhaRotinaActivity.class);
+                    Toast.makeText(PassosAtividadeActivity.this,"Atividade Concluída", Toast.LENGTH_LONG).show();
+                    dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(dashboard);
                 }
             });
         }else{

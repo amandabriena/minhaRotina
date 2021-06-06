@@ -67,6 +67,7 @@
     <string name="btOuvir">OUVIR</string>
     <string name="btAnterior">Anterior</string>
     <string name="btProximo">Próximo</string>
+    <string name="btConcluido">Concluído!</string>
 
     //Pop up window
     <string name="btResponsavel">Acessar</string>
