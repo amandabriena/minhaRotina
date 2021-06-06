@@ -76,8 +76,8 @@ public class DashboardActivity extends AppCompatActivity {
         btEditarPreferencias.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Direcionando a ação do botão para abrir a tela de atividades
-                Intent addAtividade = new Intent(DashboardActivity.this, CadastrarAtividade.class);
+                //Direcionando a ação do botão para view de gerenciamento de  prefêrencias
+                Intent addAtividade = new Intent(DashboardActivity.this, CadastrarPreferenciasActivity.class);
                 startActivity(addAtividade);
             }
         });

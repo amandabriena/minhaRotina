@@ -5,10 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controller.GerAtividadesActivity">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,10 +23,20 @@
                 android:id="@+id/recyclerViewGer"
                 android:background="@android:color/white"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="650dp"
                 tools:listitem="@layout/recyclerview_adapter_ger"/>
+            <Button
+                android:id="@+id/btAdicionarAtividade"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/button_round_border"
+                android:text="@string/btAdicionarAtividade"
+                android:drawableEnd="@drawable/ic_add"
+                android:padding="@dimen/padding_icons_button"
+                android:layout_marginTop="20dp"
+                />
         </LinearLayout>
 
 
-    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

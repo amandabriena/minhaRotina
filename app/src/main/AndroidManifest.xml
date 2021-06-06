@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.AtividadesAgendadasActivity"></activity>
+        <activity android:name=".controller.CadastrarAtividadesInicialActivity"></activity>
+        <activity android:name=".controller.CadastrarPreferenciasActivity" />
+        <activity android:name=".controller.AtividadesAgendadasActivity" />
         <activity android:name=".controller.CadastrarAtividadeFora" />
         <activity
             android:name=".controller.PopUpResponsaveis"

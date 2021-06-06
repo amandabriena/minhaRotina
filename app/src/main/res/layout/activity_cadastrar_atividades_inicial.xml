@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.CadastrarAtividadesInicialActivity">
+    <LinearLayout
+        android:id="@+id/instrucoesAtividades"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="2">
+        <TextView
+            android:id="@+id/instrucoes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_cadastro"
+            android:text="@string/instrucoes_atividades"
+            android:textAlignment="center"
+            android:textAppearance="@style/label_maior" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            tools:listitem="@layout/recyclerview_adapter_layout"/>
+        <Button
+            android:id="@+id/btCriarNova"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_round_border"
+            android:text="@string/btCriarnova"
+            android:drawableEnd="@drawable/ic_add"
+            android:padding="@dimen/padding_icons_button"
+            android:layout_marginTop="20dp"
+            />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

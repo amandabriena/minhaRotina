@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
@@ -24,29 +25,29 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GerAtividadesActivity extends AppCompatActivity {
-    Button btAdicionarAtividade;
+public class CadastrarAtividadesInicialActivity extends AppCompatActivity {
+    Button btCriarNova;
     private RecyclerView recyclerView;
     private RecyclerViewAdapterGerenciador recyclerViewAdapter;
-    private List<Atividade> listaAtividadesGer = new ArrayList<>();
+    private List<Atividade> listaAtividades = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ger_atividades);
+        setContentView(R.layout.activity_cadastrar_atividades_inicial);
+        btCriarNova = (Button) findViewById(R.id.btCriarNova);
 
-        btAdicionarAtividade = (Button) findViewById(R.id.btAdicionarAtividade);
-        btAdicionarAtividade.setOnClickListener(new View.OnClickListener() {
+        btCriarNova.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Direcionando a ação do botão para cadastrar uma nova atividade
-                Intent addAtividade = new Intent(GerAtividadesActivity.this, CadastrarAtividadesInicialActivity.class);
-                startActivity(addAtividade);
+                //Direcionando para espaço infantil
+                Intent intent = new Intent(CadastrarAtividadesInicialActivity.this, CadastrarAtividade.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewGer);
-        recyclerViewAdapter = new RecyclerViewAdapterGerenciador(listaAtividadesGer);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerViewAdapter = new RecyclerViewAdapterGerenciador(listaAtividades);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -56,7 +57,7 @@ public class GerAtividadesActivity extends AppCompatActivity {
         recyclerViewAdapter.setOnItemClickListener(new ClickListener<Atividade>() {
             @Override
             public void onItemClick(Atividade atividade) {
-                Intent intent = new Intent(GerAtividadesActivity.this, AtividadeActivity.class);
+                Intent intent = new Intent(CadastrarAtividadesInicialActivity.this, AtividadeActivity.class);
                 intent.putExtra("idAtividade", atividade.getId());
                 startActivity(intent);
             }
@@ -81,7 +82,7 @@ public class GerAtividadesActivity extends AppCompatActivity {
                             for(DocumentSnapshot doc : docs){
                                 Atividade atv = doc.toObject(Atividade.class);
                                 Log.e("nome", "nome av: "+atv.getNomeAtividade());
-                                listaAtividadesGer.add(atv);
+                                listaAtividades.add(atv);
                             }
                         }
                     });
