@@ -77,4 +77,7 @@
     <string name="horarioPreparacao">Horário para preparação:</string>
     <string name="data">Data:</string>
 
+    //Página de calendário de atividades agendadas
+    <string name="instrucoes">Selecione uma data para agendar uma nova atividade fora da rotina ou selecione as já agendadas nos dias circulados para saber mais.</string>
+
 </resources>
