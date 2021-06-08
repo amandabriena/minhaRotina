@@ -54,6 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="26dp"
                 android:text="@string/atividade"
+                android:layout_gravity="left"
+                android:layout_marginStart="55dp"
                 android:textAppearance="@style/label" />
 
             <EditText
@@ -68,6 +70,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="26dp"
                 android:text="@string/horario"
+                android:layout_gravity="left"
+                android:layout_marginStart="55dp"
                 android:layout_marginTop="@dimen/margin_top_cadastro"
                 android:textAppearance="@style/label" />
 
@@ -76,13 +80,16 @@
                 android:layout_width="@dimen/width_edit"
                 android:layout_height="@dimen/height_edit"
                 android:layout_marginTop="@dimen/margin_top_cadastro"
-                android:background="@drawable/edit_round" />
+                android:background="@drawable/edit_round"
+                android:focusableInTouchMode="false"/>
 
             <TextView
                 android:id="@+id/tmusica"
                 android:layout_width="wrap_content"
                 android:layout_height="26dp"
                 android:text="@string/musica"
+                android:layout_gravity="left"
+                android:layout_marginStart="55dp"
                 android:layout_marginTop="@dimen/margin_top_cadastro"
                 android:textAppearance="@style/label" />
 
@@ -99,12 +106,13 @@
                 android:layout_height="26dp"
                 android:text="@string/dias_semana"
                 android:layout_marginTop="@dimen/margin_top_cadastro"
-                android:textAppearance="@style/label" />
+                android:textAppearance="@style/label"
+                android:layout_gravity="left"
+                android:layout_marginStart="55dp"/>
         <LinearLayout
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_gravity="center"
             android:layout_marginTop="5dp">
 
             <RelativeLayout

@@ -57,6 +57,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="26dp"
                 android:text="@string/nome"
+                android:layout_gravity="left"
+                android:layout_marginStart="55dp"
                 android:textAppearance="@style/label" />
 
             <EditText
@@ -69,6 +71,8 @@
                 android:id="@+id/tdata"
                 android:layout_width="wrap_content"
                 android:layout_height="26dp"
+                android:layout_gravity="left"
+                android:layout_marginStart="55dp"
                 android:text="@string/dataNascimento"
                 android:textAppearance="@style/label" />
 
@@ -78,13 +82,15 @@
                 android:layout_height="40dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/edit_round"
-                android:inputType="date" />
+                android:focusableInTouchMode="false"/>
 
             <TextView
                 android:id="@+id/temail"
                 android:layout_width="wrap_content"
                 android:layout_height="26dp"
                 android:text="@string/e_mail"
+                android:layout_gravity="left"
+                android:layout_marginStart="55dp"
                 android:textAppearance="@style/label" />
 
             <EditText
@@ -101,6 +107,8 @@
                 android:layout_height="26dp"
                 android:layout_marginTop="20dp"
                 android:text="@string/senha"
+                android:layout_gravity="left"
+                android:layout_marginStart="55dp"
                 android:textAppearance="@style/label"
 
                 />

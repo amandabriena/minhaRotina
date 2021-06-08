@@ -75,7 +75,7 @@
 
     //Página Cadastro Atividade Fora da Rotina
     <string name="descricaoAtv">Descrição da atividade:</string>
-    <string name="dataPreparacao">Data anterior para preparação:</string>
+    <string name="dataPreparacao">Data e Hora anterior para preparação:</string>
     <string name="horarioPreparacao">Horário para preparação:</string>
     <string name="data">Data:</string>
 

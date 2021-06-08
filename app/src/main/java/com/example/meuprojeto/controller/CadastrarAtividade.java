@@ -1,5 +1,6 @@
 package com.example.meuprojeto.controller;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,9 +38,13 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
+
+import static android.app.TimePickerDialog.*;
 
 public class CadastrarAtividade extends AppCompatActivity {
     Atividade objAtividade;
@@ -74,7 +80,13 @@ public class CadastrarAtividade extends AppCompatActivity {
 
 
         //Adicionando máscara de horário:
-        horario.addTextChangedListener(MaskEditUtil.mask(horario, MaskEditUtil.FORMAT_HOUR));
+        //horario.addTextChangedListener(MaskEditUtil.mask(horario, MaskEditUtil.FORMAT_HOUR));
+        horario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTimeDialog(horario);
+            }
+        });
 
         //Capturando clique do botão cadastrar:
         btCadastrarAtividade.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +116,21 @@ public class CadastrarAtividade extends AppCompatActivity {
                 selecionarImagem();
             }
         });
+    }
+
+    private void showTimeDialog(final EditText horario){
+        final Calendar c = Calendar.getInstance();
+        TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener(){
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                c.set(Calendar.MINUTE, minute);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+                horario.setText(simpleDateFormat.format(c.getTime()));
+            }
+        };
+        new TimePickerDialog(CadastrarAtividade.this, timeSetListener,
+                c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE),true).show();
     }
 
     private void selecionarImagem(){

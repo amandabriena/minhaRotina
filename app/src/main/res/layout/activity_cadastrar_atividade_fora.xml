@@ -28,16 +28,18 @@
         android:id="@+id/form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="vertical"
+        android:gravity="center_horizontal"
         app:layout_constraintTop_toBottomOf="@+id/responsive"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="150dp"
         app:layout_constraintVertical_weight="3"
         >
     <TextView
         android:id="@+id/descricao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginStart="55dp"
         android:text="@string/descricaoAtv"
         android:textAppearance="@style/label" />
 
@@ -49,9 +51,11 @@
         android:background="@drawable/edit_round" />
 
     <TextView
-        android:id="@+id/data"
+        android:id="@+id/data_anterior"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginStart="55dp"
         android:text="@string/data"
         android:layout_marginTop="@dimen/margin_top_cadastro"
         android:textAppearance="@style/label" />
@@ -62,13 +66,15 @@
         android:layout_height="@dimen/height_edit"
         android:layout_marginTop="@dimen/margin_top_cadastro"
         android:background="@drawable/edit_round"
-        android:inputType="date"/>
+        android:focusableInTouchMode="false"/>
 
     <TextView
         android:id="@+id/tdataPreparacaoa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/dataPreparacao"
+        android:layout_gravity="left"
+        android:layout_marginStart="55dp"
         android:layout_marginTop="@dimen/margin_top_cadastro"
         android:textAppearance="@style/label" />
 
@@ -78,21 +84,8 @@
         android:layout_height="@dimen/height_edit"
         android:layout_marginTop="@dimen/margin_top_cadastro"
         android:background="@drawable/edit_round"
-        android:inputType="date"/>
-        <TextView
-            android:id="@+id/thorario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/horarioPreparacao"
-            android:layout_marginTop="@dimen/margin_top_cadastro"
-            android:textAppearance="@style/label" />
+        android:focusableInTouchMode="false"/>
 
-        <EditText
-            android:id="@+id/horarioPreparacao"
-            android:layout_width="@dimen/width_edit"
-            android:layout_height="@dimen/height_edit"
-            android:layout_marginTop="@dimen/margin_top_cadastro"
-            android:background="@drawable/edit_round" />
         <Button
             android:id="@+id/btCadastrarAtvFora"
             android:layout_width="150dp"

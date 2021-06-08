@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +14,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -34,7 +36,12 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.UUID;
+
+import static java.util.Calendar.*;
 
 public class CadastrarUsuario extends AppCompatActivity {
     Usuario objUsuario;
@@ -68,8 +75,14 @@ public class CadastrarUsuario extends AppCompatActivity {
         imgIcon = (ImageView) findViewById(R.id.imgUser);
 
         //Adicionando máscara de data:
-        data.addTextChangedListener(MaskEditUtil.mask(data, MaskEditUtil.FORMAT_DATE));
-
+        //data.addTextChangedListener(MaskEditUtil.mask(data, MaskEditUtil.FORMAT_DATE));
+        //data.isFocusableInTouchMode() = false;
+        data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDateDialog(data);
+            }
+        });
 
         btUploadImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,11 +97,32 @@ public class CadastrarUsuario extends AppCompatActivity {
             public void onClick(View v) {
                 //Direcionando a ação do botão padastrar novo usuário:
                 criarUsuario();
+                Intent intent = new Intent(CadastrarUsuario.this, CadastrarPreferenciasActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
 
             }
         });
 
     }
+    private void showDateDialog(final EditText data){
+        final Calendar c = getInstance();
+        DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                c.set(YEAR, year);
+                c.set(MONTH, month);
+                c.set(DAY_OF_MONTH, dayOfMonth);
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                data.setText(simpleDateFormat.format(c.getTime()));
+                Log.e("Data", data.getText().toString());
+            }
+        };
+        new  DatePickerDialog(CadastrarUsuario.this, dateSetListener, c.get(YEAR),
+                c.get(MONTH), c.get(DAY_OF_MONTH)).show();
+    }
+
 
     //Função para incluir dados no objeto usuário
     private void criarUsuario(){
@@ -149,9 +183,8 @@ public class CadastrarUsuario extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Intent intent = new Intent(CadastrarUsuario.this, CadastrarPreferenciasActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
+                                        Log.i("Sucesso","ok");
+
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
