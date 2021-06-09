@@ -11,14 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.CadastrarAtividadesInicialActivity"></activity>
+        <activity android:name=".controller.PassoAPassoActivity"></activity>
+        <activity android:name=".controller.CadastrarAtividadesInicialActivity" />
         <activity android:name=".controller.CadastrarPreferenciasActivity" />
         <activity android:name=".controller.AtividadesAgendadasActivity" />
         <activity android:name=".controller.CadastrarAtividadeFora" />
         <activity
             android:name=".controller.PopUpResponsaveis"
-            android:theme="@style/AppTheme.CustomTheme"
-            />
+            android:theme="@style/AppTheme.CustomTheme" />
         <activity android:name=".controller.PassosAtividadeActivity" />
         <activity android:name=".controller.CadastrarPassoAtividadeActivity" />
         <activity android:name=".controller.AtividadeActivity" />
@@ -34,9 +34,9 @@
         </activity>
         <activity android:name=".controller.CadastrarAtividade" />
         <activity android:name=".controller.GerAtividadesActivity" />
-        <activity android:name=".controller.DashboardActivity"
-            android:theme="@style/AppThemeDashboard"
-            />
+        <activity
+            android:name=".controller.DashboardActivity"
+            android:theme="@style/AppThemeDashboard" />
     </application>
 
 </manifest>

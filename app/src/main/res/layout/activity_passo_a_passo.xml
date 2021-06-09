@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.PassoAPassoActivity">
+    <RelativeLayout
+        android:id="@+id/responsive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="2"
+        android:layout_marginTop="10dp">
+        <Button
+            android:id="@+id/btAjuda"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/button_round_border"
+            android:drawableEnd="@android:drawable/ic_menu_help"
+            android:text="@string/btAjuda" />
+
+    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/frag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_weight="3"
+        app:layout_constraintTop_toBottomOf="@+id/responsive"
+        tools:ignore="MissingConstraints">
+
+    </FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/frag"
+        app:layout_constraintVertical_weight="1">
+
+        <Button
+            android:id="@+id/btAnteriorF"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/button_round"
+            android:drawableStart="@drawable/ic_previous"
+            android:padding="@dimen/padding_icons"/>
+
+        <Button
+            android:id="@+id/btProximoF"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="100dp"
+            android:background="@drawable/button_round"
+            android:drawableEnd="@drawable/ic_next"
+            android:padding="@dimen/padding_icons" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

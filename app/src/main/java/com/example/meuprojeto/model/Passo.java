@@ -1,8 +1,11 @@
 package com.example.meuprojeto.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class Passo {
+public class Passo implements Parcelable {
     private String numOrdem;
     private String descricaoPasso;
     private String imagemURL;
@@ -17,6 +20,25 @@ public class Passo {
         this.imagemURL = imagemURL;
         this.audio = audio;
     }
+
+    protected Passo(Parcel in) {
+        numOrdem = in.readString();
+        descricaoPasso = in.readString();
+        imagemURL = in.readString();
+        audio = in.readString();
+    }
+
+    public static final Creator<Passo> CREATOR = new Creator<Passo>() {
+        @Override
+        public Passo createFromParcel(Parcel in) {
+            return new Passo(in);
+        }
+
+        @Override
+        public Passo[] newArray(int size) {
+            return new Passo[size];
+        }
+    };
 
     public String getDescricaoPasso() {
         return descricaoPasso;
@@ -48,5 +70,18 @@ public class Passo {
 
     public void setNumOrdem(String numOrdem) {
         this.numOrdem = numOrdem;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(numOrdem);
+        dest.writeString(descricaoPasso);
+        dest.writeString(imagemURL);
+        dest.writeString(audio);
     }
 }

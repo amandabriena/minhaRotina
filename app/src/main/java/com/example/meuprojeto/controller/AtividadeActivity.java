@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AtividadeActivity extends AppCompatActivity {
@@ -36,6 +38,7 @@ public class AtividadeActivity extends AppCompatActivity {
     ImageView imagem;
     Button btIniciar;
     String id;
+    private List<Passo> listaPassos = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +76,11 @@ public class AtividadeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Direcionando a ação do botão para abrir a tela de atividades
-                Intent intent = new Intent(AtividadeActivity.this, PassosAtividadeActivity.class);
+                //Intent intent = new Intent(AtividadeActivity.this, PassosAtividadeActivity.class);
+                Intent intent = new Intent(AtividadeActivity.this, PassoAPassoActivity.class);
                 intent.putExtra("idAtividade", id);
-                intent.putExtra("numPasso", "1");
+                intent.putParcelableArrayListExtra("lista", (ArrayList<? extends Parcelable>) listaPassos);
+                //intent.putStringArrayListExtra("lista", (ArrayList<String>) listaPassos);
                 startActivity(intent);
             }
         });
@@ -100,6 +105,7 @@ public class AtividadeActivity extends AppCompatActivity {
 
                                 Passo passo = doc.toObject(Passo.class);
                                 Log.e("Teste", passo.getDescricaoPasso());
+                                listaPassos.add(passo);
                             }
                         }
                     });

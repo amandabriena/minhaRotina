@@ -90,4 +90,7 @@
     //Página de selecionar atividade ou cadastrar nova
     <string name="instrucoes_atividades">Selecione uma das atividades abaixo para incluir ou crie uma nova:</string>
     <string name="btCriarnova">Criar Nova</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

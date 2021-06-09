@@ -8,7 +8,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_weight="2"
             android:id="@+id/responsive">
@@ -34,7 +34,7 @@
             <Button
                 android:id="@+id/btEditar"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_below="@+id/imgIcon"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="10dp"
@@ -57,7 +57,7 @@
             <Button
                 android:id="@+id/btRotinaDiaria"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/height_bts_dashboard"
                 android:background="@drawable/button_round_border2"
                 android:text="@string/btRotinaDiaria"
                 android:drawableEnd="@drawable/ic_schedule"
@@ -66,7 +66,7 @@
             <Button
                 android:id="@+id/btGerAtividades"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/height_bts_dashboard"
                 android:layout_marginTop="@dimen/margin_bts_dashboard"
                 android:background="@drawable/button_round_border2"
                 android:text="@string/btGerAtividades"
@@ -76,7 +76,7 @@
             <Button
                 android:id="@+id/btAddAtividadeFora"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/height_bts_dashboard"
                 android:layout_marginTop="@dimen/margin_bts_dashboard"
                 android:background="@drawable/button_round_border2"
                 android:drawableEnd="@drawable/ic_create"
@@ -85,7 +85,7 @@
             <Button
                 android:id="@+id/btAtvsAgendadas"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/height_bts_dashboard"
                 android:layout_marginTop="@dimen/margin_bts_dashboard"
                 android:background="@drawable/button_round_border2"
                 android:drawableEnd="@drawable/ic_calendar"
@@ -94,7 +94,7 @@
             <Button
                 android:id="@+id/btEditarPreferencias"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/height_bts_dashboard"
                 android:layout_marginTop="@dimen/margin_bts_dashboard"
                 android:background="@drawable/button_round_border2"
                 android:drawableEnd="@drawable/ic_activity"
@@ -103,7 +103,7 @@
             <Button
                 android:id="@+id/btTempoMax"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/height_bts_dashboard"
                 android:layout_marginTop="@dimen/margin_bts_dashboard"
                 android:background="@drawable/button_round_border2"
                 android:drawableEnd="@drawable/ic_time"
@@ -112,7 +112,7 @@
             <Button
                 android:id="@+id/btVolMax"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/height_bts_dashboard"
                 android:layout_marginTop="@dimen/margin_bts_dashboard"
                 android:background="@drawable/button_round_border2"
                 android:drawableEnd="@drawable/ic_stereo"
@@ -121,7 +121,7 @@
             <Button
                 android:id="@+id/btVoltarCrianca"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/height_bts_dashboard"
                 android:layout_marginTop="@dimen/margin_bts_dashboard"
                 android:background="@drawable/button_round_border"
                 android:text="@string/btVoltarCrianca"
