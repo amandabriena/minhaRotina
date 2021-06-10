@@ -76,11 +76,9 @@ public class AtividadeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Direcionando a ação do botão para abrir a tela de atividades
-                //Intent intent = new Intent(AtividadeActivity.this, PassosAtividadeActivity.class);
-                Intent intent = new Intent(AtividadeActivity.this, PassoAPassoActivity.class);
+                Intent intent = new Intent(AtividadeActivity.this, PassosActivity.class);
                 intent.putExtra("idAtividade", id);
                 intent.putParcelableArrayListExtra("lista", (ArrayList<? extends Parcelable>) listaPassos);
-                //intent.putStringArrayListExtra("lista", (ArrayList<String>) listaPassos);
                 startActivity(intent);
             }
         });

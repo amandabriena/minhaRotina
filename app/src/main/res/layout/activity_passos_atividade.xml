@@ -95,5 +95,44 @@
             android:text="@string/btProximo" />
 
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/ordemPasso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="20dp"
+            android:layout_centerHorizontal="true"
+            android:textAppearance="@style/label_maior"
+            android:text="teste"/>
+        <ImageView
+            android:id="@+id/imagemPasso"
+            android:layout_width="350dp"
+            android:layout_height="250dp"
+            android:layout_below="@+id/ordemPasso"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imagemPasso"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:textAlignment="center"
+            android:textAppearance="@style/label"
+            android:text="teste"/>
+        <Button
+            android:id="@+id/btOuvirFrag"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginEnd="10dp"
+            android:padding="@dimen/padding_icons"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_round_border"
+            android:drawableEnd="@drawable/ic_stereo"
+            android:text="@string/btOuvir" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

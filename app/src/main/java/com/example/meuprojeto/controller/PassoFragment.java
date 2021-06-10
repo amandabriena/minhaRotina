@@ -53,7 +53,8 @@ public class PassoFragment extends Fragment {
         Bundle bundleRetorno = this.getArguments();
         if(bundleRetorno != null){
             numP = bundleRetorno.getString("ordemPasso");
-            listaPassos = bundleRetorno.getParcelableArrayList("lista");
+            Passo passoAtual = bundleRetorno.getParcelable("passoAtual");
+            //listaPassos = bundleRetorno.getParcelableArrayList("lista");
         }
         numPasso = Integer.parseInt(numP);
 

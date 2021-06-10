@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.PassoAPassoActivity"></activity>
+        <activity android:name=".controller.PassosActivity"></activity>
+        <activity android:name=".controller.PassoAPassoActivity" />
         <activity android:name=".controller.CadastrarAtividadesInicialActivity" />
         <activity android:name=".controller.CadastrarPreferenciasActivity" />
         <activity android:name=".controller.AtividadesAgendadasActivity" />

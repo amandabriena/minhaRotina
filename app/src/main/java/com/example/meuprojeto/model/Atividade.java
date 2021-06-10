@@ -1,11 +1,14 @@
 package com.example.meuprojeto.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Atividade {
+public class Atividade implements Parcelable {
     private String id = UUID.randomUUID().toString();
     private String idUsuario;
     private String nomeAtividade;
@@ -43,6 +46,29 @@ public class Atividade {
     public Atividade(String nomeAtividade){
         this.nomeAtividade = nomeAtividade;
     }
+
+    protected Atividade(Parcel in) {
+        id = in.readString();
+        idUsuario = in.readString();
+        nomeAtividade = in.readString();
+        imagemURL = in.readString();
+        horario = in.readString();
+        musica = in.readString();
+        dias_semana = in.createStringArrayList();
+        status = in.readInt();
+    }
+
+    public static final Creator<Atividade> CREATOR = new Creator<Atividade>() {
+        @Override
+        public Atividade createFromParcel(Parcel in) {
+            return new Atividade(in);
+        }
+
+        @Override
+        public Atividade[] newArray(int size) {
+            return new Atividade[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -112,5 +138,22 @@ public class Atividade {
     @Override
     public String toString() {
         return nomeAtividade;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(idUsuario);
+        dest.writeString(nomeAtividade);
+        dest.writeString(imagemURL);
+        dest.writeString(horario);
+        dest.writeString(musica);
+        dest.writeStringList(dias_semana);
+        dest.writeInt(status);
     }
 }

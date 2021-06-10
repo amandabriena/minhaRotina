@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/ordemPassoItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="@style/label_maior"
+        android:text="teste"/>
+    <ImageView
+        android:id="@+id/imagemPassoItem"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_below="@+id/ordemPassoItem"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/descricaoPassoItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imagemPassoItem"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:textAlignment="center"
+        android:textAppearance="@style/label"
+        android:text="teste"/>
+    <Button
+        android:id="@+id/btOuvirItem"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginEnd="10dp"
+        android:layout_below="@+id/descricaoPassoItem"
+        android:padding="@dimen/padding_icons"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_round_border"
+        android:drawableEnd="@drawable/ic_stereo"
+        android:text="@string/btOuvir" />
+
+</RelativeLayout>
