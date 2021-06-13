@@ -3,14 +3,23 @@ package com.example.meuprojeto.controller;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +43,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -44,15 +54,20 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
     TextView atv_atual, ordemPasso;
     EditText descricao, som;
     Button btFinalizarPassos, btAddPassos;
-    ImageButton btUploadImg;
+    ImageButton btUploadImg, btStart, btPlay, btTrash;
     ImageView imgPasso;
+    boolean audioOn = false;
     int numPasso;
     private Uri filePath;
     private byte[] dataIMG;
     String idAtividade;
+    MediaRecorder mediaRecorder;
+    private static final String LOG_TAG =  "Record_log";
+    private static int MICROPHONE_PERMISSION_CODE = 200;
     //Conexão com o db
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +84,9 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         btAddPassos = (Button) findViewById(R.id.btAddPassos);
         btUploadImg = (ImageButton) findViewById(R.id.btUploadImgPasso);
         imgPasso = (ImageView) findViewById(R.id.imgPasso);
-
+        btStart = (ImageButton) findViewById(R.id.btStart);
+        btPlay = (ImageButton) findViewById(R.id.btPlay);
+        btTrash = (ImageButton) findViewById(R.id.btTrash);
         objPasso = new Passo();
 
         //Pegando informações da atividade que está sendo cadastrada:
@@ -81,13 +98,58 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         ordemPasso.setText("Passo "+num);
         atv_atual.setText(atividadeAtual);
 
+        //informações para gravação do aúdio:
+        if(isMicrophonePresent()){
+            permissaoMicrofone();
+        }
+        /*
+        soundFile = Environment.getExternalStorageDirectory().getAbsolutePath();
+        soundFile += "recorded_audio.3gp";*/
+        btTrash.setEnabled(false);
+        btPlay.setEnabled(false);
+        btPlay.setVisibility(View.GONE);
+        btStart.bringToFront();
+        btStart.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                    if(event.getAction() == MotionEvent.ACTION_DOWN){
+                        record();
+                    }else if(event.getAction() == MotionEvent.ACTION_UP){
+                        stopAudio();
+                        audioOn = true;
+                        Log.e("audioR ", audioOn+"");
+                        btStart.setEnabled(false);
+                        btTrash.setEnabled(true);
+                        btTrash.bringToFront();
+                        btPlay.setEnabled(true);
+                        btPlay.setVisibility(View.VISIBLE);
+                    }
 
+                return false;
+            }
+        });
+
+        btTrash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaRecorder = null;
+                audioOn = false;
+                Log.e("audioR ", audioOn+"");
+                btTrash.setEnabled(false);
+                btPlay.setEnabled(false);
+                btPlay.setVisibility(View.GONE);
+                btStart.setEnabled(true);
+                btStart.bringToFront();
+                som.setText("");
+            }
+        });
         btUploadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selecionarImagem();
             }
         });
+
         btAddPassos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +176,79 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
             }
         });
     }
+    private boolean isMicrophonePresent(){
+        if(this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    private void permissaoMicrofone(){
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_DENIED){
+            ActivityCompat.requestPermissions(this, new String[]
+                    {Manifest.permission.RECORD_AUDIO},MICROPHONE_PERMISSION_CODE);
+        }
+    }
+    private String getRecordFilePath(){
+        ContextWrapper contextWrapper = new ContextWrapper(getApplicationContext());
+        File musicDirectory = contextWrapper.getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+        //String name = UUID.randomUUID().toString();
+        File file = new File(musicDirectory, "teste_recording"+".mp3");
+        return file.getPath();
+    }
+
+    public void onClickBt(View v){
+        if(v.getId() == R.id.btPlay){
+            play();
+        }
+    }
+
+    private void record() {
+        mediaRecorder = new MediaRecorder();
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mediaRecorder.setOutputFile(getRecordFilePath());
+        mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        try {
+            mediaRecorder.prepare();
+            mediaRecorder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        som.setText("Gravando..");
+    }
+    private void stopAudio() {
+        mediaRecorder.stop();
+        mediaRecorder.release();
+        som.setText("Gravação finalizada!");
+    }
+    private void play() {
+        MediaPlayer mediaPlayer = new MediaPlayer();
+        try {
+            mediaPlayer.setDataSource(getRecordFilePath());
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        som.setText("Ouvindo o audio..");
+    }
+
+    private void uploadAudio(String idAtv, String ordemPasso){
+        StorageReference ref = FirebaseStorage.getInstance().getReference();
+        //A denomicação do aúdio do passo será composta pelo id da atividade + "passo" + número de ordem do passo
+        StorageReference arquivo = ref.child("audio").child(idAtv+"-passo"+ordemPasso+".3gp");
+        Uri uri = Uri.fromFile(new File(getRecordFilePath()));
+        objPasso.setAudio(uri.toString());
+        arquivo.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.e("FILE audio", "URi");
+
+            }
+        });
+    }
+
     private void selecionarImagem(){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
@@ -159,11 +294,12 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
 
                         //final String numOrdem = numPasso+"";
 
-                        //objPasso = new Passo(numOrdem, descricao.getText().toString(),uri.toString(), som.getText().toString());
                         objPasso.setDescricaoPasso(descricao.getText().toString());
-                        objPasso.setAudio(som.getText().toString());
-                        objPasso.setImagemURL(uri.toString());
+                        //objPasso.setAudio(som.getText().toString());
 
+                        objPasso.setImagemURL(uri.toString());
+                        uploadAudio(idAtividade, objPasso.getNumOrdem());
+                        //objPasso.setAudio(idAtividade+"passo"+ordemPasso+".3gp");
                         FirebaseFirestore.getInstance().collection("atividades").document(idAtividade).collection("passos")
                                 .document(objPasso.getNumOrdem())
                                 .set(objPasso)

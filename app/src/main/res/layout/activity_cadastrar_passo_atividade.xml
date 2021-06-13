@@ -51,7 +51,7 @@
             />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -70,6 +70,7 @@
 
         <TextView
             android:id="@+id/tdescricao"
+            android:layout_below="@+id/ordemPasso"
             android:layout_width="wrap_content"
             android:layout_height="26dp"
             android:layout_marginTop="@dimen/margin_top_cadastro"
@@ -78,6 +79,7 @@
 
         <EditText
             android:id="@+id/descricao"
+            android:layout_below="@+id/tdescricao"
             android:layout_width="@dimen/width_edit"
             android:layout_height="@dimen/height_edit"
             android:layout_marginTop="@dimen/margin_top_cadastro"
@@ -85,6 +87,7 @@
 
         <TextView
             android:id="@+id/tsom"
+            android:layout_below="@id/descricao"
             android:layout_width="wrap_content"
             android:layout_height="26dp"
             android:layout_marginTop="@dimen/margin_top_cadastro"
@@ -93,16 +96,44 @@
 
         <EditText
             android:id="@+id/som"
-            android:layout_width="@dimen/width_edit"
+            android:layout_below="@+id/tsom"
+            android:layout_width="200dp"
             android:layout_height="@dimen/height_edit"
             android:layout_marginTop="@dimen/margin_top_cadastro"
             android:background="@drawable/edit_round"
-            android:drawableEnd="@drawable/ic_voice"
-            android:padding="@dimen/padding_icons"
             />
 
+        <ImageButton
+            android:id="@+id/btStart"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="205dp"
+            android:layout_below="@+id/tsom"
+            android:background="@drawable/button_round_border"
+            app:srcCompat="@drawable/ic_voice" />
+        <ImageButton
+            android:id="@+id/btTrash"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="205dp"
+            android:layout_below="@+id/tsom"
+            android:background="@drawable/button_round_delete"
+            app:srcCompat="@drawable/ic_delete" />
+        <ImageButton
+            android:id="@+id/btPlay"
+            android:onClick="onClickBt"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/tsom"
+            android:layout_marginStart="260dp"
+            android:background="@drawable/button_round_border"
+            app:srcCompat="@drawable/ic_play" />
 
-    </LinearLayout>
+
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
