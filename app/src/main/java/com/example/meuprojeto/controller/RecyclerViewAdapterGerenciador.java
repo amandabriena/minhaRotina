@@ -3,6 +3,7 @@ package com.example.meuprojeto.controller;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,13 +38,19 @@ public class RecyclerViewAdapterGerenciador extends RecyclerView.Adapter<Recycle
         holder.horario_atv_ger.setText(atividade.getHorario());
         Picasso.get().load(atividade.getImagemURL()).into(holder.imagem_atv_ger);
 
-        holder.cardViewGer.setOnClickListener(new View.OnClickListener() {
+
+        holder.editarAtividade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clickListener.onItemClick(atividade);
             }
         });
-
+        holder.deletarAtividade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListener.onItemClick(atividade);
+            }
+        });
 
     }
     @Override
@@ -60,6 +67,7 @@ public class RecyclerViewAdapterGerenciador extends RecyclerView.Adapter<Recycle
         private TextView nome_atv_ger;
         private ImageView imagem_atv_ger;
         private TextView horario_atv_ger;
+        private Button editarAtividade, deletarAtividade;
         private CardView cardViewGer;
 
         public MyViewHolder(View itemView) {
@@ -67,7 +75,10 @@ public class RecyclerViewAdapterGerenciador extends RecyclerView.Adapter<Recycle
             nome_atv_ger = itemView.findViewById(R.id.nome_atv_ger);
             horario_atv_ger = itemView.findViewById(R.id.horario_atv_ger);
             imagem_atv_ger = itemView.findViewById(R.id.imagem_atv_ger);
+            editarAtividade = itemView.findViewById(R.id.btEditarAtividade);
+            deletarAtividade = itemView.findViewById(R.id.btDeletarAtividade);
             cardViewGer = itemView.findViewById(R.id.cardViewGer);
+
         }
     }
 

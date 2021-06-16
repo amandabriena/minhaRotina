@@ -25,7 +25,6 @@ public class Atividade implements Parcelable {
 
 
     public Atividade(){
-
     }
 
     public Atividade(String nomeAtividade, String imagemURL, String horario, String musica) {

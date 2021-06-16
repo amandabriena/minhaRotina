@@ -29,8 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.meuprojeto.R;
-import com.example.meuprojeto.datasource.AtividadeController;
-import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.Passo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,21 +47,19 @@ import java.util.UUID;
 
 public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
     Passo objPasso;
-
     //Declarando variáveis
     TextView atv_atual, ordemPasso;
     EditText descricao, som;
     Button btFinalizarPassos, btAddPassos;
     ImageButton btUploadImg, btStart, btPlay, btTrash;
     ImageView imgPasso;
-    boolean audioOn = false;
     int numPasso;
     private Uri filePath;
     private byte[] dataIMG;
-    String idAtividade;
-    MediaRecorder mediaRecorder;
-    private static final String LOG_TAG =  "Record_log";
+    private String idAtividade;
     private static int MICROPHONE_PERMISSION_CODE = 200;
+    MediaRecorder mediaRecorder;
+
     //Conexão com o db
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -76,10 +72,8 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         //Atrelando variáveis as views
         descricao = (EditText) findViewById(R.id.descricao);
         som = (EditText) findViewById(R.id.som);
-
         atv_atual = (TextView) findViewById(R.id.atividade_atual);
         ordemPasso = (TextView) findViewById(R.id.ordemPasso);
-
         btFinalizarPassos = (Button) findViewById(R.id.btFinalizar);
         btAddPassos = (Button) findViewById(R.id.btAddPassos);
         btUploadImg = (ImageButton) findViewById(R.id.btUploadImgPasso);
@@ -87,6 +81,7 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         btStart = (ImageButton) findViewById(R.id.btStart);
         btPlay = (ImageButton) findViewById(R.id.btPlay);
         btTrash = (ImageButton) findViewById(R.id.btTrash);
+
         objPasso = new Passo();
 
         //Pegando informações da atividade que está sendo cadastrada:
@@ -102,9 +97,6 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         if(isMicrophonePresent()){
             permissaoMicrofone();
         }
-        /*
-        soundFile = Environment.getExternalStorageDirectory().getAbsolutePath();
-        soundFile += "recorded_audio.3gp";*/
         btTrash.setEnabled(false);
         btPlay.setEnabled(false);
         btPlay.setVisibility(View.GONE);
@@ -116,8 +108,6 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
                         record();
                     }else if(event.getAction() == MotionEvent.ACTION_UP){
                         stopAudio();
-                        audioOn = true;
-                        Log.e("audioR ", audioOn+"");
                         btStart.setEnabled(false);
                         btTrash.setEnabled(true);
                         btTrash.bringToFront();
@@ -133,8 +123,6 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mediaRecorder = null;
-                audioOn = false;
-                Log.e("audioR ", audioOn+"");
                 btTrash.setEnabled(false);
                 btPlay.setEnabled(false);
                 btPlay.setVisibility(View.GONE);
@@ -158,7 +146,6 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
                 Intent add = new Intent(CadastrarPassoAtividadeActivity.this, CadastrarPassoAtividadeActivity.class);
                 //Passando número de ordem do passo
                 numPasso++;
-                Log.e("Acrescimo passo ", "ac num: "+numPasso);
                 add.putExtra("idAtividade", idAtividade);
                 add.putExtra("nomeAtividade", atividadeAtual);
                 add.putExtra("numPasso", numPasso+"");
@@ -281,7 +268,7 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
             Toast.makeText(this,"Preencha todos os campos para criar o Passo!", Toast.LENGTH_SHORT).show();
         }
         String fileName = UUID.randomUUID().toString();
-        final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/passos/" + fileName);
+        final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/passos" + fileName);
         UploadTask uploadTask2 = ref.putBytes(dataIMG);
         uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -300,7 +287,9 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
                         objPasso.setImagemURL(uri.toString());
                         uploadAudio(idAtividade, objPasso.getNumOrdem());
                         //objPasso.setAudio(idAtividade+"passo"+ordemPasso+".3gp");
-                        FirebaseFirestore.getInstance().collection("atividades").document(idAtividade).collection("passos")
+                        FirebaseFirestore.getInstance().collection("usuarios")
+                                .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
+                                .document(idAtividade).collection("passos")
                                 .document(objPasso.getNumOrdem())
                                 .set(objPasso)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {

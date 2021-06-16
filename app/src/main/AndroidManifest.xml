@@ -3,9 +3,9 @@
     package="com.example.meuprojeto">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.PassosActivity"></activity>
+        <activity android:name=".controller.PopupDeletarAtividadeActivity"
+            android:theme="@style/AppTheme.CustomTheme"/>
+        <activity android:name=".controller.PassosActivity" />
         <activity android:name=".controller.PassoAPassoActivity" />
         <activity android:name=".controller.CadastrarAtividadesInicialActivity" />
         <activity android:name=".controller.CadastrarPreferenciasActivity" />
@@ -23,7 +25,6 @@
         <activity
             android:name=".controller.PopUpResponsaveis"
             android:theme="@style/AppTheme.CustomTheme" />
-        <activity android:name=".controller.PassosAtividadeActivity" />
         <activity android:name=".controller.CadastrarPassoAtividadeActivity" />
         <activity android:name=".controller.AtividadeActivity" />
         <activity android:name=".controller.LoginActivity" />

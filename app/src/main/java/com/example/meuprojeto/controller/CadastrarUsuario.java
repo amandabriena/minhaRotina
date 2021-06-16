@@ -155,7 +155,7 @@ public class CadastrarUsuario extends AppCompatActivity {
     }
     private void salvarUsuarioFirebase(){
         String fileName = UUID.randomUUID().toString();
-        final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/"+fileName);
+        final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/usuarios"+fileName);
         UploadTask uploadTask2 = ref.putBytes(dataIMG);
         uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override

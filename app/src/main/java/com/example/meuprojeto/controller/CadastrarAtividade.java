@@ -22,10 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.meuprojeto.R;
-import com.example.meuprojeto.datasource.AtividadeController;
 import com.example.meuprojeto.model.Atividade;
-import com.example.meuprojeto.model.DiaSemana;
-import com.example.meuprojeto.util.MaskEditUtil;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,14 +38,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.UUID;
-
-import static android.app.TimePickerDialog.*;
 
 public class CadastrarAtividade extends AppCompatActivity {
     Atividade objAtividade;
-    private List<String> listaDiasSemana = new ArrayList<>();
+    private ArrayList<String> listaDiasSemana = new ArrayList<>();
 
     //Declarando variáveis
     EditText nome_atv, horario, musica;
@@ -200,7 +194,7 @@ public class CadastrarAtividade extends AppCompatActivity {
         }else {
             //criando ID randomico e demais informações preenchidas para upload da imagem no firebase:
             String fileName = UUID.randomUUID().toString();
-            final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/atividades/" + fileName);
+            final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/atividades" + fileName);
             UploadTask uploadTask2 = ref.putBytes(dataIMG);
             uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -220,37 +214,14 @@ public class CadastrarAtividade extends AppCompatActivity {
                             objAtividade.setHorario(horario.getText().toString());
                             objAtividade.setMusica(musica.getText().toString());
                             objAtividade.setIdUsuario(usuario_atv);
-                            FirebaseFirestore.getInstance().collection("atividades")
+                            objAtividade.setDias_semana(listaDiasSemana);
+                            FirebaseFirestore.getInstance().collection("usuarios").document(usuario_atv).collection("atividades")
                                     .document(objAtividade.getId())
                                     .set(objAtividade)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.e("Atividade cadastrada", objAtividade.getId());
-                                            //int i = 1;
-                                            for(int i = 0; i <listaDiasSemana.size(); i++){
-                                                String dia = listaDiasSemana.get(i);
-                                                String valor = String.valueOf(i);
-                                                DiaSemana diaS = new DiaSemana(valor, dia);
-                                                FirebaseFirestore.getInstance().collection("atividades").document(objAtividade.getId())
-                                                        .collection("diasSemana")
-                                                        .document(valor)
-                                                        .set(diaS)
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void aVoid) {
-                                                                Log.e("DIA X", " DIA: X");
-
-                                                            }
-                                                        })
-                                                        .addOnFailureListener(new OnFailureListener() {
-                                                            @Override
-                                                            public void onFailure(@NonNull Exception e) {
-                                                                Log.i("Erro ao cadastrar", e.getMessage());
-                                                            }
-                                                        });
-
-                                            }
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {

@@ -128,7 +128,6 @@ public class CadastrarAtividadeFora extends AppCompatActivity {
 
 
             objAtividadeFora.setNomeAtividade(descricao.getText().toString());
-            //objAtividadeFora.setHorario(horario.getText().toString());
             objAtividadeFora.setData(data.getText().toString());
             objAtividadeFora.setDataPrevia(dataPreparacao.getText().toString());
             objAtividadeFora.setIdUsuario(usuario_atv);

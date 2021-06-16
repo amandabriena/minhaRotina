@@ -61,6 +61,7 @@ public class GerAtividadesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         recyclerView.setAdapter(recyclerViewAdapter);
     }
     public class CarregarListaAsynctask extends AsyncTask<Void, Void, Void> {

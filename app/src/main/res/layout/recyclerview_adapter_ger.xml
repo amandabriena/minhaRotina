@@ -77,7 +77,7 @@
                 cardView:layout_constraintRight_toRightOf="parent"
                 >
                 <Button
-                    android:id="@+id/btGerEditar"
+                    android:id="@+id/btEditarAtividade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableTop="@drawable/ic_edit"
@@ -86,7 +86,7 @@
                     android:layout_marginStart="20dp"
                     />
                 <Button
-                    android:id="@+id/btGerExcluir"
+                    android:id="@+id/btDeletarAtividade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableTop="@drawable/ic_delete"
