@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:layout_centerHorizontal="true"
         android:textAppearance="@style/label_maior"
         android:text="teste"/>
@@ -39,5 +39,18 @@
         android:background="@drawable/button_round_border"
         android:drawableEnd="@drawable/ic_stereo"
         android:text="@string/btOuvir" />
+    <Button
+        android:id="@+id/btConcluido"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/btOuvirItem"
+        android:padding="@dimen/padding_icons"
+        android:textAppearance="@style/label_maior"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_round_border2"
+        android:drawableEnd="@drawable/ic_check"
+        android:onClick="onClickConcluido"
+        android:text="@string/btConcluido" />
 
 </RelativeLayout>

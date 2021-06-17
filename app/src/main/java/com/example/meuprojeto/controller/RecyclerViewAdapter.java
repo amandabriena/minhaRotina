@@ -20,6 +20,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<Atividade> listaAtividades;
     private ClickListener<Atividade> clickListener;
 
+
     public RecyclerViewAdapter(List<Atividade> listaAtividades) {
         this.listaAtividades = listaAtividades;
     }

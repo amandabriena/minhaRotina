@@ -46,15 +46,6 @@ public class MinhaRotinaActivity extends AppCompatActivity {
         recyclerViewAdapter = new RecyclerViewAdapter(listaAtividades);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
-        if(getIntent() !=null){
-            //listaAtividades = getIntent().getParcelableArrayListExtra("listaAtividades");
-            idUsuario = getIntent().getStringExtra("idUsuario");
-        }else{
-            idUsuario = FirebaseAuth.getInstance().getUid();
-            Log.e("UID", "user"+idUsuario);
-        }
-        Log.e("User", "ID"+FirebaseAuth.getInstance().getUid());
         new CarregarListaAsynctask().execute();
         //PASSANDO PARA OUTRA PÁGINA AO CLICAR NA ATIVIDADE
 

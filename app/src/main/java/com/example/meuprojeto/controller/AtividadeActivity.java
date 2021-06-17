@@ -19,6 +19,7 @@ import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.Passo;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -40,7 +41,7 @@ public class AtividadeActivity extends AppCompatActivity {
     Button btIniciar;
     String id;
     Atividade atividade;
-    private List<Passo> listaPassos = new ArrayList<>();
+    private ArrayList<Passo> listaPassos = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,42 +54,30 @@ public class AtividadeActivity extends AppCompatActivity {
         musica = (EditText) findViewById(R.id.musica);
         imagem = (ImageView) findViewById(R.id.imgAtv);
         btIniciar = (Button) findViewById(R.id.btIniciar);
-        /*
-        DocumentReference docRef = FirebaseFirestore.getInstance().collection("/atividades").document(id);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d("Teste", "DocumentSnapshot data: " + document.getData());
-                        Atividade atv = document.toObject(com.example.meuprojeto.model.Atividade.class);
-                        String textoCompleto = "Olá! São "+atv.getHorario()+", hora de '"+atv.getNomeAtividade()+"'";
-                        texto.setText(textoCompleto);
-                        Picasso.get().load(atv.getImagemURL()).into(imagem);
-                        new CarregarPassosAsynctask().execute();
-                    } else {
-                        Log.d("Teste", "Atividade não encontrada");
-                    }
-                } else {
-                    Log.d("Teste", "Falha: ", task.getException());
-                }
-            }
-        });*/
+        new CarregarPassosAsynctask().execute();
+        Log.e("passos size", listaPassos.size()+"");
         String textoCompleto = "Olá! São "+atividade.getHorario()+", hora de '"+atividade.getNomeAtividade()+"'";
         texto.setText(textoCompleto);
         Picasso.get().load(atividade.getImagemURL()).into(imagem);
-        if(listaPassos.size()<0){
+        if(listaPassos.size()<=0){
             btIniciar.setText("Feito!");
             btIniciar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //Direcionando a ação do botão para abrir a tela de dashboard pois a atividade não contem passos
+                    FirebaseFirestore.getInstance().collection("usuarios")
+                            .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
+                            .document(id).update("status", "1").addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.e("update", "updateRealizado");
+                                }
+                            });
                     Intent intent = new Intent(AtividadeActivity.this, DashboardActivity.class);
                     startActivity(intent);
                 }
             });
-        }else{
+        }else {
             btIniciar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -100,7 +89,6 @@ public class AtividadeActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
     public class CarregarPassosAsynctask extends AsyncTask<Void, Void, Void> {
 
@@ -109,19 +97,16 @@ public class AtividadeActivity extends AppCompatActivity {
             // carregar do banco
             FirebaseFirestore.getInstance().collection("usuarios")
                     .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
-                    .document(atividade.getIdUsuario()).collection("passos")
-                .orderBy("numOrdem", Query.Direction.ASCENDING)
+                    .document(id).collection("passos")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
                             if(error != null){
                                 Log.e("Erro", error.getMessage());
                                 return;
                             }
                             List<DocumentSnapshot> docs = value.getDocuments();
                             for(DocumentSnapshot doc : docs){
-
                                 Passo passo = doc.toObject(Passo.class);
                                 Log.e("Passo:", passo.getDescricaoPasso());
                                 listaPassos.add(passo);

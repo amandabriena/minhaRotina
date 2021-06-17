@@ -16,11 +16,11 @@ public class Atividade implements Parcelable {
     private String horario;
     private String musica;
     private ArrayList<String> dias_semana;
-    private int status;
+    private String status;
     /*Status da atividade poderá ser:
-    1- em aberto
-    2- concluída
-    3- não realizada
+    0- em aberto
+    1- concluída
+    2- não realizada
     */
 
 
@@ -54,7 +54,7 @@ public class Atividade implements Parcelable {
         horario = in.readString();
         musica = in.readString();
         dias_semana = in.createStringArrayList();
-        status = in.readInt();
+        status = in.readString();
     }
 
     public static final Creator<Atividade> CREATOR = new Creator<Atividade>() {
@@ -93,11 +93,11 @@ public class Atividade implements Parcelable {
         this.dias_semana = dias_semana;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -153,6 +153,6 @@ public class Atividade implements Parcelable {
         dest.writeString(horario);
         dest.writeString(musica);
         dest.writeStringList(dias_semana);
-        dest.writeInt(status);
+        dest.writeString(status);
     }
 }

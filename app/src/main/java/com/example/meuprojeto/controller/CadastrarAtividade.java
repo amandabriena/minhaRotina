@@ -213,6 +213,7 @@ public class CadastrarAtividade extends AppCompatActivity {
                             objAtividade.setNomeAtividade(nome_atv.getText().toString());
                             objAtividade.setHorario(horario.getText().toString());
                             objAtividade.setMusica(musica.getText().toString());
+                            objAtividade.setStatus("0");
                             objAtividade.setIdUsuario(usuario_atv);
                             objAtividade.setDias_semana(listaDiasSemana);
                             FirebaseFirestore.getInstance().collection("usuarios").document(usuario_atv).collection("atividades")
