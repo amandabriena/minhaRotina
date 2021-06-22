@@ -2,14 +2,18 @@ package com.example.meuprojeto.controller;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -20,6 +24,13 @@ import android.widget.Toast;
 
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
+import com.example.meuprojeto.model.Passo;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -27,10 +38,14 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class EditarAtividadeActivity extends AppCompatActivity {
     String id;
     Atividade atividade;
+    private RecyclerView recyclerView;
+    private RecyclerViewAdapterHorizontal recyclerViewAdapter;
+    private ArrayList<Passo> listaPassos = new ArrayList<>();
     private ArrayList<String> listaDiasSemana = new ArrayList<>();
     EditText nome_atv, horario, musica;
     ImageButton btUploadImg;
@@ -42,6 +57,26 @@ public class EditarAtividadeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_atividade);
+        id = getIntent().getStringExtra("idAtividade");
+        Log.e("id Atividade:", id);
+        atividade = getIntent().getParcelableExtra("atividade");
+        new CarregarPassosAsynctask().execute();
+
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewHorizontal);
+        recyclerViewAdapter = new RecyclerViewAdapterHorizontal(listaPassos);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        /*
+        recyclerViewAdapter.setOnItemClickListener(new ClickListener<Passo>() {
+            @Override
+            public void onItemClick(Passo passo) {
+                Intent intent = new Intent(EditarAtividadeActivity.this, Passo.class);
+                intent.putExtra("passo", passo);
+                startActivity(intent);
+            }
+        });*/
+        recyclerView.setAdapter(recyclerViewAdapter);
 
         nome_atv = (EditText) findViewById(R.id.nome_atividade);
         horario = (EditText) findViewById(R.id.horario);
@@ -49,8 +84,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         btUploadImg = (ImageButton) findViewById(R.id.btUploadImg);
         imagemAtividade = (ImageView) findViewById(R.id.imgIcon);
 
-        id = getIntent().getStringExtra("idAtividade");
-        atividade = getIntent().getParcelableExtra("atividade");
+
 
         //Setando as informações da atividade:
         Picasso.get().load(atividade.getImagemURL()).into(imagemAtividade);
@@ -72,6 +106,36 @@ public class EditarAtividadeActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public class CarregarPassosAsynctask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            // carregar do banco
+            FirebaseFirestore.getInstance().collection("usuarios")
+                    .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
+                    .document(id).collection("passos")
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                            if(error != null){
+                                Log.e("Erro", error.getMessage());
+                                return;
+                            }
+                            List<DocumentSnapshot> docs = value.getDocuments();
+                            for(DocumentSnapshot doc : docs){
+                                Passo passo = doc.toObject(Passo.class);
+                                Log.e("Passo:", passo.getDescricaoPasso());
+                                listaPassos.add(passo);
+                            }
+                        }
+                    });
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void resultado) {
+            recyclerViewAdapter.notifyDataSetChanged();
+        }
     }
     private void showTimeDialog(final EditText horario){
         final Calendar c = Calendar.getInstance();

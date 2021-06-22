@@ -289,9 +289,9 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
             Toast.makeText(this,"Preencha todos os campos para criar o Passo!", Toast.LENGTH_SHORT).show();
         }
         String fileName = UUID.randomUUID().toString();
-        Uri uriAudio = Uri.fromFile(new File(getRecordFilePath()));
+        //Uri uriAudio = Uri.fromFile(new File(getRecordFilePath()));
         final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/passos" + fileName);
-        UploadTask uploadTask1 = ref.putFile(uriAudio);
+        //UploadTask uploadTask1 = ref.putFile(uriAudio);
         UploadTask uploadTask2 = ref.putBytes(dataIMG);
         uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override

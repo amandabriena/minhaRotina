@@ -38,26 +38,13 @@ public class RecyclerViewAdapterGerenciador extends RecyclerView.Adapter<Recycle
         holder.horario_atv_ger.setText(atividade.getHorario());
         Picasso.get().load(atividade.getImagemURL()).into(holder.imagem_atv_ger);
 
-        /*
-        holder.editarAtividade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListener.onItemClick(atividade);
-            }
-        });
-
-        holder.deletarAtividade.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickListener.onItemClick(atividade);
-            }
-        });*/
-
     }
+
     @Override
     public int getItemCount() {
         return listaAtividadesGer.size();
     }
+
     /*
     public void setOnItemClickListener(ClickListener<Atividade> movieClickListener) {
         this.clickListener = movieClickListener;

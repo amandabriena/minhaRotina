@@ -77,6 +77,8 @@ public class PassosActivity extends AppCompatActivity {
     }
     public void onClickOuvir(View v){
         int i = adapter.getItemCount();
+
+        Log.e("i count", i+"");
         String descricao = listaPassos.get(i-1).getDescricaoPasso();
         int speech = textToSpeech.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
     }
