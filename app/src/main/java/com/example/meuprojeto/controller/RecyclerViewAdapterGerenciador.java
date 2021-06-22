@@ -18,7 +18,7 @@ import java.util.List;
 
 public class RecyclerViewAdapterGerenciador extends RecyclerView.Adapter<RecyclerViewAdapterGerenciador.MyViewHolder> {
     private List<Atividade> listaAtividadesGer;
-    private ClickListener<Atividade> clickListener;
+    private ClickListener<Atividade> clickListenerDelete, clickListenerEdita;
 
     public RecyclerViewAdapterGerenciador(List<Atividade> listaAtividadesGer) {
         this.listaAtividadesGer = listaAtividadesGer;
@@ -37,6 +37,18 @@ public class RecyclerViewAdapterGerenciador extends RecyclerView.Adapter<Recycle
         holder.nome_atv_ger.setText(atividade.getNomeAtividade());
         holder.horario_atv_ger.setText(atividade.getHorario());
         Picasso.get().load(atividade.getImagemURL()).into(holder.imagem_atv_ger);
+        holder.btDeletar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListenerDelete.onItemClick(atividade);
+            }
+        });
+        holder.btEditar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListenerEdita.onItemClick(atividade);
+            }
+        });
 
     }
 
@@ -45,17 +57,20 @@ public class RecyclerViewAdapterGerenciador extends RecyclerView.Adapter<Recycle
         return listaAtividadesGer.size();
     }
 
-    /*
-    public void setOnItemClickListener(ClickListener<Atividade> movieClickListener) {
-        this.clickListener = movieClickListener;
-    }*/
+
+    public void setOnItemClickListenerDeletar(ClickListener<Atividade> movieClickListener) {
+        this.clickListenerDelete = movieClickListener;
+    }
+    public void setOnItemClickListenerEditar(ClickListener<Atividade> movieClickListener) {
+        this.clickListenerEdita = movieClickListener;
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         private TextView nome_atv_ger;
         private ImageView imagem_atv_ger;
         private TextView horario_atv_ger;
-        //private Button editarAtividade, deletarAtividade;
+        private Button btEditar, btDeletar;
         private CardView cardViewGer;
 
         public MyViewHolder(View itemView) {
@@ -63,9 +78,8 @@ public class RecyclerViewAdapterGerenciador extends RecyclerView.Adapter<Recycle
             nome_atv_ger = itemView.findViewById(R.id.nome_atv_ger);
             horario_atv_ger = itemView.findViewById(R.id.horario_atv_ger);
             imagem_atv_ger = itemView.findViewById(R.id.imagem_atv_ger);
-            /*
-            editarAtividade = itemView.findViewById(R.id.btEditarAtividade);
-            deletarAtividade = itemView.findViewById(R.id.btDeletarAtividade);*/
+            btEditar = itemView.findViewById(R.id.btEditarAtividade);
+            btDeletar = itemView.findViewById(R.id.btDeletarAtividade);
 
             cardViewGer = itemView.findViewById(R.id.cardViewGer);
 

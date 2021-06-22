@@ -50,16 +50,16 @@ public class MinhaRotinaActivity extends AppCompatActivity {
         new CarregarListaAsynctask().execute();
         //PASSANDO PARA OUTRA PÁGINA AO CLICAR NA ATIVIDADE
 
-    recyclerViewAdapter.setOnItemClickListener(new ClickListener<Atividade>() {
-        @Override
-        public void onItemClick(Atividade atividade) {
-            Intent intent = new Intent(MinhaRotinaActivity.this, AtividadeActivity.class);
-            intent.putExtra("atividade", atividade);
-            intent.putExtra("idAtividade", atividade.getId());
-            startActivity(intent);
-            //Toast.makeText(MinhaRotinaActivity.this, atividade.getId(), Toast.LENGTH_LONG).show();
-        }
-    });
+        recyclerViewAdapter.setOnItemClickListener(new ClickListener<Atividade>() {
+            @Override
+            public void onItemClick(Atividade atividade) {
+                Intent intent = new Intent(MinhaRotinaActivity.this, AtividadeActivity.class);
+                intent.putExtra("atividade", atividade);
+                intent.putExtra("idAtividade", atividade.getId());
+                startActivity(intent);
+                //Toast.makeText(MinhaRotinaActivity.this, atividade.getId(), Toast.LENGTH_LONG).show();
+            }
+        });
         recyclerView.setAdapter(recyclerViewAdapter);
 
 

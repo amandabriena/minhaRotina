@@ -85,10 +85,20 @@ public class CadastrarAtividade extends AppCompatActivity {
         btCadastrarAtividade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                criarAtividade();
-                Intent intent = new Intent(CadastrarAtividade.this, DashboardActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                String nome = nome_atv.getText().toString();
+                String hora = horario.getText().toString();
+                String musica_atv = musica.getText().toString();
+                diasMarcados();
+                if(dataIMG == null){
+                    Toast.makeText(CadastrarAtividade.this,"Por gentileza adicione uma imagem para a atividade!", Toast.LENGTH_SHORT).show();
+                }else if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
+                    Toast.makeText(CadastrarAtividade.this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT).show();
+                }else {
+                    criarAtividade();
+                    Intent intent = new Intent(CadastrarAtividade.this, DashboardActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
             }
         });
         btAddPassos.setOnClickListener(new View.OnClickListener() {
@@ -183,15 +193,7 @@ public class CadastrarAtividade extends AppCompatActivity {
     }
 
     private void criarAtividade(){
-        String nome = nome_atv.getText().toString();
-        String hora = horario.getText().toString();
-        String musica_atv = musica.getText().toString();
         diasMarcados();
-        if(dataIMG == null){
-            Toast.makeText(this,"Por gentileza adicione uma imagem para a atividade!", Toast.LENGTH_SHORT).show();
-        }else if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
-            Toast.makeText(this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT).show();
-        }else {
             //criando ID randomico e demais informações preenchidas para upload da imagem no firebase:
             String fileName = UUID.randomUUID().toString();
             final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/atividades" + fileName);
@@ -242,8 +244,6 @@ public class CadastrarAtividade extends AppCompatActivity {
                     Log.e("Teste", e.getMessage(), e);
                 }
             });
-
-        }
     }
 
 }

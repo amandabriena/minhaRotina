@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meuprojeto.R;
+import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.Passo;
 import com.squareup.picasso.Picasso;
 
@@ -25,6 +26,7 @@ import java.util.List;
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.MyViewHolder> {
     private ArrayList<Passo> listaPassos;
     private MediaPlayer mediaPlayer;
+    private ClickListener<Passo> clickListener;
 
 
     public SliderAdapter(ArrayList<Passo> listaPassos) {
@@ -54,14 +56,22 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.MyViewHold
         holder.ordem.setText("Passo "+p.getNumOrdem()+":");
         holder.descricao.setText(p.getDescricaoPasso());
         Picasso.get().load(p.getImagemURL()).into(holder.imagem);
-        final String audio = p.getAudio();
+        holder.btOuvir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListener.onItemClick(p);
+            }
+        });
 
     }
-
+    public void setOnItemClickListener(ClickListener<Passo> movieClickListener) {
+        this.clickListener = movieClickListener;
+    }
     @Override
     public int getItemCount() {
         return listaPassos.size();
     }
+
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

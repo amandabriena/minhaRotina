@@ -54,7 +54,26 @@ public class GerAtividadesActivity extends AppCompatActivity {
         new CarregarListaAsynctask().execute();
 
         recyclerView.setAdapter(recyclerViewAdapter);
+
+        recyclerViewAdapter.setOnItemClickListenerDeletar(new ClickListener<Atividade>() {
+            @Override
+            public void onItemClick(Atividade atividade) {
+                Intent intent = new Intent(GerAtividadesActivity.this, PopupDeletarAtividadeActivity.class);
+                intent.putExtra("idAtividade", atividade.getId());
+                startActivity(intent);
+            }
+        });
+        recyclerViewAdapter.setOnItemClickListenerEditar(new ClickListener<Atividade>() {
+            @Override
+            public void onItemClick(Atividade atividade) {
+                Intent intent = new Intent(GerAtividadesActivity.this, EditarAtividadeActivity.class);
+                intent.putExtra("atividade", atividade);
+                intent.putExtra("idAtividade", atividade.getId());
+                startActivity(intent);
+            }
+        });
     }
+    /*
     public void onClickEditar(View v){
         int itemAtv = recyclerViewAdapter.getItemCount()-1;
         Intent intent = new Intent(GerAtividadesActivity.this, EditarAtividadeActivity.class);
@@ -67,7 +86,7 @@ public class GerAtividadesActivity extends AppCompatActivity {
         Intent intent = new Intent(GerAtividadesActivity.this, PopupDeletarAtividadeActivity.class);
         intent.putExtra("idAtividade", listaAtividadesGer.get(itemAtv).getId());
         startActivity(intent);
-    }
+    }*/
     public class CarregarListaAsynctask extends AsyncTask<Void, Void, Void> {
 
         @Override

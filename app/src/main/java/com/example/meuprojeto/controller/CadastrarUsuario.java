@@ -96,10 +96,23 @@ public class CadastrarUsuario extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Direcionando a ação do botão padastrar novo usuário:
-                criarUsuario();
-                Intent intent = new Intent(CadastrarUsuario.this, CadastrarPreferenciasActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                String nome_user = nome.getText().toString();
+                String data_nasc = data.getText().toString();
+                String email_user = email.getText().toString();
+                String senha_user = senha.getText().toString();
+                if(senha_user.length() < 6){
+                    Toast.makeText(CadastrarUsuario.this,"Sua senha deve conter ao menos 6 caracteres!", Toast.LENGTH_SHORT).show();
+                }else if(dataIMG == null){
+                    Toast.makeText(CadastrarUsuario.this,"Por gentileza adicione uma foto!", Toast.LENGTH_SHORT).show();
+                }else if( nome_user.isEmpty() || data_nasc.isEmpty()  || email_user.isEmpty() || senha_user.isEmpty()){
+                    Toast.makeText(CadastrarUsuario.this,"Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
+                }else{
+                    criarUsuario();
+                    Intent intent = new Intent(CadastrarUsuario.this, CadastrarPreferenciasActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+
 
             }
         });
@@ -126,17 +139,8 @@ public class CadastrarUsuario extends AppCompatActivity {
 
     //Função para incluir dados no objeto usuário
     private void criarUsuario(){
-        String nome_user = nome.getText().toString();
-        String data_nasc = data.getText().toString();
         String email_user = email.getText().toString();
         String senha_user = senha.getText().toString();
-        if(senha_user.length() < 6){
-            Toast.makeText(this,"Sua senha deve conter ao menos 6 caracteres!", Toast.LENGTH_SHORT).show();
-        }else if(dataIMG == null){
-            Toast.makeText(this,"Por gentileza adicione uma foto!", Toast.LENGTH_SHORT).show();
-        }else if( nome_user.isEmpty() || data_nasc.isEmpty()  || email_user.isEmpty() || senha_user.isEmpty()){
-            Toast.makeText(this,"Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
-        }else{
             //AUTENTICAÇÃO DE USUÁRIO COM O FIREBASE:
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_user,senha_user)
             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -154,7 +158,7 @@ public class CadastrarUsuario extends AppCompatActivity {
                             Log.e("Erro", e.getMessage());
                         }
                     });
-        }
+
 
     }
     private void salvarUsuarioFirebase(){

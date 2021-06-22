@@ -35,7 +35,7 @@
         android:padding="@dimen/padding_icons"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_round_border"
-        android:onClick="onClickOuvir"
+
         android:drawableEnd="@drawable/ic_stereo"
         android:text="@string/btOuvir" />
     <Button

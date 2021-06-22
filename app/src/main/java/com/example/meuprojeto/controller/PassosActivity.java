@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.Toast;
 
 import com.example.meuprojeto.R;
@@ -46,8 +47,16 @@ public class PassosActivity extends AppCompatActivity {
         page2 = findViewById(R.id.viewPager);
 
         adapter = new SliderAdapter(listaPassos);
-        adapter.getItemCount();
         page2.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new ClickListener<Passo>() {
+            @Override
+            public void onItemClick(Passo data) {
+                Log.e("i count", data.getNumOrdem()+"");
+                String descricao = data.getDescricaoPasso();
+                int speech = textToSpeech.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
+            }
+        });
 
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -75,11 +84,12 @@ public class PassosActivity extends AppCompatActivity {
         dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dashboard);
     }
+    /*
     public void onClickOuvir(View v){
         int i = adapter.getItemCount();
-
         Log.e("i count", i+"");
         String descricao = listaPassos.get(i-1).getDescricaoPasso();
         int speech = textToSpeech.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
-    }
+    }*/
+
 }
