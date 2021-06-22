@@ -283,8 +283,9 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
     private void adicionarPasso(){
         String descricao_passo = descricao.getText().toString();
         String som_passo = som.getText().toString();
-
-        if(descricao_passo.isEmpty() || som_passo.isEmpty()){
+        if(dataIMG == null){
+            Toast.makeText(this,"Por gentileza adicione uma imagem para a atividade!", Toast.LENGTH_SHORT).show();
+        }else if(descricao_passo.isEmpty() || som_passo.isEmpty()){
             Toast.makeText(this,"Preencha todos os campos para criar o Passo!", Toast.LENGTH_SHORT).show();
         }
         String fileName = UUID.randomUUID().toString();

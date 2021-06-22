@@ -187,8 +187,9 @@ public class CadastrarAtividade extends AppCompatActivity {
         String hora = horario.getText().toString();
         String musica_atv = musica.getText().toString();
         diasMarcados();
-
-        if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
+        if(dataIMG == null){
+            Toast.makeText(this,"Por gentileza adicione uma imagem para a atividade!", Toast.LENGTH_SHORT).show();
+        }else if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
             Toast.makeText(this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT).show();
         }else {
             //criando ID randomico e demais informações preenchidas para upload da imagem no firebase:

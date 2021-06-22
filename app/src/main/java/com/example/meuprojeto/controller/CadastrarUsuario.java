@@ -130,10 +130,14 @@ public class CadastrarUsuario extends AppCompatActivity {
         String data_nasc = data.getText().toString();
         String email_user = email.getText().toString();
         String senha_user = senha.getText().toString();
-        if( nome_user.isEmpty() || data_nasc.isEmpty()  || email_user.isEmpty() || senha_user.isEmpty()){
+        if(senha_user.length() < 6){
+            Toast.makeText(this,"Sua senha deve conter ao menos 6 caracteres!", Toast.LENGTH_SHORT).show();
+        }else if(dataIMG == null){
+            Toast.makeText(this,"Por gentileza adicione uma foto!", Toast.LENGTH_SHORT).show();
+        }else if( nome_user.isEmpty() || data_nasc.isEmpty()  || email_user.isEmpty() || senha_user.isEmpty()){
             Toast.makeText(this,"Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
         }else{
-            //AUTENTICAÇÃO DE USUÁRIOCOM O FIREBASE:
+            //AUTENTICAÇÃO DE USUÁRIO COM O FIREBASE:
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_user,senha_user)
             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override

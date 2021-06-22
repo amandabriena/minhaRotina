@@ -49,6 +49,9 @@ public class PopUpResponsaveis extends AppCompatActivity {
             public void onClick(View v) {
                 //if para verificar se a senha está correta else caso não esteja
                 String senhaResponsavel = senha.getText().toString();
+                if(senhaResponsavel.length() < 6){
+                    Toast.makeText(PopUpResponsaveis.this,"SENHA INCORRETA!", Toast.LENGTH_LONG).show();
+                }
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(user.getEmail(),senhaResponsavel)
