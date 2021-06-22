@@ -59,7 +59,7 @@ public class CadastrarAtividade extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.cadastrar_atividade);
+        setContentView(R.layout.activity_cadastrar_atividade);
 
         //Atrelando variáveis as views
         nome_atv = (EditText) findViewById(R.id.nome_atividade);
@@ -74,7 +74,6 @@ public class CadastrarAtividade extends AppCompatActivity {
 
 
         //Adicionando máscara de horário:
-        //horario.addTextChangedListener(MaskEditUtil.mask(horario, MaskEditUtil.FORMAT_HOUR));
         horario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

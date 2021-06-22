@@ -95,4 +95,7 @@
     <string name="deletar">Deseja realmente excluir esta atividade da rotina?</string>
     <string name="btCancelar">Cancelar</string>
     <string name="btExcluir">Excluir</string>
+
+    //Página de edição de atividade
+    <string name="btAtualizar">Atualizar Atividade!</string>
 </resources>

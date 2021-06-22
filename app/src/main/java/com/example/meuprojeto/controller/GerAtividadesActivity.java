@@ -52,9 +52,15 @@ public class GerAtividadesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         new CarregarListaAsynctask().execute();
-        //PASSANDO PARA OUTRA PÁGINA AO CLICAR NA ATIVIDADE
 
         recyclerView.setAdapter(recyclerViewAdapter);
+    }
+    public void onClickEditar(View v){
+        int itemAtv = recyclerViewAdapter.getItemCount()-1;
+        Intent intent = new Intent(GerAtividadesActivity.this, EditarAtividadeActivity.class);
+        intent.putExtra("atividade", listaAtividadesGer.get(itemAtv));
+        intent.putExtra("idAtividade", listaAtividadesGer.get(itemAtv).getId());
+        startActivity(intent);
     }
     public void onClickDeletar(View v){
         int itemAtv = recyclerViewAdapter.getItemCount()-1;

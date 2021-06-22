@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin_top_cadastro">8dp</dimen>
+    <dimen name="margin_top_editar">12dp</dimen>
     <dimen name="width_edit">300dp</dimen>
     <dimen name="height_edit">40dp</dimen>
     <dimen name="margin_bts_dashboard">8dp</dimen>

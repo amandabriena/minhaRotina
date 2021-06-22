@@ -57,6 +57,7 @@ public class AtividadeActivity extends AppCompatActivity {
         btIniciar = (Button) findViewById(R.id.btIniciar);
 
         Log.e("passos size", listaPassos.size()+"");
+
         String textoCompleto = "Olá! São "+atividade.getHorario()+", hora de '"+atividade.getNomeAtividade()+"'";
         texto.setText(textoCompleto);
         Picasso.get().load(atividade.getImagemURL()).into(imagem);
