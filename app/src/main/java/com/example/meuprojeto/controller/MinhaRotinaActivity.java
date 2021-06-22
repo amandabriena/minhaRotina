@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -76,15 +77,13 @@ public class MinhaRotinaActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             // carregar do banco
-            String dia = verificarDiaSemana();
+            final String dia = verificarDiaSemana();
             FirebaseFirestore.getInstance().collection("usuarios")
                     .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
-                    .whereArrayContains("dias_semana", dia)
-                    //.orderBy("horario", Query.Direction.ASCENDING)
+                    .orderBy("horario", Query.Direction.ASCENDING)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
                             if(error != null){
                                 Log.e("Erro", error.getMessage());
                                 return;
@@ -92,8 +91,10 @@ public class MinhaRotinaActivity extends AppCompatActivity {
                             List<DocumentSnapshot> docs = value.getDocuments();
                             for(DocumentSnapshot doc : docs){
                                 Atividade atv = doc.toObject(Atividade.class);
-                                Log.e("Rotina", atv.getNomeAtividade());
-                                listaAtividades.add(atv);
+                                if(atv.getDias_semana().contains(dia)){
+                                    Log.e("Rotina", atv.getNomeAtividade());
+                                    listaAtividades.add(atv);
+                                }
                             }
                         }
                     });
@@ -107,8 +108,13 @@ public class MinhaRotinaActivity extends AppCompatActivity {
     private String verificarDiaSemana(){
         Date d = new Date();
         Calendar c = new GregorianCalendar();
-        c.setTime(d); String nome = "";
+        c.setTime(d);
+        String nome = "";
         int diaS = c.get(c.DAY_OF_WEEK);
+        c.set(Calendar.HOUR_OF_DAY, d.getHours());
+        c.set(Calendar.MINUTE, d.getMinutes());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        Log.e("hora:", simpleDateFormat.format(c.getTime()));
         String dia = "";
         switch(diaS){
             case Calendar.SUNDAY:

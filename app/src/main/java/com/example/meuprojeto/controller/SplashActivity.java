@@ -17,6 +17,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -36,14 +37,13 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         Bundle bundle = new Bundle();
-        String dia = verificarDiaSemana();
+        final String dia = verificarDiaSemana();
         Log.e("DIA", dia);
 
         //executar tarefas enquanto carrega a tela splash
         FirebaseFirestore.getInstance().collection("usuarios")
                 .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
-                .whereArrayContains("dias_semana", dia)
-                //.orderBy("horario", Query.Direction.ASCENDING)
+                .orderBy("horario", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -55,8 +55,10 @@ public class SplashActivity extends AppCompatActivity {
                         List<DocumentSnapshot> docs = value.getDocuments();
                         for(DocumentSnapshot doc : docs){
                             Atividade atv = doc.toObject(Atividade.class);
-                            Log.e("Rotina", atv.getNomeAtividade());
-                            listaAtividades.add(atv);
+                            if(atv.getDias_semana().contains(dia)){
+                                Log.e("Rotina", atv.getNomeAtividade());
+                                listaAtividades.add(atv);
+                            }
                         }
                     }
                 });

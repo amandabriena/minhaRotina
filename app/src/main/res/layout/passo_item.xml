@@ -9,8 +9,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
         android:layout_centerHorizontal="true"
-        android:textAppearance="@style/label_maior"
-        android:text="teste"/>
+        android:textAppearance="@style/label_maior"/>
     <ImageView
         android:id="@+id/imagemPassoItem"
         android:layout_width="350dp"
@@ -26,8 +25,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"
         android:textAlignment="center"
-        android:textAppearance="@style/label"
-        android:text="teste"/>
+        android:textAppearance="@style/label"/>
     <Button
         android:id="@+id/btOuvirItem"
         android:layout_width="wrap_content"
@@ -37,6 +35,7 @@
         android:padding="@dimen/padding_icons"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_round_border"
+        android:onClick="onClickOuvir"
         android:drawableEnd="@drawable/ic_stereo"
         android:text="@string/btOuvir" />
     <Button

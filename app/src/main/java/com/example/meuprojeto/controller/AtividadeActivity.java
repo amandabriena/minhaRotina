@@ -48,47 +48,41 @@ public class AtividadeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_atividade);
         id = getIntent().getStringExtra("idAtividade");
         atividade = getIntent().getParcelableExtra("atividade");
+        new CarregarPassosAsynctask().execute();
         texto = (TextView) findViewById(R.id.textoAtv);
         nome_atv = (EditText) findViewById(R.id.nome_atividade);
         horario = (EditText) findViewById(R.id.horario);
         musica = (EditText) findViewById(R.id.musica);
         imagem = (ImageView) findViewById(R.id.imgAtv);
         btIniciar = (Button) findViewById(R.id.btIniciar);
-        new CarregarPassosAsynctask().execute();
+
         Log.e("passos size", listaPassos.size()+"");
         String textoCompleto = "Olá! São "+atividade.getHorario()+", hora de '"+atividade.getNomeAtividade()+"'";
         texto.setText(textoCompleto);
         Picasso.get().load(atividade.getImagemURL()).into(imagem);
-        if(listaPassos.size()<=0){
-            btIniciar.setText("Feito!");
             btIniciar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(listaPassos.size()<=0){
                     //Direcionando a ação do botão para abrir a tela de dashboard pois a atividade não contem passos
-                    FirebaseFirestore.getInstance().collection("usuarios")
-                            .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
-                            .document(id).update("status", "1").addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.e("update", "updateRealizado");
-                                }
-                            });
-                    Intent intent = new Intent(AtividadeActivity.this, DashboardActivity.class);
-                    startActivity(intent);
+                        new AtualizarStatusAsynctask().execute();
+                        Intent intent = new Intent(AtividadeActivity.this, MinhaRotinaActivity.class);
+                        startActivity(intent);
+                    }else {
+                        btIniciar.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //Direcionando a ação do botão para abrir a tela de atividades
+                                Intent intent = new Intent(AtividadeActivity.this, PassosActivity.class);
+                                intent.putExtra("idAtividade", id);
+                                intent.putParcelableArrayListExtra("lista", (ArrayList<? extends Parcelable>) listaPassos);
+                                startActivity(intent);
+                            }
+                        });
+                    }
                 }
             });
-        }else {
-            btIniciar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Direcionando a ação do botão para abrir a tela de atividades
-                    Intent intent = new Intent(AtividadeActivity.this, PassosActivity.class);
-                    intent.putExtra("idAtividade", id);
-                    intent.putParcelableArrayListExtra("lista", (ArrayList<? extends Parcelable>) listaPassos);
-                    startActivity(intent);
-                }
-            });
-        }
+
     }
     public class CarregarPassosAsynctask extends AsyncTask<Void, Void, Void> {
 
@@ -113,6 +107,26 @@ public class AtividadeActivity extends AppCompatActivity {
                             }
                         }
                     });
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void resultado) {
+
+        }
+    }
+    public class AtualizarStatusAsynctask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            // carregar do banco
+            FirebaseFirestore.getInstance().collection("usuarios")
+                    .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
+                    .document(id).update("status", "1").addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.e("update", "updateRealizado");
+                }
+            });
             return null;
         }
         @Override

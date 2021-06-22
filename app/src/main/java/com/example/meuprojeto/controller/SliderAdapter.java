@@ -1,6 +1,8 @@
 package com.example.meuprojeto.controller;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +18,14 @@ import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Passo;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.MyViewHolder> {
-    ArrayList<Passo> listaPassos;
+    private ArrayList<Passo> listaPassos;
+    private MediaPlayer mediaPlayer;
+
 
     public SliderAdapter(ArrayList<Passo> listaPassos) {
         this.listaPassos = listaPassos;
@@ -35,21 +40,22 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        //
         Log.e("SizePassosSlider", "SizeSlider: "+listaPassos.size());
-        Passo p = listaPassos.get(position);
+        final Passo p = listaPassos.get(position);
         Log.e("SizePassosSlider", "num Ordem "+p.getNumOrdem()+"");
         if(p.getNumOrdem().equals(listaPassos.size()+"")){
             holder.btConcluido.setEnabled(true);
             holder.btConcluido.setVisibility(View.VISIBLE);
-            Log.e("SizePassosSlider", "true");
         }else{
             holder.btConcluido.setEnabled(false);
             holder.btConcluido.setVisibility(View.GONE);
-            Log.e("SizePassosSlider", "false");
         }
-        holder.ordem.setText(p.getNumOrdem());
+        holder.ordem.setText("Passo "+p.getNumOrdem()+":");
         holder.descricao.setText(p.getDescricaoPasso());
         Picasso.get().load(p.getImagemURL()).into(holder.imagem);
+        final String audio = p.getAudio();
+
     }
 
     @Override
@@ -62,7 +68,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.MyViewHold
         private TextView ordem;
         private ImageView imagem;
         private TextView descricao;
-        private Button btConcluido;
+        private Button btConcluido, btOuvir;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -70,7 +76,36 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.MyViewHold
             imagem = itemView.findViewById(R.id.imagemPassoItem);
             descricao = itemView.findViewById(R.id.descricaoPassoItem);
             btConcluido = itemView.findViewById(R.id.btConcluido);
+            btOuvir = itemView.findViewById(R.id.btOuvirItem);
 
         }
+    }
+    void sendUrlToMediaPlayer(String url) {
+        mediaPlayer = new MediaPlayer();
+        Log.e("SizePassosSlider Url", url+"");
+        try {
+            mediaPlayer.setDataSource(url);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        /*
+        try {
+            // enviar a StreamUrl para o player
+            Log.e("SizePassosSlider Url", url+"");
+            mediaPlayer.setDataSource(url);
+            // esperar que ele fique pronto e após ficar pronto tocar o áudio
+            mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    mediaPlayer.start();
+                }
+            });
+
+            mediaPlayer.prepareAsync();
+        } catch (IOException err) {
+            Log.e("Audio Error", err.toString());
+        }*/
     }
 }

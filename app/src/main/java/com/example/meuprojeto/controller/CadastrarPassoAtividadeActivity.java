@@ -222,16 +222,36 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
     }
 
     private void uploadAudio(String idAtv, String ordemPasso){
-        StorageReference ref = FirebaseStorage.getInstance().getReference();
+        //final StorageReference ref = FirebaseStorage.getInstance().getReference();
         //A denomicação do aúdio do passo será composta pelo id da atividade + "passo" + número de ordem do passo
-        StorageReference arquivo = ref.child("audio").child(idAtv+"-passo"+ordemPasso+".3gp");
+        //StorageReference arquivo = ref.child("audio").child(idAtv+"-passo"+ordemPasso+".3gp");
         Uri uri = Uri.fromFile(new File(getRecordFilePath()));
-        objPasso.setAudio(uri.toString());
+        Log.e("FILE audio1", "URI: " + uri.toString());
+
+        /*
         arquivo.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.e("FILE audio", "URi");
-
+            }
+        });*/
+        final StorageReference ref = FirebaseStorage.getInstance().getReference("/audio" + idAtv+"-passo"+ordemPasso+".3gp");
+        UploadTask uploadTask2 = ref.putFile(uri);
+        uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.e("FILE audio", "URI: " + uri.toString());
+                        objPasso.setAudio(uri.toString());
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //Toast.makeText(Profilepic.this, "Upload Failed -> " + e, Toast.LENGTH_LONG).show();
+                Log.e("Teste", e.getMessage(), e);
             }
         });
     }
@@ -268,7 +288,9 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
             Toast.makeText(this,"Preencha todos os campos para criar o Passo!", Toast.LENGTH_SHORT).show();
         }
         String fileName = UUID.randomUUID().toString();
+        Uri uriAudio = Uri.fromFile(new File(getRecordFilePath()));
         final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/passos" + fileName);
+        UploadTask uploadTask1 = ref.putFile(uriAudio);
         UploadTask uploadTask2 = ref.putBytes(dataIMG);
         uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -278,8 +300,6 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         Log.i("FILEURI", "URI: " + uri.toString());
-
-                        //final String numOrdem = numPasso+"";
 
                         objPasso.setDescricaoPasso(descricao.getText().toString());
                         //objPasso.setAudio(som.getText().toString());
