@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -53,23 +54,22 @@ public class GerAtividadesActivity extends AppCompatActivity {
         new CarregarListaAsynctask().execute();
         //PASSANDO PARA OUTRA PÁGINA AO CLICAR NA ATIVIDADE
 
-        recyclerViewAdapter.setOnItemClickListener(new ClickListener<Atividade>() {
-            @Override
-            public void onItemClick(Atividade atividade) {
-                Intent intent = new Intent(GerAtividadesActivity.this, AtividadeActivity.class);
-                intent.putExtra("idAtividade", atividade.getId());
-                startActivity(intent);
-            }
-        });
-
         recyclerView.setAdapter(recyclerViewAdapter);
+    }
+    public void onClickDeletar(View v){
+        int itemAtv = recyclerViewAdapter.getItemCount()-1;
+        Intent intent = new Intent(GerAtividadesActivity.this, PopupDeletarAtividadeActivity.class);
+        intent.putExtra("idAtividade", listaAtividadesGer.get(itemAtv).getId());
+        startActivity(intent);
     }
     public class CarregarListaAsynctask extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected Void doInBackground(Void... params) {
             // carregar do banco
-            FirebaseFirestore.getInstance().collection("atividades").orderBy("horario", Query.Direction.ASCENDING)
+            FirebaseFirestore.getInstance().collection("usuarios")
+                    .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
+                    .orderBy("horario", Query.Direction.ASCENDING)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -80,10 +80,9 @@ public class GerAtividadesActivity extends AppCompatActivity {
                             }
                             List<DocumentSnapshot> docs = value.getDocuments();
                             for(DocumentSnapshot doc : docs){
-                                /*
                                 Atividade atv = doc.toObject(Atividade.class);
                                 Log.e("nome", "nome av: "+atv.getNomeAtividade());
-                                listaAtividadesGer.add(atv);*/
+                                listaAtividadesGer.add(atv);
                             }
                         }
                     });

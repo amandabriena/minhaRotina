@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".controller.PopupDeletarAtividadeActivity">
     <RelativeLayout
-        android:id="@+id/popup"
+        android:id="@+id/popupDeletar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"

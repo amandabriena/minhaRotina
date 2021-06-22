@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.meuprojeto.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class PopupDeletarAtividadeActivity extends AppCompatActivity {
@@ -26,15 +27,19 @@ public class PopupDeletarAtividadeActivity extends AppCompatActivity {
         int width = (int) ((dm.widthPixels) * 0.6);
         int height = (int) ((dm.heightPixels) * 0.25);
         getWindow().setLayout(width,height);
-        btDeletar = (Button) findViewById(R.id.btAcessarResponsavel);
-        view = (View) findViewById(R.id.popup);
+        btCancelar = (Button) findViewById(R.id.btCancelar);
+        btDeletar = (Button) findViewById(R.id.btConfirmar);
+        view = (View) findViewById(R.id.popupDeletar);
 
         idAtividade = getIntent().getStringExtra("idAtividade");
 
         btDeletar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseFirestore.getInstance().collection("/atividades").document(idAtividade).delete();
+                //Deletando atividade:
+                FirebaseFirestore.getInstance().collection("usuarios")
+                        .document(FirebaseAuth.getInstance().getUid())
+                        .collection("/atividades").document(idAtividade).delete();
                 Intent ger = new Intent(PopupDeletarAtividadeActivity.this, GerAtividadesActivity.class);
                 ger.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(ger);

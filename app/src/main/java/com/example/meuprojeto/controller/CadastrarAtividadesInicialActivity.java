@@ -53,7 +53,7 @@ public class CadastrarAtividadesInicialActivity extends AppCompatActivity {
 
         new CarregarListaAsynctask().execute();
         //PASSANDO PARA OUTRA PÁGINA AO CLICAR NA ATIVIDADE
-
+        /*
         recyclerViewAdapter.setOnItemClickListener(new ClickListener<Atividade>() {
             @Override
             public void onItemClick(Atividade atividade) {
@@ -61,7 +61,7 @@ public class CadastrarAtividadesInicialActivity extends AppCompatActivity {
                 intent.putExtra("idAtividade", atividade.getId());
                 startActivity(intent);
             }
-        });
+        });*/
         recyclerView.setAdapter(recyclerViewAdapter);
     }
     public class CarregarListaAsynctask extends AsyncTask<Void, Void, Void> {
