@@ -107,9 +107,13 @@ public class CadastrarAtividade extends AppCompatActivity {
                 criarAtividade();
                 Intent cadPasso = new Intent(CadastrarAtividade.this, CadastrarPassoAtividadeActivity.class);
                 //Passando informações da atividade para cadastrar os passos
+                cadPasso.putExtra("atividade",objAtividade);
+                /*
                 cadPasso.putExtra("idAtividade", objAtividade.getId());
-                cadPasso.putExtra("nomeAtividade", nome_atv.getText().toString());
+                cadPasso.putExtra("nomeAtividade", nome_atv.getText().toString());*/
                 cadPasso.putExtra("numPasso", "1");
+                //informando que o modo não é de edição, mas sim de cadastro:
+                cadPasso.putExtra("modoEdicao", "false");
                 startActivity(cadPasso);
             }
         });
@@ -193,7 +197,7 @@ public class CadastrarAtividade extends AppCompatActivity {
     }
 
     private void criarAtividade(){
-        diasMarcados();
+            diasMarcados();
             //criando ID randomico e demais informações preenchidas para upload da imagem no firebase:
             String fileName = UUID.randomUUID().toString();
             final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/atividades" + fileName);
@@ -245,5 +249,4 @@ public class CadastrarAtividade extends AppCompatActivity {
                 }
             });
     }
-
 }

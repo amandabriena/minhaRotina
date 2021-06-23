@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/round_card"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.EditarPassoActivity">
+
+    <RelativeLayout
+        android:id="@+id/responsive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="2"
+        android:layout_marginTop="10dp">
+        <ImageButton
+            android:id="@+id/btFechar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/button_round_delete"
+            app:srcCompat="@drawable/ic_close" />
+        <TextView
+            android:id="@+id/ordemPasso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_centerHorizontal="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textStyle="bold"
+            android:text="Passo X:"
+            />
+        <TextView
+            android:id="@+id/atividade_atual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:textAppearance="@style/label_maior" />
+        <ImageButton
+            android:layout_below="@+id/atividade_atual"
+            android:id="@+id/btUploadImgPasso"
+            android:layout_width="310dp"
+            android:layout_height="180dp"
+            app:srcCompat="@drawable/add_img"
+            android:layout_margin="20dp"
+            android:layout_centerHorizontal="true"/>
+        <ImageView
+            android:layout_below="@+id/atividade_atual"
+            android:id="@+id/imgPasso"
+            android:layout_width="310dp"
+            android:layout_height="180dp"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:scaleType="centerCrop"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/responsive"
+        app:layout_constraintVertical_weight="3">
+
+
+    <TextView
+        android:id="@+id/tdescricao"
+        android:layout_width="wrap_content"
+        android:layout_height="26dp"
+        android:layout_marginTop="@dimen/margin_top_cadastro"
+        android:text="@string/descricao"
+        android:textAppearance="@style/label" />
+
+    <EditText
+        android:id="@+id/descricao"
+        android:layout_below="@+id/tdescricao"
+        android:layout_width="@dimen/width_edit"
+        android:layout_height="@dimen/height_edit"
+        android:layout_marginTop="@dimen/margin_top_cadastro"
+        android:background="@drawable/edit_round" />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/form"
+        android:orientation="horizontal"
+        android:layout_margin="30dp"
+        android:gravity="center_horizontal"
+        app:layout_constraintVertical_weight="1"
+        >
+
+        <Button
+            android:id="@+id/btExcluirPasso"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_round_delete"
+            android:layout_margin="5dp"
+            android:text="@string/btExcluir" />
+        <Button
+            android:id="@+id/btAtualizar"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_round"
+            android:layout_margin="5dp"
+            android:text="@string/btAtualizar" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

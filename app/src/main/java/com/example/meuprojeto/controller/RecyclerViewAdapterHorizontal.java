@@ -20,7 +20,7 @@ import java.util.List;
 
 public class RecyclerViewAdapterHorizontal extends RecyclerView.Adapter<RecyclerViewAdapterHorizontal.MyViewHolder>{
     private ArrayList<Passo> listaPassos;
-    //private ClickListener<Passo> clickListener;
+    private ClickListener<Passo> clickListener;
 
     public RecyclerViewAdapterHorizontal(ArrayList<Passo> listaPassos) {
         this.listaPassos = listaPassos;
@@ -38,13 +38,13 @@ public class RecyclerViewAdapterHorizontal extends RecyclerView.Adapter<Recycler
         holder.ordemPasso.setText("PASSO "+passo.getNumOrdem());
         Log.e("passo img", passo.getImagemURL());
         Picasso.get().load(passo.getImagemURL()).into(holder.imagemPasso);
-        /*
+
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clickListener.onItemClick(passo);
             }
-        });*/
+        });
 
 
     }
@@ -52,10 +52,10 @@ public class RecyclerViewAdapterHorizontal extends RecyclerView.Adapter<Recycler
     public int getItemCount() {
         Log.e("size", listaPassos.size()+""); return listaPassos.size();
     }
-    /*
+
     public void setOnItemClickListener(ClickListener<Passo> movieClickListener) {
         this.clickListener = movieClickListener;
-    }*/
+    }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 

@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.meuprojeto.R;
+import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.Passo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -54,9 +55,9 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
     ImageButton btUploadImg, btStart, btPlay, btTrash;
     ImageView imgPasso;
     int numPasso;
+    private Atividade atividade;
     private Uri filePath;
     private byte[] dataIMG;
-    private String idAtividade;
     private static int MICROPHONE_PERMISSION_CODE = 200;
     MediaRecorder mediaRecorder;
 
@@ -85,13 +86,15 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         objPasso = new Passo();
 
         //Pegando informações da atividade que está sendo cadastrada:
-        idAtividade = getIntent().getStringExtra("idAtividade");
-        final String atividadeAtual = getIntent().getStringExtra("nomeAtividade");
+        atividade = getIntent().getParcelableExtra("atividade");
+        //idAtividade = getIntent().getStringExtra("idAtividade");
+        //final String atividadeAtual = getIntent().getStringExtra("nomeAtividade");
         String num = getIntent().getStringExtra("numPasso");
+        final String modo = getIntent().getStringExtra("modoEdicao");
         objPasso.setNumOrdem(num);
         numPasso = Integer.parseInt(num);
         ordemPasso.setText("Passo "+num);
-        atv_atual.setText(atividadeAtual);
+        atv_atual.setText(atividade.getNomeAtividade());
 
         //informações para gravação do aúdio:
         if(isMicrophonePresent()){
@@ -143,13 +146,23 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Direcionando para cadastrar mais passos
                 adicionarPasso();
-                Intent add = new Intent(CadastrarPassoAtividadeActivity.this, CadastrarPassoAtividadeActivity.class);
-                //Passando número de ordem do passo
-                numPasso++;
-                add.putExtra("idAtividade", idAtividade);
-                add.putExtra("nomeAtividade", atividadeAtual);
-                add.putExtra("numPasso", numPasso+"");
-                startActivity(add);
+                if(modo =="true"){
+                    Intent intent = new Intent(CadastrarPassoAtividadeActivity.this, EditarAtividadeActivity.class);
+                    //intent.putExtra("idAtividade", atividade.getId());
+                    intent.putExtra("atividade",atividade);
+                    intent.putExtra("modoEdicao", "true");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }else{
+                    Intent add = new Intent(CadastrarPassoAtividadeActivity.this, CadastrarPassoAtividadeActivity.class);
+                    //Passando número de ordem do passo
+                    numPasso++;
+                    add.putExtra("atividade",atividade);
+                    add.putExtra("modoEdicao", "false");
+                    add.putExtra("numPasso", numPasso+"");
+                    startActivity(add);
+                }
+
             }
         });
         btFinalizarPassos.setOnClickListener(new View.OnClickListener() {
@@ -157,9 +170,19 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Direcionando para tela de  de dashboard ao finalizar cadastros
                 adicionarPasso();
-                Intent intent = new Intent(CadastrarPassoAtividadeActivity.this, DashboardActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                if(modo =="true"){
+                    Intent intent = new Intent(CadastrarPassoAtividadeActivity.this, EditarAtividadeActivity.class);
+                    intent.putExtra("modoEdicao", "true");
+                    intent.putExtra("atividade",atividade);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(CadastrarPassoAtividadeActivity.this, DashboardActivity.class);
+                    intent.putExtra("modoEdicao", "false");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
+
             }
         });
     }
@@ -306,11 +329,11 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
                         //objPasso.setAudio(som.getText().toString());
 
                         objPasso.setImagemURL(uri.toString());
-                        uploadAudio(idAtividade, objPasso.getNumOrdem());
+                        uploadAudio(atividade.getId(), objPasso.getNumOrdem());
                         //objPasso.setAudio(idAtividade+"passo"+ordemPasso+".3gp");
                         FirebaseFirestore.getInstance().collection("usuarios")
                                 .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
-                                .document(idAtividade).collection("passos")
+                                .document(atividade.getId()).collection("passos")
                                 .document(objPasso.getNumOrdem())
                                 .set(objPasso)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {

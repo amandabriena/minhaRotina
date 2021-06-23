@@ -97,5 +97,6 @@
     <string name="btExcluir">Excluir</string>
 
     //Página de edição de atividade
-    <string name="btAtualizar">Atualizar Atividade!</string>
+    <string name="btAtualizar">Atualizar!</string>
+    <string name="passos">Passo a Passo:</string>
 </resources>

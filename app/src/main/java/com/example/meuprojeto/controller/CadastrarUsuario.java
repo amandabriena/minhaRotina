@@ -75,8 +75,6 @@ public class CadastrarUsuario extends AppCompatActivity {
         imgIcon = (ImageView) findViewById(R.id.imgUser);
 
         //Adicionando máscara de data:
-        //data.addTextChangedListener(MaskEditUtil.mask(data, MaskEditUtil.FORMAT_DATE));
-        //data.isFocusableInTouchMode() = false;
         data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

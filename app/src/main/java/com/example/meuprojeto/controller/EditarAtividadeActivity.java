@@ -1,5 +1,6 @@
 package com.example.meuprojeto.controller;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -25,12 +27,17 @@ import android.widget.Toast;
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.Passo;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -39,9 +46,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 public class EditarAtividadeActivity extends AppCompatActivity {
-    String id;
     Atividade atividade;
     private RecyclerView recyclerView;
     private RecyclerViewAdapterHorizontal recyclerViewAdapter;
@@ -50,6 +57,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
     EditText nome_atv, horario, musica;
     ImageButton btUploadImg;
     ImageView imagemAtividade;
+    Button btCancelar, btAtualizar, btAdicionarPasso;
     private Uri filePath;
     private byte[] dataIMG;
 
@@ -57,25 +65,26 @@ public class EditarAtividadeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_atividade);
-        id = getIntent().getStringExtra("idAtividade");
-        Log.e("id Atividade:", id);
+
         atividade = getIntent().getParcelableExtra("atividade");
+        Log.e("id Atividade:", atividade.getId());
         new CarregarPassosAsynctask().execute();
 
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewHorizontal);
         recyclerViewAdapter = new RecyclerViewAdapterHorizontal(listaPassos);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        /*
+
         recyclerViewAdapter.setOnItemClickListener(new ClickListener<Passo>() {
             @Override
             public void onItemClick(Passo passo) {
-                Intent intent = new Intent(EditarAtividadeActivity.this, Passo.class);
+                Intent intent = new Intent(EditarAtividadeActivity.this, EditarPassoActivity.class);
                 intent.putExtra("passo", passo);
+                intent.putExtra("idAtividade", atividade.getId());
                 startActivity(intent);
             }
-        });*/
+        });
         recyclerView.setAdapter(recyclerViewAdapter);
 
         nome_atv = (EditText) findViewById(R.id.nome_atividade);
@@ -83,7 +92,9 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         musica = (EditText) findViewById(R.id.musica);
         btUploadImg = (ImageButton) findViewById(R.id.btUploadImg);
         imagemAtividade = (ImageView) findViewById(R.id.imgIcon);
-
+        btCancelar = (Button) findViewById(R.id.btCancelar);
+        btAtualizar = (Button) findViewById(R.id.btAtualizarAtv);
+        btAdicionarPasso = (Button) findViewById(R.id.btAdicionarPasso);
 
 
         //Setando as informações da atividade:
@@ -93,19 +104,121 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         musica.setHint(atividade.getMusica());
         setarDias();
 
+        //mascara de horário:
         horario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTimeDialog(horario);
             }
         });
+
+        //ação de upload de imagem:
         btUploadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 selecionarImagem();
             }
         });
+        btCancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        btAtualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                atualizarAtividade();
+                finish();
+            }
+        });
+        btAdicionarPasso.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cadPasso = new Intent(EditarAtividadeActivity.this, CadastrarPassoAtividadeActivity.class);
+                //Passando informações da atividade para cadastrar os passos
+                String numPasso = (listaPassos.size()+1)+"";
+                cadPasso.putExtra("atividade", atividade);
+                //cadPasso.putExtra("nomeAtividade", nome_atv.getText().toString());
+                cadPasso.putExtra("numPasso", numPasso);
+                //na parte de edição é passado o modo atual para tela de adicionar passo
+                cadPasso.putExtra("modoEdicao", "true");
+                startActivity(cadPasso);
+            }
+        });
 
+
+    }
+    public void atualizarAtividade(){
+        String nome = nome_atv.getText().toString();
+        String hora = horario.getText().toString();
+        String musicaAtv = musica.getText().toString();
+        diasMarcados();
+        FirebaseFirestore.getInstance().collection("usuarios")
+                .document(FirebaseAuth.getInstance().getUid())
+                .collection("/atividades").document(atividade.getId())
+                .update("dias_semana",listaDiasSemana);
+        if(!nome.isEmpty()){
+            FirebaseFirestore.getInstance().collection("usuarios")
+                    .document(FirebaseAuth.getInstance().getUid())
+                    .collection("/atividades").document(atividade.getId())
+                    .update("nomeAtividade",nome);
+        }
+        if(!hora.isEmpty()){
+            FirebaseFirestore.getInstance().collection("usuarios")
+                    .document(FirebaseAuth.getInstance().getUid())
+                    .collection("/atividades").document(atividade.getId())
+                    .update("horario",hora);
+        }
+        if(!musicaAtv.isEmpty()){
+            FirebaseFirestore.getInstance().collection("usuarios")
+                    .document(FirebaseAuth.getInstance().getUid())
+                    .collection("/atividades").document(atividade.getId())
+                    .update("musica",musicaAtv);
+        }
+        if(dataIMG != null){
+            String fileName = UUID.randomUUID().toString();
+            final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/atividades" + fileName);
+            UploadTask uploadTask2 = ref.putBytes(dataIMG);
+            uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Log.i("FILEURI", "URI: " + uri.toString());
+
+                            //Pegando o usuário que criou a atividade:
+                            String usuario_atv = FirebaseAuth.getInstance().getUid();
+                            atividade.setImagemURL(uri.toString());
+                            FirebaseFirestore.getInstance().collection("usuarios").document(usuario_atv).collection("atividades")
+                                    .document(atividade.getId())
+                                    .update("imagemURL", uri.toString())
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.e("Imagem atualizada", atividade.getId());
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.i("Erro ao atualizar", e.getMessage());
+                                        }
+                                    });
+
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    //Toast.makeText(Profilepic.this, "Upload Failed -> " + e, Toast.LENGTH_LONG).show();
+                    Log.e("Teste", e.getMessage(), e);
+                }
+            });
+        }
     }
     public class CarregarPassosAsynctask extends AsyncTask<Void, Void, Void> {
 
@@ -114,7 +227,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
             // carregar do banco
             FirebaseFirestore.getInstance().collection("usuarios")
                     .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
-                    .document(id).collection("passos")
+                    .document(atividade.getId()).collection("passos")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

@@ -41,47 +41,29 @@ public class SplashActivity extends AppCompatActivity {
         Log.e("DIA", dia);
 
         //executar tarefas enquanto carrega a tela splash
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user == null){
-            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }else{
-            FirebaseFirestore.getInstance().collection("usuarios")
-                    .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
-                    .orderBy("horario", Query.Direction.ASCENDING)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+        FirebaseFirestore.getInstance().collection("usuarios")
+                .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
+                .orderBy("horario", Query.Direction.ASCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
-                            if(error != null){
-                                Log.e("Erro", error.getMessage());
-                                return;
-                            }
-                            List<DocumentSnapshot> docs = value.getDocuments();
-                            for(DocumentSnapshot doc : docs){
-                                Atividade atv = doc.toObject(Atividade.class);
-                                if(atv.getDias_semana().contains(dia)){
-                                    Log.e("Rotina", atv.getNomeAtividade());
-                                    listaAtividades.add(atv);
-                                }
-                            }
-
+                        if(error != null){
+                            Log.e("Erro", error.getMessage());
+                            return;
                         }
-                    });
-            Intent intent = new Intent(SplashActivity.this, MinhaRotinaActivity.class);
-            intent.putParcelableArrayListExtra("listaAtividades", (ArrayList<? extends Parcelable>) listaAtividades);
-            intent.putExtra("idUsuario", user.getUid());
-            finish();
-            startActivity(intent);
-        }
+                        List<DocumentSnapshot> docs = value.getDocuments();
+                        for(DocumentSnapshot doc : docs){
+                            Atividade atv = doc.toObject(Atividade.class);
+                            if(atv.getDias_semana().contains(dia)){
+                                Log.e("Rotina", atv.getNomeAtividade());
+                                listaAtividades.add(atv);
+                            }
+                        }
 
-        new Handler().postDelayed(new Runnable(){
-            @Override
-            public void run(){
-            }
-        }, SPLASH_TIME_OUT);
-        /*
+                    }
+                });
+
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run(){
@@ -99,7 +81,7 @@ public class SplashActivity extends AppCompatActivity {
                 }
 
             }
-        }, SPLASH_TIME_OUT);*/
+        }, SPLASH_TIME_OUT);
     }
     private String verificarDiaSemana(){
         Date d = new Date();

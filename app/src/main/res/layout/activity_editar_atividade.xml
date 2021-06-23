@@ -216,6 +216,15 @@
                 </RelativeLayout>
 
             </LinearLayout>
+            <TextView
+                android:id="@+id/tPassos"
+                android:layout_width="wrap_content"
+                android:layout_height="26dp"
+                android:text="@string/passos"
+                android:layout_marginTop="@dimen/margin_top_editar"
+                android:textAppearance="@style/label"
+                android:layout_marginBottom="@dimen/margin_top_editar"
+                android:layout_gravity="left"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewHorizontal"
                 android:background="@android:color/white"
@@ -223,6 +232,15 @@
                 android:layout_height="150dp"
                 android:orientation="horizontal"
                 tools:listitem="@layout/recyclerview_adapter_horizontal"/>
+            <Button
+                android:id="@+id/btAdicionarPasso"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_gravity="right"
+                android:background="@drawable/button_round_border"
+                android:layout_margin="5dp"
+                android:text="@string/btAddPassos"/>
         </LinearLayout>
         </RelativeLayout>
     </ScrollView>
@@ -245,7 +263,7 @@
             android:layout_margin="5dp"
             android:text="@string/btCancelar" />
         <Button
-            android:id="@+id/btAtualizar"
+            android:id="@+id/btAtualizarAtv"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
