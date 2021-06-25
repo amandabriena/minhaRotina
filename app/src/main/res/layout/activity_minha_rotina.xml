@@ -5,24 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controller.MinhaRotinaActivity">
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/responsive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center"
-        tools:ignore="MissingConstraints">
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="2"
+        android:layout_marginTop="10dp">
+        <ImageButton
+            android:id="@+id/btCompartilhar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_round_border"
+            app:srcCompat="@drawable/ic_share" />
         <Button
             android:id="@+id/btEspacoPais"
             android:layout_width="130dp"
-            android:layout_height="30dp"
-            android:layout_gravity="right"
+            android:layout_height="35dp"
+            android:layout_toStartOf="@+id/btCompartilhar"
             android:layout_margin="10dp"
             android:background="@drawable/button_round_border"
             android:drawableEnd="@drawable/pais"
             android:text="@string/espacoPais"
             android:textSize="10dp"
             />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/btEspacoPais"
+        android:layout_gravity="center"
+        tools:ignore="MissingConstraints">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,5 +55,5 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/recyclerview_adapter_layout"/>
     </LinearLayout>
-
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

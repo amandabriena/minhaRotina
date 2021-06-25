@@ -51,6 +51,7 @@
 
     //Página de minha rotina
     <string name="espacoPais">Espaço para Pais</string>
+    <string name="compartilhar">Compartilhar Rotina</string>
 
     //Página Gerenciador de Atividades
     <string name="btGerEditar">EDITAR</string>
