@@ -4,9 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Passo implements Parcelable {
-    private String numOrdem;
+    private String id = UUID.randomUUID().toString();
+    private int numOrdem;
     private String descricaoPasso;
     private String imagemURL;
     private String audio;
@@ -14,7 +16,7 @@ public class Passo implements Parcelable {
     public Passo() {
     }
 
-    public Passo(String numOrdem, String descricaoPasso, String imagemURL, String audio) {
+    public Passo(int numOrdem, String descricaoPasso, String imagemURL, String audio) {
         this.numOrdem = numOrdem;
         this.descricaoPasso = descricaoPasso;
         this.imagemURL = imagemURL;
@@ -22,7 +24,8 @@ public class Passo implements Parcelable {
     }
 
     protected Passo(Parcel in) {
-        numOrdem = in.readString();
+        numOrdem = in.readInt();
+        id = in.readString();
         descricaoPasso = in.readString();
         imagemURL = in.readString();
         audio = in.readString();
@@ -64,12 +67,20 @@ public class Passo implements Parcelable {
         this.imagemURL = imagemURL;
     }
 
-    public String getNumOrdem() {
+    public int getNumOrdem() {
         return numOrdem;
     }
 
-    public void setNumOrdem(String numOrdem) {
+    public void setNumOrdem(int numOrdem) {
         this.numOrdem = numOrdem;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
@@ -79,7 +90,8 @@ public class Passo implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(numOrdem);
+        dest.writeInt(numOrdem);
+        dest.writeString(id);
         dest.writeString(descricaoPasso);
         dest.writeString(imagemURL);
         dest.writeString(audio);

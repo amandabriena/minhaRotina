@@ -91,8 +91,8 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         //final String atividadeAtual = getIntent().getStringExtra("nomeAtividade");
         String num = getIntent().getStringExtra("numPasso");
         final String modo = getIntent().getStringExtra("modoEdicao");
-        objPasso.setNumOrdem(num);
         numPasso = Integer.parseInt(num);
+        objPasso.setNumOrdem(numPasso);
         ordemPasso.setText("Passo "+num);
         atv_atual.setText(atividade.getNomeAtividade());
 
@@ -329,17 +329,17 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
                         //objPasso.setAudio(som.getText().toString());
 
                         objPasso.setImagemURL(uri.toString());
-                        uploadAudio(atividade.getId(), objPasso.getNumOrdem());
+                        //uploadAudio(atividade.getId(), objPasso.getNumOrdem());
                         //objPasso.setAudio(idAtividade+"passo"+ordemPasso+".3gp");
                         FirebaseFirestore.getInstance().collection("usuarios")
                                 .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
                                 .document(atividade.getId()).collection("passos")
-                                .document(objPasso.getNumOrdem())
+                                .document(objPasso.getId())
                                 .set(objPasso)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Log.e("Passo e ID", objPasso.getDescricaoPasso()+" id:"+objPasso.getNumOrdem());
+                                        Log.e("Passo e ID", objPasso.getDescricaoPasso()+" ordem:"+objPasso.getNumOrdem()+"ID:"+objPasso.getId());
                                         Log.e("numPasso ", numPasso+"");
 
                                     }

@@ -93,6 +93,7 @@ public class AtividadeActivity extends AppCompatActivity {
             FirebaseFirestore.getInstance().collection("usuarios")
                     .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
                     .document(id).collection("passos")
+                    .orderBy("numOrdem", Query.Direction.ASCENDING)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

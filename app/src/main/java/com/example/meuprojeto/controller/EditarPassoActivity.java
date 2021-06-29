@@ -58,6 +58,7 @@ public class EditarPassoActivity extends AppCompatActivity {
         getWindow().setLayout(width,height);
 
         passo = getIntent().getParcelableExtra("passo");
+        Log.e("passo atual ", "passo"+passo.getId());
         idAtividade = getIntent().getStringExtra("idAtividade");
 
         descricao = (EditText) findViewById(R.id.descricao);
@@ -91,10 +92,12 @@ public class EditarPassoActivity extends AppCompatActivity {
         btExcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("passo excluido ", "excluido"+passo.getId());
                 FirebaseFirestore.getInstance().collection("usuarios")
                         .document(FirebaseAuth.getInstance().getUid())
                         .collection("/atividades").document(idAtividade)
-                        .collection("passos").document(passo.getNumOrdem()).delete();
+                        .collection("passos").document(passo.getId()).delete();
+                Log.e("passo excluido ", "excluido");
                 finish();
             }
         });
@@ -113,7 +116,7 @@ public class EditarPassoActivity extends AppCompatActivity {
             FirebaseFirestore.getInstance().collection("usuarios")
                     .document(FirebaseAuth.getInstance().getUid())
                     .collection("/atividades").document(idAtividade)
-                    .collection("passos").document(passo.getNumOrdem()).update("descricaoPasso",descricaoPasso);
+                    .collection("passos").document(passo.getId()).update("descricaoPasso",descricaoPasso);
         }
         if(dataIMG != null){
             String fileName = UUID.randomUUID().toString();
@@ -133,7 +136,7 @@ public class EditarPassoActivity extends AppCompatActivity {
                             FirebaseFirestore.getInstance().collection("usuarios")
                                     .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
                                     .document(idAtividade).collection("passos")
-                                    .document(passo.getNumOrdem())
+                                    .document(passo.getId())
                                     .update("imagemURL", uri.toString())
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override

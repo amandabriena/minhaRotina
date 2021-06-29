@@ -92,7 +92,7 @@ public class PassoFragment extends Fragment {
 
         //Inicializando o objeto do passo atual para cadastro
         objPasso = new Passo();
-        objPasso.setNumOrdem(passo);
+        //objPasso.setNumOrdem(passo);
 
         //Setando a informação do passo atual no fragmento:
         ordemPasso.setText("Passo "+passo+":");

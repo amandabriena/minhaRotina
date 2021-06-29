@@ -1,37 +1,26 @@
 package com.example.meuprojeto.controller;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewParent;
 import android.widget.Toast;
 
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Passo;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class PassosActivity extends AppCompatActivity {
-    SliderAdapter adapter;
+    SliderPassosAdapter adapter;
     ViewPager2 page2;
     ArrayList<Passo> listaPassos = new ArrayList<>();
     String idAtividade;
@@ -46,7 +35,7 @@ public class PassosActivity extends AppCompatActivity {
         Log.e("passos size", listaPassos.size()+"");
         page2 = findViewById(R.id.viewPager);
 
-        adapter = new SliderAdapter(listaPassos);
+        adapter = new SliderPassosAdapter(listaPassos);
         page2.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new ClickListener<Passo>() {

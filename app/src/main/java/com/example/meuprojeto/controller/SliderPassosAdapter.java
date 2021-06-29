@@ -1,8 +1,6 @@
 package com.example.meuprojeto.controller;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,21 +13,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meuprojeto.R;
-import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.Passo;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.MyViewHolder> {
+public class SliderPassosAdapter extends RecyclerView.Adapter<SliderPassosAdapter.MyViewHolder> {
     private ArrayList<Passo> listaPassos;
     private MediaPlayer mediaPlayer;
     private ClickListener<Passo> clickListener;
 
 
-    public SliderAdapter(ArrayList<Passo> listaPassos) {
+    public SliderPassosAdapter(ArrayList<Passo> listaPassos) {
         this.listaPassos = listaPassos;
     }
 
@@ -46,7 +42,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.MyViewHold
         Log.e("SizePassosSlider", "SizeSlider: "+listaPassos.size());
         final Passo p = listaPassos.get(position);
         Log.e("SizePassosSlider", "num Ordem "+p.getNumOrdem()+"");
-        if(p.getNumOrdem().equals(listaPassos.size()+"")){
+        if(p.getNumOrdem()==listaPassos.size()){
             holder.btConcluido.setEnabled(true);
             holder.btConcluido.setVisibility(View.VISIBLE);
         }else{

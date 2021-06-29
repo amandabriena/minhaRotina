@@ -35,7 +35,7 @@ public class RecyclerViewAdapterHorizontal extends RecyclerView.Adapter<Recycler
     public void onBindViewHolder(MyViewHolder holder, final int position) {
         final Passo passo = listaPassos.get(position);
         Log.e("passo view", passo.getDescricaoPasso());
-        holder.ordemPasso.setText("PASSO "+passo.getNumOrdem());
+        holder.ordemPasso.setText("PASSO "+(position+1));
         Log.e("passo img", passo.getImagemURL());
         Picasso.get().load(passo.getImagemURL()).into(holder.imagemPasso);
 

@@ -3,6 +3,7 @@ package com.example.meuprojeto.controller;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +35,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -45,6 +47,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -146,9 +150,30 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                 startActivity(cadPasso);
             }
         });
-
-
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
+    //Função para reorganizar os passos:
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT
+    | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            int fromPosition = viewHolder.getAdapterPosition();
+            int toPosition = target.getAdapterPosition();
+
+            Collections.swap(listaPassos, fromPosition, toPosition);
+            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+            Log.e("From:", "From:"+fromPosition+"");
+            Log.e("To:", "To:"+toPosition+"");
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+        }
+    };
+
     public void atualizarAtividade(){
         String nome = nome_atv.getText().toString();
         String hora = horario.getText().toString();
@@ -219,6 +244,13 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                 }
             });
         }
+        //Atualizando a ordem dos passos:
+        for (Passo p : listaPassos) {
+            FirebaseFirestore.getInstance().collection("usuarios")
+                    .document(FirebaseAuth.getInstance().getUid())
+                    .collection("/atividades").document(atividade.getId())
+                    .collection("passos").document(p.getId()).update("numOrdem",(listaPassos.indexOf(p)+1));
+        }
     }
     public class CarregarPassosAsynctask extends AsyncTask<Void, Void, Void> {
 
@@ -228,6 +260,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
             FirebaseFirestore.getInstance().collection("usuarios")
                     .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
                     .document(atividade.getId()).collection("passos")
+                    .orderBy("numOrdem", Query.Direction.ASCENDING)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -269,6 +302,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, 0);
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

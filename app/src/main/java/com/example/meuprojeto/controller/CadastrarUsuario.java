@@ -20,9 +20,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.meuprojeto.R;
-import com.example.meuprojeto.datasource.UsuarioController;
 import com.example.meuprojeto.model.Usuario;
-import com.example.meuprojeto.util.MaskEditUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,7 +34,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.UUID;
@@ -45,7 +42,6 @@ import static java.util.Calendar.*;
 
 public class CadastrarUsuario extends AppCompatActivity {
     Usuario objUsuario;
-    UsuarioController controleUsuario;
     //Declarando variáveis
     Button btCadastrar, btUploadImg;
     EditText nome, data, email, senha;
@@ -63,7 +59,7 @@ public class CadastrarUsuario extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar_usuario);
 
-        controleUsuario = new UsuarioController();
+
         btCadastrar = (Button) findViewById(R.id.btCadastrar);
 
         nome = (EditText) findViewById(R.id.nome);
