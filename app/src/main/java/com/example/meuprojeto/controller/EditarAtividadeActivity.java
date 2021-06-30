@@ -326,6 +326,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
             //Activity result para atualizar informaçoes do passo que foi editado:
         }else if (requestCode==1 && resultCode == RESULT_OK){
             recyclerView.getAdapter().notifyDataSetChanged();
+            Log.e("Atualização:", "notificado");
         }
     }
     public void setarDias(){
