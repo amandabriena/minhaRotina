@@ -16,12 +16,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class RecyclerViewAdapterAtividades extends RecyclerView.Adapter<RecyclerViewAdapterAtividades.MyViewHolder> {
     private List<Atividade> listaAtividades;
     private ClickListener<Atividade> clickListener;
 
 
-    public RecyclerViewAdapter(List<Atividade> listaAtividades) {
+    public RecyclerViewAdapterAtividades(List<Atividade> listaAtividades) {
         this.listaAtividades = listaAtividades;
     }
 

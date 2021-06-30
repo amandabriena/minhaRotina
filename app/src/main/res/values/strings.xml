@@ -100,4 +100,7 @@
     //Página de edição de atividade
     <string name="btAtualizar">Atualizar!</string>
     <string name="passos">Passo a Passo:</string>
+
+    //Página incluir atividade base:
+    <string name="btIncluir">Incluir Atividade!</string>
 </resources>

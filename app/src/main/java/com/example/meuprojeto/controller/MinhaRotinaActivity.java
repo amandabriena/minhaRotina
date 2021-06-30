@@ -13,7 +13,6 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -31,21 +30,16 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.UUID;
 
 public class MinhaRotinaActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private RecyclerViewAdapter recyclerViewAdapter;
+    private RecyclerViewAdapterAtividades recyclerViewAdapter;
     private List<Atividade> listaAtividades = new ArrayList<>();
     Button btEspacoPais;
     ImageButton btCompartilhar;
@@ -59,7 +53,7 @@ public class MinhaRotinaActivity extends AppCompatActivity {
         btEspacoPais = (Button) findViewById(R.id.btEspacoPais);
         btCompartilhar = (ImageButton) findViewById(R.id.btCompartilhar);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerViewAdapter = new RecyclerViewAdapter(listaAtividades);
+        recyclerViewAdapter = new RecyclerViewAdapterAtividades(listaAtividades);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         new CarregarListaAsynctask().execute();

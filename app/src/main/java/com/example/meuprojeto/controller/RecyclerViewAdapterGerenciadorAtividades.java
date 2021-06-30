@@ -16,11 +16,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class RecyclerViewAdapterGerenciador extends RecyclerView.Adapter<RecyclerViewAdapterGerenciador.MyViewHolder> {
+public class RecyclerViewAdapterGerenciadorAtividades extends RecyclerView.Adapter<RecyclerViewAdapterGerenciadorAtividades.MyViewHolder> {
     private List<Atividade> listaAtividadesGer;
     private ClickListener<Atividade> clickListenerDelete, clickListenerEdita;
 
-    public RecyclerViewAdapterGerenciador(List<Atividade> listaAtividadesGer) {
+    public RecyclerViewAdapterGerenciadorAtividades(List<Atividade> listaAtividadesGer) {
         this.listaAtividadesGer = listaAtividadesGer;
     }
 

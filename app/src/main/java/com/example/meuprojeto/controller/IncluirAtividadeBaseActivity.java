@@ -3,8 +3,6 @@ package com.example.meuprojeto.controller;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.TimePickerDialog;
@@ -12,7 +10,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -31,12 +28,7 @@ import com.example.meuprojeto.model.Passo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -47,49 +39,23 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
-public class EditarAtividadeActivity extends AppCompatActivity {
+public class IncluirAtividadeBaseActivity extends AppCompatActivity {
     private Atividade atividade;
-    private RecyclerView recyclerView;
-    private RecyclerViewAdapterPassosHorizontal recyclerViewAdapter;
-    private ArrayList<Passo> listaPassos = new ArrayList<>();
     private ArrayList<String> listaDiasSemana = new ArrayList<>();
     EditText nome_atv, horario, musica;
     ImageButton btUploadImg;
     ImageView imagemAtividade;
-    Button btCancelar, btAtualizar, btAdicionarPasso;
+    Button btCancelar, btIncluir;
     private Uri filePath;
     private byte[] dataIMG;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_editar_atividade);
+        setContentView(R.layout.activity_incluir_atividade_base);
 
         atividade = getIntent().getParcelableExtra("atividade");
-
-        Log.e("id Atividade:", atividade.getId());
-        new CarregarPassosAsynctask().execute();
-
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerViewHorizontal);
-        recyclerViewAdapter = new RecyclerViewAdapterPassosHorizontal(listaPassos);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(layoutManager);
-
-        recyclerViewAdapter.setOnItemClickListener(new ClickListener<Passo>() {
-            @Override
-            public void onItemClick(Passo passo) {
-                Intent intent = new Intent(EditarAtividadeActivity.this, EditarPassoActivity.class);
-                intent.putExtra("passo", passo);
-                intent.putExtra("idAtividade", atividade.getId());
-                startActivity(intent);
-            }
-        });
-        recyclerView.setAdapter(recyclerViewAdapter);
 
         nome_atv = (EditText) findViewById(R.id.nome_atividade);
         horario = (EditText) findViewById(R.id.horario);
@@ -97,17 +63,13 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         btUploadImg = (ImageButton) findViewById(R.id.btUploadImg);
         imagemAtividade = (ImageView) findViewById(R.id.imgIcon);
         btCancelar = (Button) findViewById(R.id.btCancelar);
-        btAtualizar = (Button) findViewById(R.id.btAtualizarAtv);
-        btAdicionarPasso = (Button) findViewById(R.id.btAdicionarPasso);
-
+        btIncluir = (Button) findViewById(R.id.btIncluir);
 
         //Setando as informações da atividade:
         Picasso.get().load(atividade.getImagemURL()).into(imagemAtividade);
-        nome_atv.setHint(atividade.getNomeAtividade());
-        horario.setHint(atividade.getHorario());
-        musica.setHint(atividade.getMusica());
+        nome_atv.setText(atividade.getNomeAtividade());
+        musica.setText(atividade.getMusica());
         setarDias();
-
         //mascara de horário:
         horario.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,79 +91,36 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                 finish();
             }
         });
-        btAtualizar.setOnClickListener(new View.OnClickListener() {
+        btIncluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                atualizarAtividade();
-                finish();
+                String nome = nome_atv.getText().toString();
+                String hora = horario.getText().toString();
+                String musica_atv = musica.getText().toString();
+                diasMarcados();
+                if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
+                    Toast.makeText(IncluirAtividadeBaseActivity.this,"Preencha todos os campos para incluir a atividade!", Toast.LENGTH_SHORT).show();
+                }else {
+                    incluirAtividade();
+                    finish();
+                }
             }
         });
-        btAdicionarPasso.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cadPasso = new Intent(EditarAtividadeActivity.this, CadastrarPassoAtividadeActivity.class);
-                //Passando informações da atividade para cadastrar os passos
-                String numPasso = (listaPassos.size()+1)+"";
-                cadPasso.putExtra("atividade", atividade);
-                //cadPasso.putExtra("nomeAtividade", nome_atv.getText().toString());
-                cadPasso.putExtra("numPasso", numPasso);
-                //na parte de edição é passado o modo atual para tela de adicionar passo
-                cadPasso.putExtra("modoEdicao", "true");
-                startActivity(cadPasso);
-            }
-        });
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
-    //Função para reorganizar os passos:
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT
-    | ItemTouchHelper.START | ItemTouchHelper.END, 0) {
-        @Override
-        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-            int fromPosition = viewHolder.getAdapterPosition();
-            int toPosition = target.getAdapterPosition();
-
-            Collections.swap(listaPassos, fromPosition, toPosition);
-            recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
-            Log.e("From:", "From:"+fromPosition+"");
-            Log.e("To:", "To:"+toPosition+"");
-            return false;
-        }
-
-        @Override
-        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-        }
-    };
-
-    public void atualizarAtividade(){
-        String nome = nome_atv.getText().toString();
-        String hora = horario.getText().toString();
-        String musicaAtv = musica.getText().toString();
+    private void incluirAtividade(){
         diasMarcados();
-        FirebaseFirestore.getInstance().collection("usuarios")
-                .document(FirebaseAuth.getInstance().getUid())
-                .collection("/atividades").document(atividade.getId())
-                .update("dias_semana",listaDiasSemana);
-        if(!nome.isEmpty()){
-            FirebaseFirestore.getInstance().collection("usuarios")
-                    .document(FirebaseAuth.getInstance().getUid())
-                    .collection("/atividades").document(atividade.getId())
-                    .update("nomeAtividade",nome);
-        }
-        if(!hora.isEmpty()){
-            FirebaseFirestore.getInstance().collection("usuarios")
-                    .document(FirebaseAuth.getInstance().getUid())
-                    .collection("/atividades").document(atividade.getId())
-                    .update("horario",hora);
-        }
-        if(!musicaAtv.isEmpty()){
-            FirebaseFirestore.getInstance().collection("usuarios")
-                    .document(FirebaseAuth.getInstance().getUid())
-                    .collection("/atividades").document(atividade.getId())
-                    .update("musica",musicaAtv);
-        }
+        //Criando um novo id para a atividade:
+        atividade.setId(UUID.randomUUID().toString());
+        //incluindo demais informações da atividade:
+        final String usuario_atv = FirebaseAuth.getInstance().getUid();
+        atividade.setNomeAtividade(nome_atv.getText().toString());
+        atividade.setHorario(horario.getText().toString());
+        atividade.setMusica(musica.getText().toString());
+        atividade.setStatus("0");
+        atividade.setIdUsuario(usuario_atv);
+        atividade.setDias_semana(listaDiasSemana);
         if(dataIMG != null){
+            //caso o usuário tenha adicionado uma nova imagem a atividade:
             String fileName = UUID.randomUUID().toString();
             final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/atividades" + fileName);
             UploadTask uploadTask2 = ref.putBytes(dataIMG);
@@ -215,21 +134,20 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                             Log.i("FILEURI", "URI: " + uri.toString());
 
                             //Pegando o usuário que criou a atividade:
-                            String usuario_atv = FirebaseAuth.getInstance().getUid();
                             atividade.setImagemURL(uri.toString());
                             FirebaseFirestore.getInstance().collection("usuarios").document(usuario_atv).collection("atividades")
                                     .document(atividade.getId())
-                                    .update("imagemURL", uri.toString())
+                                    .set(atividade)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Log.e("Imagem atualizada", atividade.getId());
+                                            Log.e("Atividade cadastrada", atividade.getId());
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
-                                            Log.i("Erro ao atualizar", e.getMessage());
+                                            Log.i("Erro ao cadastrar", e.getMessage());
                                         }
                                     });
 
@@ -243,45 +161,23 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                     Log.e("Teste", e.getMessage(), e);
                 }
             });
-        }
-        //Atualizando a ordem dos passos:
-        for (Passo p : listaPassos) {
-            FirebaseFirestore.getInstance().collection("usuarios")
-                    .document(FirebaseAuth.getInstance().getUid())
-                    .collection("/atividades").document(atividade.getId())
-                    .collection("passos").document(p.getId()).update("numOrdem",(listaPassos.indexOf(p)+1));
-            Log.e("Index Passo:", listaPassos.indexOf(p)+1+"");
-        }
-    }
-    public class CarregarPassosAsynctask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            // carregar do banco
-            FirebaseFirestore.getInstance().collection("usuarios")
-                    .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
-                    .document(atividade.getId()).collection("passos")
-                    .orderBy("numOrdem", Query.Direction.ASCENDING)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+        }else{
+            //Caso o usuário não tenha atualizado a imagem da atividade:
+            FirebaseFirestore.getInstance().collection("usuarios").document(usuario_atv).collection("atividades")
+                    .document(atividade.getId())
+                    .set(atividade)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                            if(error != null){
-                                Log.e("Erro", error.getMessage());
-                                return;
-                            }
-                            List<DocumentSnapshot> docs = value.getDocuments();
-                            for(DocumentSnapshot doc : docs){
-                                Passo passo = doc.toObject(Passo.class);
-                                Log.e("Passo:", passo.getDescricaoPasso());
-                                listaPassos.add(passo);
-                            }
+                        public void onSuccess(Void aVoid) {
+                            Log.e("Atividade cadastrada", atividade.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.i("Erro ao cadastrar", e.getMessage());
                         }
                     });
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Void resultado) {
-            recyclerViewAdapter.notifyDataSetChanged();
         }
     }
     private void showTimeDialog(final EditText horario){
@@ -295,7 +191,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                 horario.setText(simpleDateFormat.format(c.getTime()));
             }
         };
-        new TimePickerDialog(EditarAtividadeActivity.this, timeSetListener,
+        new TimePickerDialog(IncluirAtividadeBaseActivity.this, timeSetListener,
                 c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE),true).show();
     }
 

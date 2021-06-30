@@ -11,18 +11,16 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.meuprojeto.R;
-import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.Passo;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class RecyclerViewAdapterHorizontal extends RecyclerView.Adapter<RecyclerViewAdapterHorizontal.MyViewHolder>{
+public class RecyclerViewAdapterPassosHorizontal extends RecyclerView.Adapter<RecyclerViewAdapterPassosHorizontal.MyViewHolder>{
     private ArrayList<Passo> listaPassos;
     private ClickListener<Passo> clickListener;
 
-    public RecyclerViewAdapterHorizontal(ArrayList<Passo> listaPassos) {
+    public RecyclerViewAdapterPassosHorizontal(ArrayList<Passo> listaPassos) {
         this.listaPassos = listaPassos;
     }
     @Override

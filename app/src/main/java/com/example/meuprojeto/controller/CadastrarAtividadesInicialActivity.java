@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
@@ -28,7 +27,7 @@ import java.util.List;
 public class CadastrarAtividadesInicialActivity extends AppCompatActivity {
     Button btCriarNova;
     private RecyclerView recyclerView;
-    private RecyclerViewAdapterGerenciador recyclerViewAdapter;
+    private RecyclerViewAdapterAtividades recyclerViewAdapter;
     private List<Atividade> listaAtividades = new ArrayList<>();
 
     @Override
@@ -47,21 +46,21 @@ public class CadastrarAtividadesInicialActivity extends AppCompatActivity {
             }
         });
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        recyclerViewAdapter = new RecyclerViewAdapterGerenciador(listaAtividades);
+        recyclerViewAdapter = new RecyclerViewAdapterAtividades(listaAtividades);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
         new CarregarListaAsynctask().execute();
         //PASSANDO PARA OUTRA PÁGINA AO CLICAR NA ATIVIDADE
-        /*
+
         recyclerViewAdapter.setOnItemClickListener(new ClickListener<Atividade>() {
             @Override
             public void onItemClick(Atividade atividade) {
-                Intent intent = new Intent(CadastrarAtividadesInicialActivity.this, AtividadeActivity.class);
-                intent.putExtra("idAtividade", atividade.getId());
+                Intent intent = new Intent(CadastrarAtividadesInicialActivity.this, IncluirAtividadeBaseActivity.class);
+                intent.putExtra("atividade", atividade);
                 startActivity(intent);
             }
-        });*/
+        });
         recyclerView.setAdapter(recyclerViewAdapter);
     }
     public class CarregarListaAsynctask extends AsyncTask<Void, Void, Void> {
@@ -69,7 +68,7 @@ public class CadastrarAtividadesInicialActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             // carregar do banco
-            FirebaseFirestore.getInstance().collection("/atividades").orderBy("horario", Query.Direction.ASCENDING)
+            FirebaseFirestore.getInstance().collection("/atividades_base")
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {

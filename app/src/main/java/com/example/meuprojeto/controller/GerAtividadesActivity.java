@@ -28,7 +28,7 @@ import java.util.List;
 public class GerAtividadesActivity extends AppCompatActivity {
     Button btAdicionarAtividade;
     private RecyclerView recyclerView;
-    private RecyclerViewAdapterGerenciador recyclerViewAdapter;
+    private RecyclerViewAdapterGerenciadorAtividades recyclerViewAdapter;
     private List<Atividade> listaAtividadesGer = new ArrayList<>();
 
     @Override
@@ -47,7 +47,7 @@ public class GerAtividadesActivity extends AppCompatActivity {
         });
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewGer);
-        recyclerViewAdapter = new RecyclerViewAdapterGerenciador(listaAtividadesGer);
+        recyclerViewAdapter = new RecyclerViewAdapterGerenciadorAtividades(listaAtividadesGer);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -69,24 +69,12 @@ public class GerAtividadesActivity extends AppCompatActivity {
                 Intent intent = new Intent(GerAtividadesActivity.this, EditarAtividadeActivity.class);
                 intent.putExtra("atividade", atividade);
                 intent.putExtra("idAtividade", atividade.getId());
+                intent.putExtra("atividadeBase", "false");
                 startActivity(intent);
             }
         });
     }
-    /*
-    public void onClickEditar(View v){
-        int itemAtv = recyclerViewAdapter.getItemCount()-1;
-        Intent intent = new Intent(GerAtividadesActivity.this, EditarAtividadeActivity.class);
-        intent.putExtra("atividade", listaAtividadesGer.get(itemAtv));
-        intent.putExtra("idAtividade", listaAtividadesGer.get(itemAtv).getId());
-        startActivity(intent);
-    }
-    public void onClickDeletar(View v){
-        int itemAtv = recyclerViewAdapter.getItemCount()-1;
-        Intent intent = new Intent(GerAtividadesActivity.this, PopupDeletarAtividadeActivity.class);
-        intent.putExtra("idAtividade", listaAtividadesGer.get(itemAtv).getId());
-        startActivity(intent);
-    }*/
+
     public class CarregarListaAsynctask extends AsyncTask<Void, Void, Void> {
 
         @Override
