@@ -85,6 +85,8 @@ public class EditarPassoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 atualizarPasso();
                 Toast.makeText(EditarPassoActivity.this,"Passo atualizado com sucesso!", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent();
+                setResult(RESULT_OK,intent);
                 finish();
             }
         });
@@ -98,6 +100,8 @@ public class EditarPassoActivity extends AppCompatActivity {
                         .collection("/atividades").document(idAtividade)
                         .collection("passos").document(passo.getId()).delete();
                 Log.e("passo excluido ", "excluido");
+                Intent intent=new Intent();
+                setResult(RESULT_OK,intent);
                 finish();
             }
         });

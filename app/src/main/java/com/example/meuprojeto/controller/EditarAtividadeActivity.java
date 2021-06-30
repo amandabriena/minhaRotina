@@ -86,7 +86,8 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                 Intent intent = new Intent(EditarAtividadeActivity.this, EditarPassoActivity.class);
                 intent.putExtra("passo", passo);
                 intent.putExtra("idAtividade", atividade.getId());
-                startActivity(intent);
+                startActivityForResult(intent, 1);// Activity é iniciada com requestCode 1
+                //startActivity(intent);
             }
         });
         recyclerView.setAdapter(recyclerViewAdapter);
@@ -322,6 +323,9 @@ public class EditarAtividadeActivity extends AppCompatActivity {
             }catch (IOException e){
                 Toast.makeText(this,"Erro ao selecionar imagem! "+e, Toast.LENGTH_SHORT);
             }
+            //Activity result para atualizar informaçoes do passo que foi editado:
+        }else if (requestCode==1 && resultCode == RESULT_OK){
+            recyclerView.getAdapter().notifyDataSetChanged();
         }
     }
     public void setarDias(){
