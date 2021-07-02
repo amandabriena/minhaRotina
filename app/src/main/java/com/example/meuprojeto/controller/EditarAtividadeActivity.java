@@ -56,7 +56,9 @@ public class EditarAtividadeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerViewAdapterPassosHorizontal recyclerViewAdapter;
     private ArrayList<Passo> listaPassos = new ArrayList<>();
+    private ArrayList<Passo> listaPassosAtualizada = new ArrayList<>();
     private ArrayList<String> listaDiasSemana = new ArrayList<>();
+    private boolean verificador = true;
     EditText nome_atv, horario, musica;
     ImageButton btUploadImg;
     ImageView imagemAtividade;
@@ -146,9 +148,8 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                 cadPasso.putExtra("atividade", atividade);
                 //cadPasso.putExtra("nomeAtividade", nome_atv.getText().toString());
                 cadPasso.putExtra("numPasso", numPasso);
-                //na parte de edição é passado o modo atual para tela de adicionar passo
-                cadPasso.putExtra("modoEdicao", "true");
-                startActivity(cadPasso);
+                //startActivity(cadPasso);
+                startActivityForResult(cadPasso, 2);
             }
         });
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -164,8 +165,13 @@ public class EditarAtividadeActivity extends AppCompatActivity {
 
             Collections.swap(listaPassos, fromPosition, toPosition);
             recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
-            Log.e("From:", "From:"+fromPosition+"");
-            Log.e("To:", "To:"+toPosition+"");
+            //Alterando posição dos passos na lista e na visualização:
+            listaPassos.get(fromPosition).setNumOrdem(fromPosition+1);
+            recyclerView.getAdapter().notifyItemChanged(fromPosition);
+            listaPassos.get(toPosition).setNumOrdem(toPosition+1);
+            recyclerView.getAdapter().notifyItemChanged(toPosition);
+            Log.e("Passo From:", "From:"+fromPosition+"");
+            Log.e("Passo To:", "To:"+toPosition+"");
             return false;
         }
 
@@ -251,7 +257,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                     .document(FirebaseAuth.getInstance().getUid())
                     .collection("/atividades").document(atividade.getId())
                     .collection("passos").document(p.getId()).update("numOrdem",(listaPassos.indexOf(p)+1));
-            Log.e("Index Passo:", listaPassos.indexOf(p)+1+"");
+            Log.e("Passo:", "Index passo:"+listaPassos.indexOf(p)+1+"");
         }
     }
     public class CarregarPassosAsynctask extends AsyncTask<Void, Void, Void> {
@@ -259,30 +265,39 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             // carregar do banco
-            FirebaseFirestore.getInstance().collection("usuarios")
-                    .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
-                    .document(atividade.getId()).collection("passos")
-                    .orderBy("numOrdem", Query.Direction.ASCENDING)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                            if(error != null){
-                                Log.e("Erro", error.getMessage());
-                                return;
+            Log.e("Passo", "Verificador antes do if"+verificador);
+                FirebaseFirestore.getInstance().collection("usuarios")
+                        .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
+                        .document(atividade.getId()).collection("passos")
+                        .orderBy("numOrdem", Query.Direction.ASCENDING)
+                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                if(error != null){
+                                    Log.e("Erro", error.getMessage());
+                                    return;
+                                }
+                                List<DocumentSnapshot> docs = value.getDocuments();
+                                for(DocumentSnapshot doc : docs){
+                                    Passo passo = doc.toObject(Passo.class);
+                                    if(verificador){
+                                        Log.e("Passo:", "Passo add na lista:"+passo.getDescricaoPasso());
+                                        listaPassos.add(passo);
+                                    }
+                                }
+                                verificador = false;
+                                Log.e("Passo", "Verificador dps do for "+verificador);
                             }
-                            List<DocumentSnapshot> docs = value.getDocuments();
-                            for(DocumentSnapshot doc : docs){
-                                Passo passo = doc.toObject(Passo.class);
-                                Log.e("Passo:", passo.getDescricaoPasso());
-                                listaPassos.add(passo);
-                            }
-                        }
-                    });
+                        });
+
+
             return null;
-        }
+            }
+
         @Override
         protected void onPostExecute(Void resultado) {
-            recyclerViewAdapter.notifyDataSetChanged();
+            Log.e("Passo", "atualização adapter");
+            recyclerView.getAdapter().notifyDataSetChanged();
         }
     }
     private void showTimeDialog(final EditText horario){
@@ -306,6 +321,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         startActivityForResult(intent, 0);
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -323,10 +339,23 @@ public class EditarAtividadeActivity extends AppCompatActivity {
             }catch (IOException e){
                 Toast.makeText(this,"Erro ao selecionar imagem! "+e, Toast.LENGTH_SHORT);
             }
-            //Activity result para atualizar informaçoes do passo que foi editado:
+            //Activity result para atualizar informaçoes do passo que foi deletado:
         }else if (requestCode==1 && resultCode == RESULT_OK){
-            recyclerView.getAdapter().notifyDataSetChanged();
-            Log.e("Atualização:", "notificado");
+            int ordemPassoRemovido = data.getIntExtra("posicaoPasso", 0);
+            Passo passoRemovido = data.getParcelableExtra("passo");
+            boolean removido = listaPassos.remove(passoRemovido);
+            Log.e("Passo", "Removido?"+removido);
+            Log.e("Passo", "passo removido:"+passoRemovido.getDescricaoPasso());
+            recyclerViewAdapter.notifyItemRemoved(ordemPassoRemovido-1);
+            //recyclerView.getAdapter().notifyDataSetChanged();
+            Log.e("Passo:", "posicao passo removido:"+ordemPassoRemovido+"");
+            //Activity result para atualizar informaçoes do passo que foi adicionado:
+        }else if(requestCode==2 && resultCode == RESULT_OK){
+            Passo p = data.getParcelableExtra("passo");
+            Log.e("Passo", "Passo adicionado:"+p.getDescricaoPasso());
+            listaPassos.add(p);
+            recyclerView.getAdapter().notifyItemInserted(p.getNumOrdem()-1);
+            //recyclerView.getAdapter().notifyDataSetChanged();
         }
     }
     public void setarDias(){

@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -60,6 +61,7 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
     private byte[] dataIMG;
     private static int MICROPHONE_PERMISSION_CODE = 200;
     MediaRecorder mediaRecorder;
+    private ProgressDialog progress;
 
     //Conexão com o db
     FirebaseDatabase firebaseDatabase;
@@ -84,6 +86,8 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         btTrash = (ImageButton) findViewById(R.id.btTrash);
 
         objPasso = new Passo();
+
+        progress = new ProgressDialog(this);
 
         //Pegando informações da atividade que está sendo cadastrada:
         atividade = getIntent().getParcelableExtra("atividade");
@@ -169,7 +173,7 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Direcionando para tela de  de dashboard ao finalizar cadastros
-                adicionarPasso();
+
                 if(modo =="true"){
                     Intent intent = new Intent(CadastrarPassoAtividadeActivity.this, EditarAtividadeActivity.class);
                     intent.putExtra("modoEdicao", "true");
@@ -177,10 +181,10 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }else{
-                    Intent intent = new Intent(CadastrarPassoAtividadeActivity.this, DashboardActivity.class);
-                    intent.putExtra("modoEdicao", "false");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+                    progress.setMessage("Adicionando passo..");
+                    progress.show();
+                    adicionarPasso();
+
                 }
 
             }
@@ -339,8 +343,13 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Log.e("Passo e ID", objPasso.getDescricaoPasso()+" ordem:"+objPasso.getNumOrdem()+"ID:"+objPasso.getId());
-                                        Log.e("numPasso ", numPasso+"");
+                                        Log.e("Passo", "Passo e ID:"+objPasso.getDescricaoPasso()+" ordem:"+objPasso.getNumOrdem()+"ID:"+objPasso.getId());
+                                        Log.e("Passo", "ordem Passo:"+numPasso);
+                                        Intent intent = new Intent(CadastrarPassoAtividadeActivity.this, DashboardActivity.class);
+                                        setResult(RESULT_OK,intent);
+                                        intent.putExtra("passo", objPasso);
+                                        progress.dismiss();
+                                        finish();
 
                                     }
                                 })

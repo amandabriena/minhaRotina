@@ -22,6 +22,7 @@ public class RecyclerViewAdapterPassosHorizontal extends RecyclerView.Adapter<Re
 
     public RecyclerViewAdapterPassosHorizontal(ArrayList<Passo> listaPassos) {
         this.listaPassos = listaPassos;
+
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -34,7 +35,6 @@ public class RecyclerViewAdapterPassosHorizontal extends RecyclerView.Adapter<Re
         final Passo passo = listaPassos.get(position);
         Log.e("passo view", passo.getDescricaoPasso());
         holder.ordemPasso.setText("PASSO "+(position+1));
-        Log.e("passo img", passo.getImagemURL());
         Picasso.get().load(passo.getImagemURL()).into(holder.imagemPasso);
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -43,8 +43,6 @@ public class RecyclerViewAdapterPassosHorizontal extends RecyclerView.Adapter<Re
                 clickListener.onItemClick(passo);
             }
         });
-
-
     }
     @Override
     public int getItemCount() {

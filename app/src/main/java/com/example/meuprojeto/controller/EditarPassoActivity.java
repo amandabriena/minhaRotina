@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -46,6 +47,7 @@ public class EditarPassoActivity extends AppCompatActivity {
     ImageButton btUploadImg;
     ImageView imgPasso;
     String idAtividade;
+    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,8 @@ public class EditarPassoActivity extends AppCompatActivity {
         passo = getIntent().getParcelableExtra("passo");
         Log.e("passo atual ", "passo"+passo.getId());
         idAtividade = getIntent().getStringExtra("idAtividade");
+
+        progress = new ProgressDialog(this);
 
         descricao = (EditText) findViewById(R.id.descricao);
         ordemPasso = (TextView) findViewById(R.id.ordemPasso);
@@ -94,15 +98,27 @@ public class EditarPassoActivity extends AppCompatActivity {
         btExcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("passo excluido ", "excluido"+passo.getId());
+                progress.setMessage("Deletando passo..");
+                progress.show();
+                Log.e("Passo ", "passo excluido:"+passo.getId());
                 FirebaseFirestore.getInstance().collection("usuarios")
                         .document(FirebaseAuth.getInstance().getUid())
                         .collection("/atividades").document(idAtividade)
-                        .collection("passos").document(passo.getId()).delete();
-                Log.e("passo excluido ", "excluido");
-                Intent intent=new Intent();
-                setResult(RESULT_OK,intent);
-                finish();
+                        .collection("passos").document(passo.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        progress.dismiss();
+                        Log.e("Passo", "excluido");
+                        Intent intent=new Intent();
+                        Log.e("Passo", "Posicao passo excluido"+passo.getNumOrdem());
+                        Log.e("Passo", "Passo excluido no edit:"+passo.getDescricaoPasso());
+                        intent.putExtra("posicaoPasso", passo.getNumOrdem());
+                        intent.putExtra("passo", passo);
+                        setResult(RESULT_OK,intent);
+                        finish();
+                    }
+                });
+
             }
         });
         //fechar popup de atualização:

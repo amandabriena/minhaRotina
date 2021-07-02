@@ -3,6 +3,8 @@ package com.example.meuprojeto.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -95,5 +97,16 @@ public class Passo implements Parcelable {
         dest.writeString(descricaoPasso);
         dest.writeString(imagemURL);
         dest.writeString(audio);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj instanceof Passo){
+            if(this.getId().
+                    equals(((Passo) obj).getId())){
+                return true;
+            }
+        }
+        return false;
     }
 }

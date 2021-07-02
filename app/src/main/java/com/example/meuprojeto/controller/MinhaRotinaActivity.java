@@ -168,7 +168,7 @@ public class MinhaRotinaActivity extends AppCompatActivity {
         }
         @Override
         protected void onPostExecute(Void resultado) {
-            recyclerViewAdapter.notifyDataSetChanged();
+            recyclerView.getAdapter().notifyDataSetChanged();
         }
     }
     private String verificarDiaSemana(){
