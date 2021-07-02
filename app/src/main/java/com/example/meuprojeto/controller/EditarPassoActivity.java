@@ -98,6 +98,15 @@ public class EditarPassoActivity extends AppCompatActivity {
         btExcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("Passo", "excluido");
+                Intent intent=new Intent();
+                Log.e("Passo", "Posicao passo excluido"+passo.getNumOrdem());
+                Log.e("Passo", "Passo excluido no edit:"+passo.getDescricaoPasso());
+                intent.putExtra("posicaoPasso", passo.getNumOrdem());
+                intent.putExtra("passo", passo);
+                setResult(RESULT_OK,intent);
+                finish();
+                /*
                 progress.setMessage("Deletando passo..");
                 progress.show();
                 Log.e("Passo ", "passo excluido:"+passo.getId());
@@ -117,7 +126,7 @@ public class EditarPassoActivity extends AppCompatActivity {
                         setResult(RESULT_OK,intent);
                         finish();
                     }
-                });
+                });*/
 
             }
         });

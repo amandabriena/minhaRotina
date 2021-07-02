@@ -56,7 +56,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerViewAdapterPassosHorizontal recyclerViewAdapter;
     private ArrayList<Passo> listaPassos = new ArrayList<>();
-    private ArrayList<Passo> listaPassosAtualizada = new ArrayList<>();
+    private ArrayList<Passo> listaPassosAntiga = new ArrayList<>();
     private ArrayList<String> listaDiasSemana = new ArrayList<>();
     private boolean verificador = true;
     EditText nome_atv, horario, musica;
@@ -251,13 +251,21 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                 }
             });
         }
-        //Atualizando a ordem dos passos:
-        for (Passo p : listaPassos) {
-            FirebaseFirestore.getInstance().collection("usuarios")
-                    .document(FirebaseAuth.getInstance().getUid())
-                    .collection("/atividades").document(atividade.getId())
-                    .collection("passos").document(p.getId()).update("numOrdem",(listaPassos.indexOf(p)+1));
-            Log.e("Passo:", "Index passo:"+listaPassos.indexOf(p)+1+"");
+        //Atualizando passos passos:
+        for (Passo p : listaPassosAntiga) {
+            if(listaPassos.contains(p)){
+                FirebaseFirestore.getInstance().collection("usuarios")
+                        .document(FirebaseAuth.getInstance().getUid())
+                        .collection("/atividades").document(atividade.getId())
+                        .collection("passos").document(p.getId()).update("numOrdem",(listaPassos.indexOf(p)+1));
+                Log.e("Passo:", "Index passo:"+listaPassos.indexOf(p)+1+"");
+            }else{
+                FirebaseFirestore.getInstance().collection("usuarios")
+                        .document(FirebaseAuth.getInstance().getUid())
+                        .collection("/atividades").document(atividade.getId())
+                        .collection("passos").document(p.getId()).delete();
+                Log.e("Passo:", "passo excluido:"+p.getDescricaoPasso());
+            }
         }
     }
     public class CarregarPassosAsynctask extends AsyncTask<Void, Void, Void> {
@@ -283,6 +291,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                                     if(verificador){
                                         Log.e("Passo:", "Passo add na lista:"+passo.getDescricaoPasso());
                                         listaPassos.add(passo);
+                                        listaPassosAntiga.add(passo);
                                     }
                                 }
                                 verificador = false;
