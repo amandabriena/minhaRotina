@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -50,6 +51,8 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
     Button btCancelar, btIncluir;
     private Uri filePath;
     private byte[] dataIMG;
+    private ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +67,8 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
         imagemAtividade = (ImageView) findViewById(R.id.imgIcon);
         btCancelar = (Button) findViewById(R.id.btCancelar);
         btIncluir = (Button) findViewById(R.id.btIncluir);
+
+        progress = new ProgressDialog(this);
 
         //Setando as informações da atividade:
         Picasso.get().load(atividade.getImagemURL()).into(imagemAtividade);
@@ -101,8 +106,9 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
                 if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
                     Toast.makeText(IncluirAtividadeBaseActivity.this,"Preencha todos os campos para incluir a atividade!", Toast.LENGTH_SHORT).show();
                 }else {
+                    progress.setMessage("Adicionando atividade..");
+                    progress.show();
                     incluirAtividade();
-                    finish();
                 }
             }
         });
@@ -142,6 +148,10 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.e("Atividade cadastrada", atividade.getId());
+                                            Intent intent = new Intent(IncluirAtividadeBaseActivity.this, GerAtividadesActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            progress.dismiss();
+                                            startActivity(intent);
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -170,6 +180,10 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.e("Atividade cadastrada", atividade.getId());
+                            Intent intent = new Intent(IncluirAtividadeBaseActivity.this, GerAtividadesActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            progress.dismiss();
+                            startActivity(intent);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

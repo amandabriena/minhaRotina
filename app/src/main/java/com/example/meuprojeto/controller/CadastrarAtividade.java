@@ -1,5 +1,6 @@
 package com.example.meuprojeto.controller;
 
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -51,6 +52,7 @@ public class CadastrarAtividade extends AppCompatActivity {
     ImageView imgIcon;
     private Uri filePath;
     private byte[] dataIMG;
+    private ProgressDialog progress;
 
     //Conexão com o db
     FirebaseDatabase firebaseDatabase;
@@ -72,6 +74,7 @@ public class CadastrarAtividade extends AppCompatActivity {
 
         objAtividade = new Atividade();
 
+        progress = new ProgressDialog(this);
 
         //Adicionando máscara de horário:
         horario.setOnClickListener(new View.OnClickListener() {
@@ -94,10 +97,10 @@ public class CadastrarAtividade extends AppCompatActivity {
                 }else if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
                     Toast.makeText(CadastrarAtividade.this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT).show();
                 }else {
+                    progress.setMessage("Adicionando atividade..");
+                    progress.show();
                     criarAtividade();
-                    Intent intent = new Intent(CadastrarAtividade.this, DashboardActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+
                 }
             }
         });
@@ -229,6 +232,10 @@ public class CadastrarAtividade extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.e("Atividade cadastrada", objAtividade.getId());
+                                            Intent intent = new Intent(CadastrarAtividade.this, GerAtividadesActivity.class);
+                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            progress.dismiss();
+                                            startActivity(intent);
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
