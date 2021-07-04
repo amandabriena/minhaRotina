@@ -40,8 +40,9 @@ public class CadastrarAtividadesInicialActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Direcionando para espaço infantil
-                Intent intent = new Intent(CadastrarAtividadesInicialActivity.this, CadastrarAtividade.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                //Intent intent = new Intent(CadastrarAtividadesInicialActivity.this, CadastrarAtividade.class);
+                Intent intent = new Intent(CadastrarAtividadesInicialActivity.this, CadastrarAtividadeCompleto.class);
+                
                 startActivity(intent);
             }
         });

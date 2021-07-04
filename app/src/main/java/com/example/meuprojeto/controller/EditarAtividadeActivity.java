@@ -142,7 +142,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         btAdicionarPasso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cadPasso = new Intent(EditarAtividadeActivity.this, CadastrarPassoAtividadeActivity.class);
+                Intent cadPasso = new Intent(EditarAtividadeActivity.this, CadastrarPassoActivity.class);
                 //Passando informações da atividade para cadastrar os passos
                 String numPasso = (listaPassos.size()+1)+"";
                 cadPasso.putExtra("atividade", atividade);
@@ -182,6 +182,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
     };
 
     public void atualizarAtividade(){
+        Log.e("Atividade", "Atualizando atividade");
         String nome = nome_atv.getText().toString();
         String hora = horario.getText().toString();
         String musicaAtv = musica.getText().toString();
@@ -191,24 +192,28 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                 .collection("/atividades").document(atividade.getId())
                 .update("dias_semana",listaDiasSemana);
         if(!nome.isEmpty()){
+            Log.e("Atividade", "nome atualizado");
             FirebaseFirestore.getInstance().collection("usuarios")
                     .document(FirebaseAuth.getInstance().getUid())
                     .collection("/atividades").document(atividade.getId())
                     .update("nomeAtividade",nome);
         }
         if(!hora.isEmpty()){
+            Log.e("Atividade", "hora atualizado");
             FirebaseFirestore.getInstance().collection("usuarios")
                     .document(FirebaseAuth.getInstance().getUid())
                     .collection("/atividades").document(atividade.getId())
                     .update("horario",hora);
         }
         if(!musicaAtv.isEmpty()){
+            Log.e("Atividade", "musica atualizado");
             FirebaseFirestore.getInstance().collection("usuarios")
                     .document(FirebaseAuth.getInstance().getUid())
                     .collection("/atividades").document(atividade.getId())
                     .update("musica",musicaAtv);
         }
         if(dataIMG != null){
+            Log.e("Atividade", "img atualizado");
             String fileName = UUID.randomUUID().toString();
             final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/atividades" + fileName);
             UploadTask uploadTask2 = ref.putBytes(dataIMG);
@@ -253,11 +258,17 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         }
         //Atualizando passos passos:
         for (Passo p : listaPassosAntiga) {
+            Log.e("Atividade", "passo atualizado");
             if(listaPassos.contains(p)){
+                /*
                 FirebaseFirestore.getInstance().collection("usuarios")
                         .document(FirebaseAuth.getInstance().getUid())
                         .collection("/atividades").document(atividade.getId())
-                        .collection("passos").document(p.getId()).update("numOrdem",(listaPassos.indexOf(p)+1));
+                        .collection("passos").document(p.getId()).update("numOrdem",(listaPassos.indexOf(p)+1));*/
+                FirebaseFirestore.getInstance().collection("usuarios")
+                        .document(FirebaseAuth.getInstance().getUid())
+                        .collection("/atividades").document(atividade.getId())
+                        .collection("passos").document(p.getId()).update("numOrdem",(listaPassos.indexOf(p)+1), "imagemURL", p.getImagemURL(), "descricaoPasso", p.getDescricaoPasso());
                 Log.e("Passo:", "Index passo:"+listaPassos.indexOf(p)+1+"");
             }else{
                 FirebaseFirestore.getInstance().collection("usuarios")
@@ -350,14 +361,24 @@ public class EditarAtividadeActivity extends AppCompatActivity {
             }
             //Activity result para atualizar informaçoes do passo que foi deletado:
         }else if (requestCode==1 && resultCode == RESULT_OK){
-            int ordemPassoRemovido = data.getIntExtra("posicaoPasso", 0);
-            Passo passoRemovido = data.getParcelableExtra("passo");
-            boolean removido = listaPassos.remove(passoRemovido);
-            Log.e("Passo", "Removido?"+removido);
-            Log.e("Passo", "passo removido:"+passoRemovido.getDescricaoPasso());
-            recyclerViewAdapter.notifyItemRemoved(ordemPassoRemovido-1);
-            //recyclerView.getAdapter().notifyDataSetChanged();
-            Log.e("Passo:", "posicao passo removido:"+ordemPassoRemovido+"");
+            String tipo = data.getStringExtra("tipo");
+            Passo passoAtual = data.getParcelableExtra("passo");
+            int ordemPassoAtual = data.getIntExtra("posicaoPasso", 0);
+            Log.e("Passo:", "Tipo:"+tipo);
+            if(tipo.equals("excluir")){
+                boolean removido = listaPassos.remove(passoAtual);
+                Log.e("Passo", "Removido?"+removido);
+                Log.e("Passo", "passo removido:"+passoAtual.getDescricaoPasso());
+                recyclerViewAdapter.notifyItemRemoved(ordemPassoAtual-1);
+                Log.e("Passo:", "posicao passo removido:"+ordemPassoAtual);
+            }else{
+                listaPassos.set(ordemPassoAtual-1, passoAtual);
+                Log.e("Passo", "passo alterado:"+passoAtual.getDescricaoPasso());
+                Log.e("Passo", "Passo Alterado");
+                Log.e("Passo:", "posicao passo alterado:"+ordemPassoAtual);
+                recyclerViewAdapter.notifyItemChanged(ordemPassoAtual-1,passoAtual);
+            }
+
             //Activity result para atualizar informaçoes do passo que foi adicionado:
         }else if(requestCode==2 && resultCode == RESULT_OK){
             Passo p = data.getParcelableExtra("passo");

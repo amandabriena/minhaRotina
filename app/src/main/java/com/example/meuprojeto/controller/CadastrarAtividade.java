@@ -104,22 +104,21 @@ public class CadastrarAtividade extends AppCompatActivity {
                 }
             }
         });
+        /*
         btAddPassos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 criarAtividade();
-                Intent cadPasso = new Intent(CadastrarAtividade.this, CadastrarPassoAtividadeActivity.class);
+                //Intent cadPasso = new Intent(CadastrarAtividade.this, CadastrarPassoAtividadeActivity.class);
+                Intent cadPasso = new Intent(CadastrarAtividade.this, EditarAtividadeActivity.class);
                 //Passando informações da atividade para cadastrar os passos
                 cadPasso.putExtra("atividade",objAtividade);
-                /*
-                cadPasso.putExtra("idAtividade", objAtividade.getId());
-                cadPasso.putExtra("nomeAtividade", nome_atv.getText().toString());*/
                 cadPasso.putExtra("numPasso", "1");
                 //informando que o modo não é de edição, mas sim de cadastro:
                 cadPasso.putExtra("modoEdicao", "false");
                 startActivity(cadPasso);
             }
-        });
+        });*/
         btUploadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -232,8 +231,9 @@ public class CadastrarAtividade extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.e("Atividade cadastrada", objAtividade.getId());
-                                            Intent intent = new Intent(CadastrarAtividade.this, GerAtividadesActivity.class);
+                                            Intent intent = new Intent(CadastrarAtividade.this, EditarAtividadeActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            intent.putExtra("atividade", objAtividade);
                                             progress.dismiss();
                                             startActivity(intent);
                                         }

@@ -1,5 +1,6 @@
 package com.example.meuprojeto.model;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -14,6 +15,7 @@ public class Passo implements Parcelable {
     private String descricaoPasso;
     private String imagemURL;
     private String audio;
+    private Uri uri;
 
     public Passo() {
     }
@@ -26,11 +28,12 @@ public class Passo implements Parcelable {
     }
 
     protected Passo(Parcel in) {
-        numOrdem = in.readInt();
         id = in.readString();
+        numOrdem = in.readInt();
         descricaoPasso = in.readString();
         imagemURL = in.readString();
         audio = in.readString();
+        uri = in.readParcelable(Uri.class.getClassLoader());
     }
 
     public static final Creator<Passo> CREATOR = new Creator<Passo>() {
@@ -44,6 +47,14 @@ public class Passo implements Parcelable {
             return new Passo[size];
         }
     };
+
+    public Uri getUri() {
+        return uri;
+    }
+
+    public void setUri(Uri uri) {
+        this.uri = uri;
+    }
 
     public String getDescricaoPasso() {
         return descricaoPasso;
@@ -85,19 +96,7 @@ public class Passo implements Parcelable {
         this.id = id;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(numOrdem);
-        dest.writeString(id);
-        dest.writeString(descricaoPasso);
-        dest.writeString(imagemURL);
-        dest.writeString(audio);
-    }
 
     @Override
     public boolean equals(@Nullable Object obj) {
@@ -108,5 +107,21 @@ public class Passo implements Parcelable {
             }
         }
         return false;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeInt(numOrdem);
+        dest.writeString(descricaoPasso);
+        dest.writeString(imagemURL);
+        dest.writeString(audio);
+        dest.writeParcelable(uri, flags);
     }
 }

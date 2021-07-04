@@ -84,17 +84,14 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         btStart = (ImageButton) findViewById(R.id.btStart);
         btPlay = (ImageButton) findViewById(R.id.btPlay);
         btTrash = (ImageButton) findViewById(R.id.btTrash);
-
         objPasso = new Passo();
 
         progress = new ProgressDialog(this);
 
         //Pegando informações da atividade que está sendo cadastrada:
         atividade = getIntent().getParcelableExtra("atividade");
-        //idAtividade = getIntent().getStringExtra("idAtividade");
-        //final String atividadeAtual = getIntent().getStringExtra("nomeAtividade");
         String num = getIntent().getStringExtra("numPasso");
-        final String modo = getIntent().getStringExtra("modoEdicao");
+        //final String modo = getIntent().getStringExtra("modoEdicao");
         numPasso = Integer.parseInt(num);
         objPasso.setNumOrdem(numPasso);
         ordemPasso.setText("Passo "+num);
@@ -144,48 +141,38 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
                 selecionarImagem();
             }
         });
-
+            /*
         btAddPassos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Direcionando para cadastrar mais passos
+                progress.setMessage("Adicionando passo..");
+                progress.show();
                 adicionarPasso();
-                if(modo =="true"){
-                    Intent intent = new Intent(CadastrarPassoAtividadeActivity.this, EditarAtividadeActivity.class);
-                    //intent.putExtra("idAtividade", atividade.getId());
-                    intent.putExtra("atividade",atividade);
-                    intent.putExtra("modoEdicao", "true");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }else{
-                    Intent add = new Intent(CadastrarPassoAtividadeActivity.this, CadastrarPassoAtividadeActivity.class);
-                    //Passando número de ordem do passo
-                    numPasso++;
-                    add.putExtra("atividade",atividade);
+                Intent add = new Intent(CadastrarPassoAtividadeActivity.this, CadastrarPassoAtividadeActivity.class);
+                 //Passando número de ordem do passo
+                 numPasso++;
+                 add.putExtra("atividade",atividade);
                     add.putExtra("modoEdicao", "false");
                     add.putExtra("numPasso", numPasso+"");
                     startActivity(add);
-                }
 
             }
-        });
+        });*/
         btFinalizarPassos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Direcionando para tela de  de dashboard ao finalizar cadastros
-
-                if(modo =="true"){
+                    /*
                     Intent intent = new Intent(CadastrarPassoAtividadeActivity.this, EditarAtividadeActivity.class);
                     intent.putExtra("modoEdicao", "true");
                     intent.putExtra("atividade",atividade);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                }else{
+                    startActivity(intent);*/
+
                     progress.setMessage("Adicionando passo..");
                     progress.show();
                     adicionarPasso();
-
-                }
 
             }
         });
@@ -319,8 +306,8 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
         //Uri uriAudio = Uri.fromFile(new File(getRecordFilePath()));
         final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/passos" + fileName);
         //UploadTask uploadTask1 = ref.putFile(uriAudio);
-        UploadTask uploadTask2 = ref.putBytes(dataIMG);
-        uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        UploadTask uploadTask = ref.putBytes(dataIMG);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
@@ -345,11 +332,14 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         Log.e("Passo", "Passo e ID:"+objPasso.getDescricaoPasso()+" ordem:"+objPasso.getNumOrdem()+"ID:"+objPasso.getId());
                                         Log.e("Passo", "ordem Passo:"+numPasso);
-                                        Intent intent = new Intent(CadastrarPassoAtividadeActivity.this, DashboardActivity.class);
-                                        setResult(RESULT_OK,intent);
+                                        Intent intent = new Intent(CadastrarPassoAtividadeActivity.this, EditarAtividadeActivity.class);
+                                        intent.putExtra("atividade",atividade);
                                         intent.putExtra("passo", objPasso);
+                                        setResult(RESULT_OK,intent);
                                         progress.dismiss();
-                                        finish();
+                                        startActivity(intent);
+
+                                        //finish();
 
                                     }
                                 })
@@ -370,6 +360,5 @@ public class CadastrarPassoAtividadeActivity extends AppCompatActivity {
                 Log.e("Teste", e.getMessage(), e);
             }
         });
-
     }
 }

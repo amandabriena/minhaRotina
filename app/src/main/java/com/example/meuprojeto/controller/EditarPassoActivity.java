@@ -90,6 +90,9 @@ public class EditarPassoActivity extends AppCompatActivity {
                 atualizarPasso();
                 Toast.makeText(EditarPassoActivity.this,"Passo atualizado com sucesso!", Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent();
+                intent.putExtra("posicaoPasso", passo.getNumOrdem());
+                intent.putExtra("passo", passo);
+                intent.putExtra("tipo", "atualizar");
                 setResult(RESULT_OK,intent);
                 finish();
             }
@@ -104,6 +107,7 @@ public class EditarPassoActivity extends AppCompatActivity {
                 Log.e("Passo", "Passo excluido no edit:"+passo.getDescricaoPasso());
                 intent.putExtra("posicaoPasso", passo.getNumOrdem());
                 intent.putExtra("passo", passo);
+                intent.putExtra("tipo", "excluir");
                 setResult(RESULT_OK,intent);
                 finish();
                 /*
@@ -142,10 +146,12 @@ public class EditarPassoActivity extends AppCompatActivity {
     private void atualizarPasso(){
         String descricaoPasso = descricao.getText().toString();
         if(descricaoPasso != null){
+            /*
             FirebaseFirestore.getInstance().collection("usuarios")
                     .document(FirebaseAuth.getInstance().getUid())
                     .collection("/atividades").document(idAtividade)
-                    .collection("passos").document(passo.getId()).update("descricaoPasso",descricaoPasso);
+                    .collection("passos").document(passo.getId()).update("descricaoPasso",descricaoPasso);*/
+            passo.setDescricaoPasso(descricaoPasso);
         }
         if(dataIMG != null){
             String fileName = UUID.randomUUID().toString();
@@ -162,6 +168,7 @@ public class EditarPassoActivity extends AppCompatActivity {
 
                             passo.setImagemURL(uri.toString());
                             //objPasso.setAudio(idAtividade+"passo"+ordemPasso+".3gp");
+                            /*
                             FirebaseFirestore.getInstance().collection("usuarios")
                                     .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
                                     .document(idAtividade).collection("passos")
@@ -179,7 +186,7 @@ public class EditarPassoActivity extends AppCompatActivity {
                                         public void onFailure(@NonNull Exception e) {
                                             Log.i("Erro alterar imagem", e.getMessage());
                                         }
-                                    });
+                                    });*/
 
                         }
                     });
