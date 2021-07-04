@@ -30,6 +30,7 @@ public class GerAtividadesActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerViewAdapterGerenciadorAtividades recyclerViewAdapter;
     private List<Atividade> listaAtividadesGer = new ArrayList<>();
+    private boolean verificador = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,8 @@ public class GerAtividadesActivity extends AppCompatActivity {
             public void onItemClick(Atividade atividade) {
                 Intent intent = new Intent(GerAtividadesActivity.this, PopupDeletarAtividadeActivity.class);
                 intent.putExtra("idAtividade", atividade.getId());
-                startActivity(intent);
+                startActivityForResult(intent, 1);
+                //startActivity(intent);
             }
         });
         recyclerViewAdapter.setOnItemClickListenerEditar(new ClickListener<Atividade>() {
@@ -73,6 +75,19 @@ public class GerAtividadesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1 && resultCode == RESULT_OK){
+            String  idAtividade = data.getStringExtra("idAtividade");
+            Log.e("Atividade", "id:"+idAtividade);
+            int index = buscarAtividade(idAtividade);
+            Log.e("Atividade", "posicao atividade removido:"+index);
+            listaAtividadesGer.remove(index);
+            recyclerViewAdapter.notifyItemRemoved(index);
+        }
     }
 
     public class CarregarListaAsynctask extends AsyncTask<Void, Void, Void> {
@@ -95,8 +110,11 @@ public class GerAtividadesActivity extends AppCompatActivity {
                             for(DocumentSnapshot doc : docs){
                                 Atividade atv = doc.toObject(Atividade.class);
                                 Log.e("nome", "nome av: "+atv.getNomeAtividade());
-                                listaAtividadesGer.add(atv);
+                                if(verificador) {
+                                    listaAtividadesGer.add(atv);
+                                }
                             }
+                            verificador = false;
                         }
                     });
             return null;
@@ -105,5 +123,16 @@ public class GerAtividadesActivity extends AppCompatActivity {
         protected void onPostExecute(Void resultado) {
             recyclerViewAdapter.notifyDataSetChanged();
         }
+    }
+    public int buscarAtividade(String id) {
+        for(int i = 0 ; i< listaAtividadesGer.size(); i++){
+            Log.e("Atividade", "index atual:"+i);
+            if (listaAtividadesGer.get(i).getId().equals(id)) {
+                Log.e("Atividade", "entrou if");
+                Log.e("Atividade", "index encontrado:"+i);
+                return i;
+            }
+        }
+        return -1;
     }
 }

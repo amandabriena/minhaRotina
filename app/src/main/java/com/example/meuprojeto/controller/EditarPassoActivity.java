@@ -47,7 +47,6 @@ public class EditarPassoActivity extends AppCompatActivity {
     ImageButton btUploadImg;
     ImageView imgPasso;
     String idAtividade;
-    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,6 @@ public class EditarPassoActivity extends AppCompatActivity {
         Log.e("passo atual ", "passo"+passo.getId());
         idAtividade = getIntent().getStringExtra("idAtividade");
 
-        progress = new ProgressDialog(this);
 
         descricao = (EditText) findViewById(R.id.descricao);
         ordemPasso = (TextView) findViewById(R.id.ordemPasso);
@@ -110,27 +108,7 @@ public class EditarPassoActivity extends AppCompatActivity {
                 intent.putExtra("tipo", "excluir");
                 setResult(RESULT_OK,intent);
                 finish();
-                /*
-                progress.setMessage("Deletando passo..");
-                progress.show();
-                Log.e("Passo ", "passo excluido:"+passo.getId());
-                FirebaseFirestore.getInstance().collection("usuarios")
-                        .document(FirebaseAuth.getInstance().getUid())
-                        .collection("/atividades").document(idAtividade)
-                        .collection("passos").document(passo.getId()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        progress.dismiss();
-                        Log.e("Passo", "excluido");
-                        Intent intent=new Intent();
-                        Log.e("Passo", "Posicao passo excluido"+passo.getNumOrdem());
-                        Log.e("Passo", "Passo excluido no edit:"+passo.getDescricaoPasso());
-                        intent.putExtra("posicaoPasso", passo.getNumOrdem());
-                        intent.putExtra("passo", passo);
-                        setResult(RESULT_OK,intent);
-                        finish();
-                    }
-                });*/
+
 
             }
         });

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -42,8 +43,8 @@ public class Atividade implements Parcelable {
         this.musica = musica;
     }
 
-    public Atividade(String nomeAtividade){
-        this.nomeAtividade = nomeAtividade;
+    public Atividade(String id) {
+        this.id = id;
     }
 
     protected Atividade(Parcel in) {
@@ -56,6 +57,7 @@ public class Atividade implements Parcelable {
         dias_semana = in.createStringArrayList();
         status = in.readString();
     }
+
 
     public static final Creator<Atividade> CREATOR = new Creator<Atividade>() {
         @Override
@@ -154,5 +156,15 @@ public class Atividade implements Parcelable {
         dest.writeString(musica);
         dest.writeStringList(dias_semana);
         dest.writeString(status);
+    }
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj instanceof Passo){
+            if(this.getId().
+                    equals(((Atividade) obj).getId())){
+                return true;
+            }
+        }
+        return false;
     }
 }

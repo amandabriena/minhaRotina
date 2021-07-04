@@ -57,7 +57,7 @@ public class CadastrarAtividadeCompleto extends AppCompatActivity {
     ImageView imagemAtividade;
     Button btCancelar, btCadastrar, btAdicionarPasso;
     private Uri filePath;
-    private byte[] dataIMG, dataPasso;
+    private byte[] dataIMG;
     private ProgressDialog progress;
 
     @Override
@@ -135,7 +135,6 @@ public class CadastrarAtividadeCompleto extends AppCompatActivity {
                 }else if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
                     Toast.makeText(CadastrarAtividadeCompleto.this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT).show();
                 }else {
-
                     progress.setMessage("Adicionando atividade..");
                     progress.show();
                     criarAtividade();

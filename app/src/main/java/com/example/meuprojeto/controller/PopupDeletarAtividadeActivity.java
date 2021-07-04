@@ -2,20 +2,24 @@ package com.example.meuprojeto.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.meuprojeto.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class PopupDeletarAtividadeActivity extends AppCompatActivity {
     Button btCancelar, btDeletar;
     String idAtividade;
+    private ProgressDialog progress;
     View view;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +35,33 @@ public class PopupDeletarAtividadeActivity extends AppCompatActivity {
         btDeletar = (Button) findViewById(R.id.btConfirmar);
         view = (View) findViewById(R.id.popupDeletar);
 
+        progress = new ProgressDialog(this);
+
         idAtividade = getIntent().getStringExtra("idAtividade");
 
         btDeletar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progress.setMessage("Excluindo atividade..");
+                progress.show();
                 //Deletando atividade:
                 FirebaseFirestore.getInstance().collection("usuarios")
                         .document(FirebaseAuth.getInstance().getUid())
-                        .collection("/atividades").document(idAtividade).delete();
-                Intent ger = new Intent(PopupDeletarAtividadeActivity.this, GerAtividadesActivity.class);
+                        .collection("/atividades").document(idAtividade).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Intent intent=new Intent();
+                        Log.e("Atividade", "Popup id:"+idAtividade);
+                        intent.putExtra("idAtividade", idAtividade);
+                        setResult(RESULT_OK,intent);
+                        progress.dismiss();
+                        finish();
+                    }
+                });
+
+                /*Intent ger = new Intent(PopupDeletarAtividadeActivity.this, GerAtividadesActivity.class);
                 ger.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(ger);
+                startActivity(ger);*/
             }
         });
         btCancelar.setOnClickListener(new View.OnClickListener() {
