@@ -3,6 +3,9 @@ package com.example.meuprojeto.controller;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +14,7 @@ import android.util.Log;
 
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
+import com.example.meuprojeto.util.Alarme;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -37,7 +41,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        Bundle bundle = new Bundle();
         final String dia = verificarDiaSemana();
         Log.e("DIA", dia);
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -60,13 +63,18 @@ public class SplashActivity extends AppCompatActivity {
                                 Atividade atv = doc.toObject(Atividade.class);
                                 if(atv.getDias_semana().contains(dia)){
                                     Log.e("Rotina", atv.getNomeAtividade());
+                                    Log.e("Rotina", atv.getId());
+                                    Log.e("Rotina", atv.getStatus());
                                     listaAtividades.add(atv);
                                 }
                             }
 
                         }
                     });
+                    //Resetando status das atividades à meia noite:
+                    //atualizarStatusAtividade();
         }
+
 
 
         new Handler().postDelayed(new Runnable(){
@@ -86,6 +94,20 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         }, SPLASH_TIME_OUT);
+    }
+    private void atualizarStatusAtividade(){
+        //Setando o horário:
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.HOUR_OF_DAY, 17);
+        c.set(Calendar.MINUTE, 45);
+        long time = c.getTimeInMillis();
+        Log.e("Rotina", c.getTimeInMillis()+"");
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this, Alarme.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+        alarmManager.setRepeating(AlarmManager.RTC, time, AlarmManager.INTERVAL_DAY, pendingIntent);
     }
     private String verificarDiaSemana(){
         Date d = new Date();

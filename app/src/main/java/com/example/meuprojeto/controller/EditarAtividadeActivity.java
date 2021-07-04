@@ -278,6 +278,15 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                 Log.e("Passo:", "passo excluido:"+p.getDescricaoPasso());
             }
         }
+        for (Passo objPasso: listaPassos) {
+            if(!listaPassosAntiga.contains(objPasso)){
+                FirebaseFirestore.getInstance().collection("usuarios")
+                        .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
+                        .document(atividade.getId()).collection("passos")
+                        .document(objPasso.getId())
+                        .set(objPasso);
+            }
+        }
     }
     public class CarregarPassosAsynctask extends AsyncTask<Void, Void, Void> {
 

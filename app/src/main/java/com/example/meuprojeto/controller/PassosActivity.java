@@ -73,12 +73,5 @@ public class PassosActivity extends AppCompatActivity {
         dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dashboard);
     }
-    /*
-    public void onClickOuvir(View v){
-        int i = adapter.getItemCount();
-        Log.e("i count", i+"");
-        String descricao = listaPassos.get(i-1).getDescricaoPasso();
-        int speech = textToSpeech.speak(descricao, TextToSpeech.QUEUE_FLUSH, null);
-    }*/
 
 }

@@ -102,7 +102,7 @@ public class CadastrarUsuario extends AppCompatActivity {
                     Toast.makeText(CadastrarUsuario.this,"Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
                 }else{
                     criarUsuario();
-                    Intent intent = new Intent(CadastrarUsuario.this, CadastrarPreferenciasActivity.class);
+                    Intent intent = new Intent(CadastrarUsuario.this, DashboardActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 }

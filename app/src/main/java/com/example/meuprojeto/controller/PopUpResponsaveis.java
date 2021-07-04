@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ public class PopUpResponsaveis extends AppCompatActivity {
     EditText senha;
     Button btAcessar;
     View view;
+    private ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +47,14 @@ public class PopUpResponsaveis extends AppCompatActivity {
         btAcessar = (Button) findViewById(R.id.btAcessarResponsavel);
         view = (View) findViewById(R.id.popup);
 
+        progress = new ProgressDialog(this);
+
         btAcessar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //if para verificar se a senha está correta else caso não esteja
+                progress.setMessage("Acessando..");
+                progress.show();
                 String senhaResponsavel = senha.getText().toString();
                 if(senhaResponsavel.length() < 6){
                     Toast.makeText(PopUpResponsaveis.this,"SENHA INCORRETA!", Toast.LENGTH_LONG).show();
@@ -63,11 +70,13 @@ public class PopUpResponsaveis extends AppCompatActivity {
                                     Log.i("Sucesso ao logar", task.getResult().getUser().getUid());
                                     Intent dashboard = new Intent(PopUpResponsaveis.this, DashboardActivity.class);
                                     dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    progress.dismiss();
                                     startActivity(dashboard);
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     view.setBackgroundResource(R.drawable.button_round_delete);
                                     senha.setBackgroundResource(R.drawable.popup_error);
+                                    progress.dismiss();
                                     Toast.makeText(PopUpResponsaveis.this,"SENHA INCORRETA!", Toast.LENGTH_LONG).show();
                                 }
 

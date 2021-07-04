@@ -54,10 +54,14 @@ public class RecyclerViewAdapterAtividades extends RecyclerView.Adapter<Recycler
                 //Verificando se já passou do horário da atividade:
                 Date present = simpleDateFormat.parse(horaAtual);
                 Date closed = simpleDateFormat.parse(atividade.getHorario());
-                if (present.after(closed) || atividade.getStatus().equals("1")) {
-                    Log.e("hora:", "horário posterior");
+                if (atividade.getStatus().equals("1")) {
+                    Log.e("hora:", "atividade feita");
                     holder.cardView.setCardBackgroundColor(Color.LTGRAY);
-                }else{
+                }else if(present.after(closed) && atividade.getStatus().equals("0")){
+                    Log.e("hora:", "atividade não feita");
+                    holder.cardView.setCardBackgroundColor(Color.argb(200,250,128,144));
+                }
+                else{
                     Log.e("hora:", "horário anterior");
                 }
             } catch (ParseException e) {

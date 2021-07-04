@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -196,6 +194,7 @@ public class CadastrarAtividadeCompleto extends AppCompatActivity {
                         atividade.setStatus("0");
                         atividade.setIdUsuario(usuario_atv);
                         atividade.setDias_semana(listaDiasSemana);
+                        
                         FirebaseFirestore.getInstance().collection("usuarios").document(usuario_atv).collection("atividades")
                                 .document(atividade.getId())
                                 .set(atividade)
