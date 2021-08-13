@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -48,6 +49,7 @@ public class CadastrarUsuario extends AppCompatActivity {
     ImageView imgIcon;
     private Uri filePath;
     private byte[] dataIMG;
+    private ProgressDialog progress;
 
     /*
     FirebaseDatabase firebaseDatabase;
@@ -78,6 +80,8 @@ public class CadastrarUsuario extends AppCompatActivity {
             }
         });
 
+        progress = new ProgressDialog(this);
+
         btUploadImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,10 +105,10 @@ public class CadastrarUsuario extends AppCompatActivity {
                 }else if( nome_user.isEmpty() || data_nasc.isEmpty()  || email_user.isEmpty() || senha_user.isEmpty()){
                     Toast.makeText(CadastrarUsuario.this,"Por favor, preencha todos os campos!", Toast.LENGTH_SHORT).show();
                 }else{
+                    progress.setMessage("Criando usuário..");
+                    progress.show();
                     criarUsuario();
-                    Intent intent = new Intent(CadastrarUsuario.this, DashboardActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+
                 }
 
 
@@ -131,11 +135,12 @@ public class CadastrarUsuario extends AppCompatActivity {
     }
 
 
-    //Função para incluir dados no objeto usuário
+    //Função para incluir dados no objeto usuário no auth firebase
     private void criarUsuario(){
         String email_user = email.getText().toString();
         String senha_user = senha.getText().toString();
             //AUTENTICAÇÃO DE USUÁRIO COM O FIREBASE:
+
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email_user,senha_user)
             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -149,7 +154,10 @@ public class CadastrarUsuario extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.e("Erro", e.getMessage());
+                            Toast.makeText(CadastrarUsuario.this,"Email já cadastrado", Toast.LENGTH_SHORT).show();
+                            progress.dismiss();
+                            Log.e("Erro ao cadastrar", e.getMessage());
+
                         }
                     });
 
@@ -175,7 +183,7 @@ public class CadastrarUsuario extends AppCompatActivity {
                         objUsuario.setNome(nome.getText().toString());
                         objUsuario.setData(data.getText().toString());
                         objUsuario.setEmail(email.getText().toString());
-                        objUsuario.setSenha(senha.getText().toString());
+                        //objUsuario.setSenha(senha.getText().toString());
 
                         //controleUsuario.incluirUsuario(objUsuario);
 
@@ -185,14 +193,19 @@ public class CadastrarUsuario extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
+                                        progress.dismiss();
                                         Log.i("Sucesso","ok");
-
+                                        Intent intent = new Intent(CadastrarUsuario.this, DashboardActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.i("Erro ao cadastrar", e.getMessage());
+                                progress.dismiss();
+                                Log.e("Erro ao cadastrar", e.getMessage());
+                                Toast.makeText(CadastrarUsuario.this,"usuário já cadastrado"+e, Toast.LENGTH_SHORT);
                             }
                         });
                     }

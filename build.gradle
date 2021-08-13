@@ -3,9 +3,12 @@
 buildscript {
     
     repositories {
+        maven {
+            url "https://maven.google.com"
+        }
         google()
         jcenter()
-        
+
     }
     dependencies {
         classpath 'com.google.gms:google-services:4.3.5'
@@ -19,9 +22,12 @@ buildscript {
 
 allprojects {
     repositories {
+        maven {
+            url "https://maven.google.com"
+        }
         google()
         jcenter()
-        
+
     }
 }
 

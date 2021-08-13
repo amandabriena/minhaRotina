@@ -105,6 +105,13 @@
                 android:layout_gravity="center"
                 android:text="@string/acesse"
                 android:textAppearance="@style/label_menor" />
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/signInGoogle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"
+                />
 
 
             <Button
@@ -116,6 +123,7 @@
                 android:background="@drawable/button_round_border"
                 android:text="@string/esqueciSenha"
                 />
+
         </LinearLayout>
 
 

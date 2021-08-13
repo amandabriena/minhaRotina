@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.CadastrarPassoActivity"></activity>
+        <activity android:name=".controller.FinalizacaoCadastroGoogle"></activity>
+        <activity android:name=".controller.CadastrarPassoActivity" />
         <activity android:name=".controller.CadastrarAtividadeCompleto" />
         <activity android:name=".controller.IncluirAtividadeBaseActivity" />
         <activity
@@ -41,6 +42,7 @@
         <activity android:name=".controller.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -49,10 +51,11 @@
         <activity
             android:name=".controller.DashboardActivity"
             android:theme="@style/AppThemeDashboard" />
-        <receiver android:name=".util.Alarme"
-            android:enabled="true"
-            android:exported="true"/>
-    </application>
 
+        <receiver
+            android:name=".util.Alarme"
+            android:enabled="true"
+            android:exported="true" />
+    </application>
 
 </manifest>
