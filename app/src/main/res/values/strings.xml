@@ -8,6 +8,7 @@
     <string name="dataNascimento">Data de Nascimento:</string>
     <string name="genero">Gênero:</string>
     <string name="senha">Senha:</string>
+    <string name="senhaAreaResponsavel">Senha do Responsável:</string>
     <string name="cadastrar">CADASTRAR!</string>
 
     //Strings Página de Login

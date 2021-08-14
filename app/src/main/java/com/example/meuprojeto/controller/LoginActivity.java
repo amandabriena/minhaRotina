@@ -153,7 +153,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Toast.makeText(LoginActivity.this, "Successful", Toast.LENGTH_SHORT).show();
                         FirebaseUser user = mAuth.getCurrentUser();
-                        salvarUsuarioFirebase();
+                        verificarPrimeiroAcesso();
                         Log.e("Login", "sucesso: "+task.getResult().getUser().getUid());
 
                         //updateUI(user);
@@ -170,41 +170,22 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void salvarUsuarioFirebase(){
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(getApplicationContext());
+    private void verificarPrimeiroAcesso(){
         final String uid = FirebaseAuth.getInstance().getUid();
-        objUsuario= new Usuario();
-        objUsuario.setId(uid);
-        objUsuario.setEmail(account.getEmail());
-        objUsuario.setNome(account.getDisplayName());
         FirebaseFirestore.getInstance().collection("usuarios")
                 .document(uid).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot doc) {
                Usuario u = doc.toObject(Usuario.class);
+               //Caso o usuário ainda não esteja cadastrado:
                 if(u == null){
-                    Intent dashboard = new Intent(LoginActivity.this, CadastrarUsuario.class);
+                    Intent dashboard = new Intent(LoginActivity.this, FinalizacaoCadastroGoogle.class);
                     startActivity(dashboard);
+                    //Se já possuir cadastro, é redirecionado para o dashboard
                 }else{
-                    FirebaseFirestore.getInstance().collection("usuarios")
-                            .document(uid)
-                            .set(objUsuario)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Log.e("Login","cadastrado com sucesso");
-                                    Intent dashboard = new Intent(LoginActivity.this, DashboardActivity.class);
-                                    dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(dashboard);
-
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.e("Erro ao cadastrar", e.getMessage());
-                                }
-                            });
+                    Intent dashboard = new Intent(LoginActivity.this, DashboardActivity.class);
+                    dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(dashboard);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

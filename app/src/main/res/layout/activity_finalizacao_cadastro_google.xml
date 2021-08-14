@@ -5,5 +5,82 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controller.FinalizacaoCadastroGoogle">
+    <RelativeLayout
+        android:id="@+id/responsive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="2"
+        android:layout_marginTop="10dp">
+        <Button
+            android:id="@+id/btAjuda"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/button_round_border"
+            android:drawableRight="@android:drawable/ic_menu_help"
+            android:text="@string/btAjuda" />
+        <Button
+            android:id="@+id/btUploadImgUser"
+            android:layout_width="@dimen/image_icon_size"
+            android:layout_height="@dimen/image_icon_size"
+            android:layout_margin="40dp"
+            android:background="@drawable/button_img_rounded"
+            android:text="@string/imagemUsuario"
+            android:textColor="@android:color/white"
+            android:layout_centerHorizontal="true"/>
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgUser"
+            android:layout_width="@dimen/image_icon_size"
+            android:layout_height="@dimen/image_icon_size"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="40dp"
+            android:scaleType="centerCrop"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/responsive"
+        app:layout_constraintVertical_weight="3"
+        >
+        <TextView
+            android:id="@+id/tsenha"
+            android:layout_width="wrap_content"
+            android:layout_height="26dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/senhaAreaResponsavel"
+            android:layout_gravity="left"
+            android:layout_marginStart="55dp"
+            android:textAppearance="@style/label"
+
+            />
+
+        <EditText
+            android:id="@+id/senha"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_round"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btCadastrar"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_round_border"
+            android:text="@string/cadastrar"
+            android:layout_marginTop="50dp"
+            />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
