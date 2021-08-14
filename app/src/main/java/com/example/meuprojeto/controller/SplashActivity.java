@@ -40,6 +40,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        atualizarStatusAtividade();
 
         final String dia = verificarDiaSemana();
         Log.e("DIA", dia);
@@ -97,11 +98,14 @@ public class SplashActivity extends AppCompatActivity {
     }
     private void atualizarStatusAtividade(){
         //Setando o horário:
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 17);
-        c.set(Calendar.MINUTE, 45);
-        long time = c.getTimeInMillis();
-        Log.e("Rotina", c.getTimeInMillis()+"");
+        Date d = new Date();
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(d);
+        cal.set(Calendar.HOUR_OF_DAY, 00);
+        cal.set(Calendar.MINUTE, 00);
+        long time = cal.getTimeInMillis();
+        Log.e("Rotina", cal.getTimeInMillis()+"");
+        Log.e("Rotina", "Time: "+cal.getTime());
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, Alarme.class);
 
@@ -112,6 +116,7 @@ public class SplashActivity extends AppCompatActivity {
     private String verificarDiaSemana(){
         Date d = new Date();
         Calendar c = new GregorianCalendar();
+        Log.e("Rotina", "Verifiação dias: "+c.getTime());
         c.setTime(d); String nome = "";
         int diaS = c.get(c.DAY_OF_WEEK);
         String dia = "";
