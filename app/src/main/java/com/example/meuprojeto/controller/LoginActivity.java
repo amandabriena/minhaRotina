@@ -145,8 +145,6 @@ public class LoginActivity extends AppCompatActivity {
         //check if the account is null
         if (acct != null) {
             final AuthCredential authCredential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-
-
             mAuth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
