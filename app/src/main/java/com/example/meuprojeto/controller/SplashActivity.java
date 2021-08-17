@@ -33,14 +33,24 @@ import java.util.List;
 import static java.util.Calendar.getInstance;
 
 public class SplashActivity extends AppCompatActivity {
-    private String user;
+    //private String user;
     private static final int SPLASH_TIME_OUT = 2000;
     private List<Atividade> listaAtividades = new ArrayList<>();
+    private int code_alarm = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        atualizarStatusAtividade();
+        Intent intent = new Intent(this, Alarme.class);
+
+        //Verificando se a tarefa de resetar status da atividade já foi definida anteriormente:
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,code_alarm,intent,PendingIntent.FLAG_NO_CREATE);
+
+        if(pendingIntent == null){
+            Log.e("Rotina", "Alarme não definido");
+            atualizarStatusAtividade();
+        }
 
         final String dia = verificarDiaSemana();
         Log.e("DIA", dia);
@@ -97,22 +107,25 @@ public class SplashActivity extends AppCompatActivity {
         }, SPLASH_TIME_OUT);
     }
     private void atualizarStatusAtividade(){
-        //Setando o horário:
+        //Setando o horário para resetar atividades:
         Date d = new Date();
         Calendar cal = new GregorianCalendar();
         cal.setTime(d);
         cal.set(Calendar.HOUR_OF_DAY, 00);
         cal.set(Calendar.MINUTE, 00);
         long time = cal.getTimeInMillis();
+
         Log.e("Rotina", cal.getTimeInMillis()+"");
         Log.e("Rotina", "Time: "+cal.getTime());
+
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, Alarme.class);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, code_alarm, intent, 0);
 
         alarmManager.setRepeating(AlarmManager.RTC, time, AlarmManager.INTERVAL_DAY, pendingIntent);
     }
+
     private String verificarDiaSemana(){
         Date d = new Date();
         Calendar c = new GregorianCalendar();
