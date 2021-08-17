@@ -1,11 +1,18 @@
 package com.example.meuprojeto.controller;
 
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -24,6 +31,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
+import com.example.meuprojeto.util.Alarme;
+import com.example.meuprojeto.util.AlarmeAtividades;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,6 +62,9 @@ public class CadastrarAtividade extends AppCompatActivity {
     private Uri filePath;
     private byte[] dataIMG;
     private ProgressDialog progress;
+    private Calendar calendar;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
 
     //Conexão com o db
     FirebaseDatabase firebaseDatabase;
@@ -73,7 +85,7 @@ public class CadastrarAtividade extends AppCompatActivity {
         imgIcon = (ImageView) findViewById(R.id.imgIcon);
 
         objAtividade = new Atividade();
-
+        criarNotificacao();
         progress = new ProgressDialog(this);
 
         //Adicionando máscara de horário:
@@ -127,19 +139,37 @@ public class CadastrarAtividade extends AppCompatActivity {
         });
     }
 
+    private void criarNotificacao(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "notificacaoAtividade";
+            String description = "Canal paa notificar atividade";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("atividadeAlerta", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+
+
+
+        }
+    }
+
     private void showTimeDialog(final EditText horario){
-        final Calendar c = Calendar.getInstance();
+        //final Calendar c = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener(){
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                c.set(Calendar.MINUTE, minute);
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-                horario.setText(simpleDateFormat.format(c.getTime()));
+                horario.setText(simpleDateFormat.format(calendar.getTime()));
             }
         };
         new TimePickerDialog(CadastrarAtividade.this, timeSetListener,
-                c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE),true).show();
+                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),true).show();
     }
 
     private void selecionarImagem(){
@@ -198,12 +228,23 @@ public class CadastrarAtividade extends AppCompatActivity {
         }
     }
 
+    private void setarAlarmeAtividade(){
+        //Setando alarme da atividade:
+        Log.e("Alarme", "setando alarme atv");
+        Log.e("Alarme", "Horario: "+calendar.getTime());
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent i = new Intent(CadastrarAtividade.this, AlarmeAtividades.class);
+        pendingIntent = PendingIntent.getBroadcast(CadastrarAtividade.this, 0, i, 0);
+        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+    }
+
     private void criarAtividade(){
             diasMarcados();
             //criando ID randomico e demais informações preenchidas para upload da imagem no firebase:
             String fileName = UUID.randomUUID().toString();
             final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/atividades" + fileName);
             UploadTask uploadTask2 = ref.putBytes(dataIMG);
+            setarAlarmeAtividade();
             uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
