@@ -24,9 +24,9 @@ public class AlarmeAtividades extends BroadcastReceiver {
         Log.e("Alarme", "notificação alarme");
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "atividadeAlerta")
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Alerta Atividade")
-                .setContentText("Começou a atividade")
+                .setContentText("Está na hora da sua atividade!")
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
