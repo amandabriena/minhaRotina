@@ -2,7 +2,10 @@ package com.example.meuprojeto.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -12,13 +15,17 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.meuprojeto.R;
+import com.example.meuprojeto.model.Atividade;
+import com.example.meuprojeto.util.Alarme;
+import com.example.meuprojeto.util.AlarmeAtividades;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class PopupDeletarAtividadeActivity extends AppCompatActivity {
     Button btCancelar, btDeletar;
-    String idAtividade;
+    private String idAtividade;
+    private Atividade atividade;
     private ProgressDialog progress;
     View view;
     @Override
@@ -38,6 +45,14 @@ public class PopupDeletarAtividadeActivity extends AppCompatActivity {
         progress = new ProgressDialog(this);
 
         idAtividade = getIntent().getStringExtra("idAtividade");
+        atividade = getIntent().getParcelableExtra("atividade");
+
+        //Cancelando alarmes relacionados a atividade:
+        for (String dia: atividade.getDias_semana()) {
+            String idRequest = atividade.getId()+dia;
+            Log.e("Alarme", "Request:"+idRequest);
+            cancelarAlarme(Integer.parseInt(idRequest));
+        }
 
         btDeletar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,5 +85,13 @@ public class PopupDeletarAtividadeActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void cancelarAlarme(int requestCode){
+        Log.e("Alarme", "Cancelando: "+requestCode);
+        Intent intent = new Intent(this, AlarmeAtividades.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                requestCode, intent, 0);
+        ((AlarmManager)getSystemService(ALARM_SERVICE)).cancel(pendingIntent);
     }
 }

@@ -41,7 +41,7 @@ public class Alarme extends BroadcastReceiver {
                         List<DocumentSnapshot> docs = value.getDocuments();
                         for(DocumentSnapshot doc : docs){
                             Atividade atv = doc.toObject(Atividade.class);
-                            Log.e("Rotina", "Update status:"+atv.getNomeAtividade());
+                            Log.e("Alarme", "Update status:"+atv.getNomeAtividade());
                             FirebaseFirestore.getInstance().collection("usuarios")
                                     .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
                                     .document(atv.getId()).update("status", "0");
@@ -49,6 +49,6 @@ public class Alarme extends BroadcastReceiver {
 
                     }
                 });
-        Log.e("Rotina", "Atualizado Horário");
+        Log.e("Alarme", "Atualizado Horário");
     }
 }

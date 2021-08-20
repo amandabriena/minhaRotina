@@ -194,22 +194,28 @@ public class CadastrarAtividadeCompleto extends AppCompatActivity {
 
         }
     }
-    private void setarAlarmeAtividade(){
-        //Setando alarme da atividade:
-        Log.e("Alarme", "setando alarme atv");
+    //Setando alarme da atividade:
+    private void setarAlarmeAtividade(int diaSemana){
+        //alterando o dia da semana para incluir alarme:
+        calendar.set(Calendar.DAY_OF_WEEK, diaSemana);
         Log.e("Alarme", "Horario: "+calendar.getTime());
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent i = new Intent(CadastrarAtividadeCompleto.this, AlarmeAtividades.class);
-        pendingIntent = PendingIntent.getBroadcast(CadastrarAtividadeCompleto.this, 0, i, 0);
-        //AlarmManager.
-        alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        //O request code do peding intent será o id da atividade com ultimo digito numero referente ao dia da semana
+        Log.e("Alarme", "id atv: "+atividade.getId());
+        int code =  Integer.parseInt(atividade.getId()+diaSemana);
+        Log.e("Alarme", "Request code: "+code);
+        pendingIntent = PendingIntent.getBroadcast(CadastrarAtividadeCompleto.this, code, i, 0);
+
+        alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
+        //alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 30*1000, pendingIntent);
         Toast.makeText(CadastrarAtividadeCompleto.this, "Alarme configurado para: "+calendar.getTime(), Toast.LENGTH_LONG).show();
     }
     private void criarAtividade(){
         diasMarcados();
         //criando ID randomico e demais informações preenchidas para upload da imagem no firebase:
         String fileName = UUID.randomUUID().toString();
-        setarAlarmeAtividade();
+        //setarAlarmeAtividade();
         final StorageReference ref = FirebaseStorage.getInstance().getReference("/images/atividades" + fileName);
         UploadTask uploadTask2 = ref.putBytes(dataIMG);
         uploadTask2.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -356,31 +362,46 @@ public class CadastrarAtividadeCompleto extends AppCompatActivity {
     public void diasMarcados() {
         CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox_dom);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Dom");
+            listaDiasSemana.add("1");
+            Log.e("Alarme", "DOM");
+            setarAlarmeAtividade(1);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_seg);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Seg");
+            listaDiasSemana.add("2");
+            Log.e("Alarme", "SEG");
+            setarAlarmeAtividade(2);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_ter);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Ter");
+            listaDiasSemana.add("3");
+            Log.e("Alarme", "TER");
+            setarAlarmeAtividade(3);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_qua);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Qua");
+            listaDiasSemana.add("4");
+            Log.e("Alarme", "QUA");
+            setarAlarmeAtividade(4);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_qui);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Qui");
+            listaDiasSemana.add("5");
+            Log.e("Alarme", "QUI");
+
+            setarAlarmeAtividade(5);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_sex);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Sex");
+            listaDiasSemana.add("6");
+            Log.e("Alarme", "SEX");
+            setarAlarmeAtividade(6);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_sab);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Sab");
+            listaDiasSemana.add("7");
+            Log.e("Alarme", "SAB");
+            setarAlarmeAtividade(7);
         }
     }
 

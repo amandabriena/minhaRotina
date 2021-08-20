@@ -48,7 +48,7 @@ public class SplashActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,code_alarm,intent,PendingIntent.FLAG_NO_CREATE);
 
         if(pendingIntent == null){
-            Log.e("Rotina", "Alarme não definido");
+            Log.e("Alarme", "Alarme não definido");
             atualizarStatusAtividade();
         }
 
@@ -115,8 +115,8 @@ public class SplashActivity extends AppCompatActivity {
         cal.set(Calendar.MINUTE, 00);
         long time = cal.getTimeInMillis();
 
-        Log.e("Rotina", cal.getTimeInMillis()+"");
-        Log.e("Rotina", "Time: "+cal.getTime());
+        Log.e("Alarme", cal.getTimeInMillis()+"");
+        Log.e("Alarme", "Time: "+cal.getTime());
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, Alarme.class);
@@ -135,25 +135,25 @@ public class SplashActivity extends AppCompatActivity {
         String dia = "";
         switch(diaS){
             case Calendar.SUNDAY:
-                dia = "Dom";
+                dia = "1";
             break;
             case Calendar.MONDAY:
-                dia = "Seg";
+                dia = "2";
                 break;
             case Calendar.TUESDAY:
-                dia = "Ter";
+                dia = "3";
                 break;
             case Calendar.WEDNESDAY:
-                dia = "Qua";
+                dia = "4";
                 break;
             case Calendar.THURSDAY:
-                dia = "Qui";
+                dia = "5";
                 break;
             case Calendar.FRIDAY:
-                dia = "Sex";
+                dia = "6";
                 break;
             case Calendar.SATURDAY:
-                dia = "Sab";
+                dia = "7";
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + Calendar.DAY_OF_WEEK);

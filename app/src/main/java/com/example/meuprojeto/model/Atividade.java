@@ -7,10 +7,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.UUID;
 
 public class Atividade implements Parcelable {
-    private String id = UUID.randomUUID().toString();
+    private String id = (new Random().nextInt(999999))+"";
     private String idUsuario;
     private String nomeAtividade;
     private String imagemURL;

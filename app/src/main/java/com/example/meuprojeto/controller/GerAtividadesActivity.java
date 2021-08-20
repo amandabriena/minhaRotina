@@ -60,6 +60,7 @@ public class GerAtividadesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Atividade atividade) {
                 Intent intent = new Intent(GerAtividadesActivity.this, PopupDeletarAtividadeActivity.class);
+                intent.putExtra("atividade", atividade);
                 intent.putExtra("idAtividade", atividade.getId());
                 startActivityForResult(intent, 1);
                 //startActivity(intent);
