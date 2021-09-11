@@ -60,6 +60,10 @@
             android:name=".util.AlarmeAtividades"
             android:enabled="true"
             android:exported="true" />
+        <receiver
+            android:name=".util.AlarmeAtividadeFora"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

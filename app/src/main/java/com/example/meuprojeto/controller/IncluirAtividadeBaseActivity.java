@@ -78,7 +78,7 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
         imagemAtividade = (ImageView) findViewById(R.id.imgIcon);
         btCancelar = (Button) findViewById(R.id.btCancelar);
         btIncluir = (Button) findViewById(R.id.btIncluir);
-
+        criarNotificacao();
         progress = new ProgressDialog(this);
 
         //Setando as informações da atividade:
@@ -127,7 +127,7 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
     private void incluirAtividade(){
         diasMarcados();
         //Criando um novo id para a atividade:
-        atividade.setId((new Random().nextInt(999999))+"");
+        //atividade.setId((new Random().nextInt(999999))+"");
         //incluindo demais informações da atividade:
         final String usuario_atv = FirebaseAuth.getInstance().getUid();
         atividade.setNomeAtividade(nome_atv.getText().toString());
