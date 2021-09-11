@@ -188,10 +188,6 @@ public class CadastrarAtividadeCompleto extends AppCompatActivity {
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
-
-
-
-
         }
     }
     //Setando alarme da atividade:

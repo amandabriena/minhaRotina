@@ -5,12 +5,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -26,6 +32,7 @@ import android.widget.Toast;
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.Passo;
+import com.example.meuprojeto.util.AlarmeAtividades;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +47,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Random;
 import java.util.UUID;
 
 public class IncluirAtividadeBaseActivity extends AppCompatActivity {
@@ -52,6 +60,9 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
     private Uri filePath;
     private byte[] dataIMG;
     private ProgressDialog progress;
+    private Calendar calendar;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,7 +127,7 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
     private void incluirAtividade(){
         diasMarcados();
         //Criando um novo id para a atividade:
-        atividade.setId(UUID.randomUUID().toString());
+        atividade.setId((new Random().nextInt(999999))+"");
         //incluindo demais informações da atividade:
         final String usuario_atv = FirebaseAuth.getInstance().getUid();
         atividade.setNomeAtividade(nome_atv.getText().toString());
@@ -195,18 +206,18 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
         }
     }
     private void showTimeDialog(final EditText horario){
-        final Calendar c = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener(){
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                c.set(Calendar.MINUTE, minute);
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-                horario.setText(simpleDateFormat.format(c.getTime()));
+                horario.setText(simpleDateFormat.format(calendar.getTime()));
             }
         };
         new TimePickerDialog(IncluirAtividadeBaseActivity.this, timeSetListener,
-                c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE),true).show();
+                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),true).show();
     }
 
     private void selecionarImagem(){
@@ -233,6 +244,36 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
                 Toast.makeText(this,"Erro ao selecionar imagem! "+e, Toast.LENGTH_SHORT);
             }
         }
+    }
+    private void criarNotificacao(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            CharSequence name = "notificacaoAtividade";
+            String description = "Canal paa notificar atividade";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("atividadeAlerta", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+
+        }
+    }
+    //Setando alarme da atividade:
+    private void setarAlarmeAtividade(int diaSemana){
+        //alterando o dia da semana para incluir alarme:
+        calendar.set(Calendar.DAY_OF_WEEK, diaSemana);
+        Log.e("Alarme", "Horario: "+calendar.getTime());
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent i = new Intent(IncluirAtividadeBaseActivity.this, AlarmeAtividades.class);
+        //O request code do peding intent será o id da atividade com ultimo digito numero referente ao dia da semana
+        Log.e("Alarme", "id atv: "+atividade.getId());
+        int code =  Integer.parseInt(atividade.getId()+diaSemana);
+        Log.e("Alarme", "Request code: "+code);
+        pendingIntent = PendingIntent.getBroadcast(IncluirAtividadeBaseActivity.this, code, i, 0);
+
+        alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
+        //alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 30*1000, pendingIntent);
+        Toast.makeText(IncluirAtividadeBaseActivity.this, "Alarme configurado para: "+calendar.getTime(), Toast.LENGTH_LONG).show();
     }
     public void setarDias(){
         CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox_dom);
@@ -268,31 +309,46 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
     public void diasMarcados() {
         CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox_dom);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Dom");
+            listaDiasSemana.add("1");
+            Log.e("Alarme", "DOM");
+            setarAlarmeAtividade(1);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_seg);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Seg");
+            listaDiasSemana.add("2");
+            Log.e("Alarme", "SEG");
+            setarAlarmeAtividade(2);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_ter);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Ter");
+            listaDiasSemana.add("3");
+            Log.e("Alarme", "TER");
+            setarAlarmeAtividade(3);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_qua);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Qua");
+            listaDiasSemana.add("4");
+            Log.e("Alarme", "QUA");
+            setarAlarmeAtividade(4);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_qui);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Qui");
+            listaDiasSemana.add("5");
+            Log.e("Alarme", "QUI");
+
+            setarAlarmeAtividade(5);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_sex);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Sex");
+            listaDiasSemana.add("6");
+            Log.e("Alarme", "SEX");
+            setarAlarmeAtividade(6);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_sab);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Sab");
+            listaDiasSemana.add("7");
+            Log.e("Alarme", "SAB");
+            setarAlarmeAtividade(7);
         }
     }
 }
