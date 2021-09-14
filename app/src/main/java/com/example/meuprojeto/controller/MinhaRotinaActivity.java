@@ -143,6 +143,7 @@ public class MinhaRotinaActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             // carregar do banco
+            Log.e("Rotina", "carregando atividades..");
             final String dia = verificarDiaSemana();
             FirebaseFirestore.getInstance().collection("usuarios")
                     .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
@@ -184,25 +185,25 @@ public class MinhaRotinaActivity extends AppCompatActivity {
         String dia = "";
         switch(diaS){
             case Calendar.SUNDAY:
-                dia = "Dom";
+                dia = "1";
                 break;
             case Calendar.MONDAY:
-                dia = "Seg";
+                dia = "2";
                 break;
             case Calendar.TUESDAY:
-                dia = "Ter";
+                dia = "3";
                 break;
             case Calendar.WEDNESDAY:
-                dia = "Qua";
+                dia = "4";
                 break;
             case Calendar.THURSDAY:
-                dia = "Qui";
+                dia = "5";
                 break;
             case Calendar.FRIDAY:
-                dia = "Sex";
+                dia = "6";
                 break;
             case Calendar.SATURDAY:
-                dia = "Sab";
+                dia = "7";
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + Calendar.DAY_OF_WEEK);

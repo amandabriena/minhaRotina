@@ -69,7 +69,7 @@ public class PassosActivity extends AppCompatActivity {
             }
         });
         Toast.makeText(PassosActivity.this,"Atividade Concluída!", Toast.LENGTH_LONG).show();
-        Intent dashboard = new Intent(PassosActivity.this, MinhaRotinaActivity.class);
+        Intent dashboard = new Intent(PassosActivity.this, FeedbackActivity.class);
         dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(dashboard);
     }

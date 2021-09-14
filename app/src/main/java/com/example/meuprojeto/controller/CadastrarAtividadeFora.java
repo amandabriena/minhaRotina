@@ -179,7 +179,7 @@ public class CadastrarAtividadeFora extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Log.e("Atividade cadastrada", atividadeFora.getId());
+                            Log.e("Atividade cadastrada:", atividadeFora.getId());
 
                         }
                     })

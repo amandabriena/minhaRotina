@@ -137,7 +137,7 @@ public class CadastrarAtividadeCompleto extends AppCompatActivity {
                 String nome = nome_atv.getText().toString();
                 String hora = horario.getText().toString();
                 String musica_atv = musica.getText().toString();
-                diasMarcados();
+                //diasMarcados();
                 if(dataIMG == null){
                     Toast.makeText(CadastrarAtividadeCompleto.this,"Por gentileza adicione uma imagem para a atividade!", Toast.LENGTH_SHORT).show();
                 }else if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
@@ -208,6 +208,7 @@ public class CadastrarAtividadeCompleto extends AppCompatActivity {
         Toast.makeText(CadastrarAtividadeCompleto.this, "Alarme configurado para: "+calendar.getTime(), Toast.LENGTH_LONG).show();
     }
     private void criarAtividade(){
+        //Adicionando dias da semana marcados para execução da atividade:
         diasMarcados();
         //criando ID randomico e demais informações preenchidas para upload da imagem no firebase:
         String fileName = UUID.randomUUID().toString();

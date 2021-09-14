@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -28,6 +31,7 @@ import android.widget.Toast;
 import com.example.meuprojeto.R;
 import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.Passo;
+import com.example.meuprojeto.util.AlarmeAtividades;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -65,6 +69,9 @@ public class EditarAtividadeActivity extends AppCompatActivity {
     Button btCancelar, btAtualizar, btAdicionarPasso;
     private Uri filePath;
     private byte[] dataIMG;
+    private Calendar calendar;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,11 +188,25 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         }
     };
 
+    public void cancelarAlarme(int requestCode){
+        Log.e("Alarme", "Cancelando: "+requestCode);
+        Intent intent = new Intent(this, AlarmeAtividades.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                requestCode, intent, 0);
+        ((AlarmManager)getSystemService(ALARM_SERVICE)).cancel(pendingIntent);
+    }
+
     public void atualizarAtividade(){
         Log.e("Atividade", "Atualizando atividade");
         String nome = nome_atv.getText().toString();
         String hora = horario.getText().toString();
         String musicaAtv = musica.getText().toString();
+        //cancelando alarmes anteriormente configurados:
+        for (String dia: atividade.getDias_semana()) {
+            String idRequest = atividade.getId()+dia;
+            Log.e("Alarme", "Request:"+idRequest);
+            cancelarAlarme(Integer.parseInt(idRequest));
+        }
         diasMarcados();
         FirebaseFirestore.getInstance().collection("usuarios")
                 .document(FirebaseAuth.getInstance().getUid())
@@ -330,18 +351,18 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         }
     }
     private void showTimeDialog(final EditText horario){
-        final Calendar c = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener(){
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                c.set(Calendar.MINUTE, minute);
+                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendar.set(Calendar.MINUTE, minute);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-                horario.setText(simpleDateFormat.format(c.getTime()));
+                horario.setText(simpleDateFormat.format(calendar.getTime()));
             }
         };
         new TimePickerDialog(EditarAtividadeActivity.this, timeSetListener,
-                c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE),true).show();
+                calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),true).show();
     }
 
     private void selecionarImagem(){
@@ -399,63 +420,95 @@ public class EditarAtividadeActivity extends AppCompatActivity {
     }
     public void setarDias(){
         CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox_dom);
-        if( atividade.getDias_semana().contains("Dom")){
+        if( atividade.getDias_semana().contains("1")){
             checkBox.setChecked(true);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_seg);
-        if( atividade.getDias_semana().contains("Seg")){
+        if( atividade.getDias_semana().contains("2")){
             checkBox.setChecked(true);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_ter);
-        if( atividade.getDias_semana().contains("Ter")){
+        if( atividade.getDias_semana().contains("3")){
             checkBox.setChecked(true);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_qua);
-        if( atividade.getDias_semana().contains("Qua")){
+        if( atividade.getDias_semana().contains("4")){
             checkBox.setChecked(true);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_qui);
-        if( atividade.getDias_semana().contains("Qui")){
+        if( atividade.getDias_semana().contains("5")){
             checkBox.setChecked(true);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_sex);
-        if( atividade.getDias_semana().contains("Sex")){
+        if( atividade.getDias_semana().contains("6")){
             checkBox.setChecked(true);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_sab);
-        if( atividade.getDias_semana().contains("Sab")){
+        if( atividade.getDias_semana().contains("7")){
             checkBox.setChecked(true);
         }
+    }
+    //Setando alarme da atividade:
+    private void setarAlarmeAtividade(int diaSemana){
+        //alterando o dia da semana para incluir alarme:
+        calendar.set(Calendar.DAY_OF_WEEK, diaSemana);
+        Log.e("Alarme", "Horario: "+calendar.getTime());
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent i = new Intent(EditarAtividadeActivity.this, AlarmeAtividades.class);
+        //O request code do peding intent será o id da atividade com ultimo digito numero referente ao dia da semana
+        Log.e("Alarme", "id atv: "+atividade.getId());
+        int code =  Integer.parseInt(atividade.getId()+diaSemana);
+        Log.e("Alarme", "Request code: "+code);
+        pendingIntent = PendingIntent.getBroadcast(EditarAtividadeActivity.this, code, i, 0);
+
+        alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
+        //alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 30*1000, pendingIntent);
+        Toast.makeText(EditarAtividadeActivity.this, "Alarme configurado para: "+calendar.getTime(), Toast.LENGTH_LONG).show();
     }
 
     public void diasMarcados() {
         CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox_dom);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Dom");
+            listaDiasSemana.add("1");
+            Log.e("Alarme", "DOM");
+            setarAlarmeAtividade(1);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_seg);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Seg");
+            listaDiasSemana.add("2");
+            Log.e("Alarme", "SEG");
+            setarAlarmeAtividade(2);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_ter);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Ter");
+            listaDiasSemana.add("3");
+            Log.e("Alarme", "TER");
+            setarAlarmeAtividade(3);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_qua);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Qua");
+            listaDiasSemana.add("4");
+            Log.e("Alarme", "QUA");
+            setarAlarmeAtividade(4);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_qui);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Qui");
+            listaDiasSemana.add("5");
+            Log.e("Alarme", "QUI");
+
+            setarAlarmeAtividade(5);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_sex);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Sex");
+            listaDiasSemana.add("6");
+            Log.e("Alarme", "SEX");
+            setarAlarmeAtividade(6);
         }
         checkBox = (CheckBox) findViewById(R.id.checkbox_sab);
         if( checkBox.isChecked()){
-            listaDiasSemana.add("Sab");
+            listaDiasSemana.add("7");
+            Log.e("Alarme", "SAB");
+            setarAlarmeAtividade(7);
         }
     }
 }
