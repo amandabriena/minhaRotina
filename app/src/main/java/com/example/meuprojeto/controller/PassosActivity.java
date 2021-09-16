@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.meuprojeto.R;
+import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.Passo;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -23,14 +25,15 @@ public class PassosActivity extends AppCompatActivity {
     SliderPassosAdapter adapter;
     ViewPager2 page2;
     ArrayList<Passo> listaPassos = new ArrayList<>();
-    String idAtividade;
+    Atividade atividade;
     TextToSpeech textToSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passos);
-        idAtividade = getIntent().getStringExtra("idAtividade");
+        atividade = getIntent().getParcelableExtra("atividade");
+        //idAtividade = getIntent().getStringExtra("idAtividade");
         listaPassos = getIntent().getParcelableArrayListExtra("lista");
         Log.e("passos size", listaPassos.size()+"");
         page2 = findViewById(R.id.viewPager);
@@ -62,16 +65,16 @@ public class PassosActivity extends AppCompatActivity {
         Log.e("btClick", "Clicado!");
         FirebaseFirestore.getInstance().collection("usuarios")
                 .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
-                .document(idAtividade).update("status", "1").addOnSuccessListener(new OnSuccessListener<Void>() {
+                .document(atividade.getId()).update("status", "1", "qtVezesConcluida", FieldValue.increment(1)).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.e("update", "updateRealizado");
             }
         });
         Toast.makeText(PassosActivity.this,"Atividade Concluída!", Toast.LENGTH_LONG).show();
-        Intent dashboard = new Intent(PassosActivity.this, FeedbackActivity.class);
-        dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(dashboard);
+        Intent intent = new Intent(PassosActivity.this, FeedbackActivity.class);
+        intent.putExtra("atividade", atividade);
+        startActivity(intent);
     }
 
 }

@@ -27,7 +27,7 @@
             android:name=".controller.PopupDeletarAtividadeActivity"
             android:theme="@style/AppTheme.CustomTheme" />
         <activity android:name=".controller.PassosActivity" />
-        <activity android:name=".controller.PassoAPassoActivity" />
+        <activity android:name=".controller.OldPassoAPassoActivity" />
         <activity android:name=".controller.CadastrarAtividadesInicialActivity" />
         <activity android:name=".controller.CadastrarPreferenciasActivity" />
         <activity android:name=".controller.AtividadesAgendadasActivity" />

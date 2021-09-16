@@ -33,7 +33,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PassoFragment extends Fragment {
+public class OldPassoFragment extends Fragment {
     Passo objPasso;
 
     //Declarando variáveis
@@ -53,7 +53,7 @@ public class PassoFragment extends Fragment {
     DatabaseReference databaseReference;
     private List<Passo> listaPassos = new ArrayList<>();
 
-    public PassoFragment() {
+    public OldPassoFragment() {
         // Required empty public constructor
     }
 
@@ -108,7 +108,7 @@ public class PassoFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("ordemPasso", num);
                 bundle.putParcelableArrayList("lista", (ArrayList<Passo>) listaPassos);
-                PassoFragment p = new PassoFragment();
+                OldPassoFragment p = new OldPassoFragment();
                 p.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.frag, p).commit();
             }

@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -75,7 +76,8 @@ public class AtividadeActivity extends AppCompatActivity {
                             public void onClick(View v) {
                                 //Direcionando a ação do botão para abrir a tela de atividades
                                 Intent intent = new Intent(AtividadeActivity.this, PassosActivity.class);
-                                intent.putExtra("idAtividade", id);
+                                intent.putExtra("atividade", atividade);
+                                //intent.putExtra("idAtividade", id);
                                 intent.putParcelableArrayListExtra("lista", (ArrayList<? extends Parcelable>) listaPassos);
                                 startActivity(intent);
                             }
@@ -123,7 +125,7 @@ public class AtividadeActivity extends AppCompatActivity {
             // carregar do banco
             FirebaseFirestore.getInstance().collection("usuarios")
                     .document(FirebaseAuth.getInstance().getUid()).collection("atividades")
-                    .document(id).update("status", "1").addOnSuccessListener(new OnSuccessListener<Void>() {
+                    .document(id).update("status", "1", "qtVezesConcluida", FieldValue.increment(1)).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     Log.e("update", "updateRealizado");

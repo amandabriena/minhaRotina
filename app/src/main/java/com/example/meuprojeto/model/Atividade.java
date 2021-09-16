@@ -19,6 +19,13 @@ public class Atividade implements Parcelable {
     private String musica;
     private ArrayList<String> dias_semana;
     private String status;
+    //total realizada define a quantidade de vezes total em que a atividade ocorreu, sendo concluida ou não:
+    private int totalRealizada;
+    private int qtVezesConcluida;
+    private int somatorioFeedBack;
+    //Define se será ou não perguntado o feedback da atividade ao finalizá-la:
+    private boolean feedbackAtivo;
+
     /*Status da atividade poderá ser:
     0- em aberto
     1- concluída
@@ -59,6 +66,13 @@ public class Atividade implements Parcelable {
         status = in.readString();
     }
 
+    public boolean isFeedbackAtivo() {
+        return feedbackAtivo;
+    }
+
+    public void setFeedbackAtivo(boolean feedbackAtivo) {
+        this.feedbackAtivo = feedbackAtivo;
+    }
 
     public static final Creator<Atividade> CREATOR = new Creator<Atividade>() {
         @Override
@@ -134,6 +148,36 @@ public class Atividade implements Parcelable {
 
     public void setImagemURL(String imagemURL) {
         this.imagemURL = imagemURL;
+    }
+
+
+
+    public int getSomatorioFeedBack() {
+        return somatorioFeedBack;
+    }
+
+    public void setSomatorioFeedBack(int somatorioFeedBack) {
+        this.somatorioFeedBack = somatorioFeedBack;
+    }
+
+    public int getTotalRealizada() {
+        return totalRealizada;
+    }
+
+    public void setTotalRealizada(int totalRealizada) {
+        this.totalRealizada = totalRealizada;
+    }
+
+    public int getQtVezesConcluida() {
+        return qtVezesConcluida;
+    }
+
+    public void setQtVezesConcluida(int qtVezesConcluida) {
+        this.qtVezesConcluida = qtVezesConcluida;
+    }
+
+    public static Creator<Atividade> getCREATOR() {
+        return CREATOR;
     }
 
     @NonNull

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controller.PassoAPassoActivity">
+    tools:context=".controller.OldPassoAPassoActivity">
     <RelativeLayout
         android:id="@+id/responsive"
         android:layout_width="match_parent"
