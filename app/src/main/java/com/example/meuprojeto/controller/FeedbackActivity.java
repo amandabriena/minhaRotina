@@ -35,54 +35,49 @@ public class FeedbackActivity extends AppCompatActivity {
         happy3 = (ImageButton) findViewById(R.id.happy3);
         happy4 = (ImageButton) findViewById(R.id.happy4);
 
-        String textoCompleto = "Olá! Deixe sua avaliação para a tarefa "+atividade.getNomeAtividade()+" ?";
+        String textoCompleto = "Olá! O que você achou da tarefa '"+atividade.getNomeAtividade()+"' ?";
         texto.setText(textoCompleto);
 
 
         happy0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent dashboard = new Intent(FeedbackActivity.this, MinhaRotinaActivity.class);
-                dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(dashboard);
+                feedback = 1;
+                avaliarAtividade();
             }
         });
         happy1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent dashboard = new Intent(FeedbackActivity.this, MinhaRotinaActivity.class);
-                dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(dashboard);
+                feedback = 2;
+                avaliarAtividade();
             }
         });
         happy2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent dashboard = new Intent(FeedbackActivity.this, MinhaRotinaActivity.class);
-                dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(dashboard);
+                feedback = 3;
+                avaliarAtividade();
             }
         });
         happy3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent dashboard = new Intent(FeedbackActivity.this, MinhaRotinaActivity.class);
-                dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(dashboard);
+                feedback = 4;
+                avaliarAtividade();
             }
         });
         happy4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent dashboard = new Intent(FeedbackActivity.this, MinhaRotinaActivity.class);
-                dashboard.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(dashboard);
+                feedback = 5;
+                avaliarAtividade();
             }
         });
 
     }
 
-    public void avaliarAtividade(int feedback){
+    public void avaliarAtividade(){
         FirebaseFirestore.getInstance().collection("usuarios")
                 .document(atividade.getIdUsuario()).collection("atividades")
                 .document(atividade.getId())
