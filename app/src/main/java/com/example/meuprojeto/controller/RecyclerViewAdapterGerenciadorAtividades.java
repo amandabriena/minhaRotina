@@ -87,7 +87,3 @@ public class RecyclerViewAdapterGerenciadorAtividades extends RecyclerView.Adapt
     }
 
 }
-/*
-interface ClickListenerGer<T> {
-    void onItemClick(T data);
-}*/
