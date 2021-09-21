@@ -40,7 +40,7 @@
     <string name="btGerAtividades">GERENCIAR ROTINA</string>
     <string name="btAddAtividadeFora">ADICIONAR ATIVIDADE FORA DA ROTINA</string>
     <string name="btAtvsAgendadas">VER ATIVIDADES AGENDADAS</string>
-    <string name="btTempoMax">TEMPO MÁXIMO DE USO</string>
+    <string name="btRelatorioAtividades">RELATÓRIO ATIVIDADES</string>
     <string name="btVolMax">AJUSTAR VOLUME MÁXIMO</string>
     <string name="btEditarPreferencias">EDITAR PREFERÊNCIAS</string>
     <string name="btVoltarCrianca">VOLTAR PARA ESPAÇO INFANTIL</string>
@@ -104,4 +104,7 @@
 
     //Página incluir atividade base:
     <string name="btIncluir">Incluir Atividade!</string>
+
+    //Pagina Relatório Atividades
+    <string name="relatorioAtividades">RELATÓRIO ATIVIDADES</string>
 </resources>

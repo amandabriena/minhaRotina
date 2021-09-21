@@ -26,7 +26,7 @@ import com.squareup.picasso.Picasso;
 
 public class DashboardActivity extends AppCompatActivity {
     //Declarando variáveis
-    Button btGerAtividades, btCadastrarAtv, btEditar, btRotinaDiaria, btVoltar, btEditarPreferencias, btAtividadesAgendadas;
+    Button btGerAtividades, btCadastrarAtv, btEditar, btRotinaDiaria, btVoltar, btEditarPreferencias, btAtividadesAgendadas, btRelatorioAtividades;
     ImageView imgIcon;
 
     @Override
@@ -43,6 +43,7 @@ public class DashboardActivity extends AppCompatActivity {
         btEditar = (Button) findViewById(R.id.btEditar);
         btEditarPreferencias = (Button) findViewById(R.id.btEditarPreferencias);
         btAtividadesAgendadas = (Button) findViewById(R.id.btAtvsAgendadas);
+        btRelatorioAtividades = (Button) findViewById(R.id.btRelatorioAtividades);
         btVoltar = (Button) findViewById(R.id.btVoltarCrianca);
 
         //Pegando imagem de icone do usuário
@@ -110,6 +111,14 @@ public class DashboardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //Direcionando a ação do botão para abrir a tela de atividades
                 Intent gerAtividades = new Intent(DashboardActivity.this, AtividadesAgendadasActivity.class);
+                startActivity(gerAtividades);
+            }
+        });
+        btRelatorioAtividades.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Direcionando a ação do botão para abrir a tela de atividades
+                Intent gerAtividades = new Intent(DashboardActivity.this, RelatorioAtividadeActivity.class);
                 startActivity(gerAtividades);
             }
         });

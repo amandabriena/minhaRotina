@@ -34,7 +34,7 @@ public class RecyclerViewAdapterFeedbackAtividades extends RecyclerView.Adapter<
         final Atividade atividade = listaAtividadesGer.get(position);
 
         holder.nome_atv.setText(atividade.getNomeAtividade());
-        int porcentagemFeedback = (atividade.getSomatorioFeedBack()/ atividade.getTotalRealizada())*100;
+        int porcentagemFeedback = (atividade.getSomatorioFeedBack()/ atividade.getTotalRealizada())*20;
         holder.porcentagem_feedback.setText(porcentagemFeedback+"% de aprovação");
         int porcentagemConclusao = (atividade.getQtVezesConcluida()/ atividade.getTotalRealizada())*100;
         holder.porcentagem_conclusao.setText("Percentual conclusão: "+porcentagemConclusao+"%");

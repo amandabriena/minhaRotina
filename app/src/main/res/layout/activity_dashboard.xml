@@ -101,14 +101,14 @@
                 android:padding="@dimen/padding_icons_button"
                 android:text="@string/btEditarPreferencias" />
             <Button
-                android:id="@+id/btTempoMax"
+                android:id="@+id/btRelatorioAtividades"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_bts_dashboard"
                 android:layout_marginTop="@dimen/margin_bts_dashboard"
                 android:background="@drawable/button_round_border2"
                 android:drawableEnd="@drawable/ic_time"
                 android:padding="@dimen/padding_icons_button"
-                android:text="@string/btTempoMax" />
+                android:text="@string/btRelatorioAtividades" />
             <Button
                 android:id="@+id/btVolMax"
                 android:layout_width="match_parent"

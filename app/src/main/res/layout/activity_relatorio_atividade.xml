@@ -5,5 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controller.RelatorioAtividadeActivity">
+    <RelativeLayout
+        android:id="@+id/responsive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="2"
+        android:layout_marginTop="10dp">
+        <ImageButton
+            android:id="@+id/btCompartilhar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_round_border"
+            app:srcCompat="@drawable/ic_share" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/btCompartilhar"
+            android:layout_gravity="center"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/relatorioAtividades"
+                android:textAppearance="@style/label_maior"
+                android:layout_gravity="center_horizontal"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:background="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:listitem="@layout/recyclerview_adapter_feedback"/>
+        </LinearLayout>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
