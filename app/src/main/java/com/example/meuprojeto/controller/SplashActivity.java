@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import static com.example.meuprojeto.util.Utilitarios.verificarDiaSemana;
 import static java.util.Calendar.getInstance;
 
 public class SplashActivity extends AppCompatActivity {
@@ -46,6 +47,7 @@ public class SplashActivity extends AppCompatActivity {
 
         //Verificando se a tarefa de resetar status da atividade já foi definida anteriormente:
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this,code_alarm,intent,PendingIntent.FLAG_NO_CREATE);
+        //atualizarStatusAtividade();
 
         if(pendingIntent == null){
             Log.e("Alarme", "Alarme não definido");
@@ -124,40 +126,5 @@ public class SplashActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, code_alarm, intent, 0);
 
         alarmManager.setRepeating(AlarmManager.RTC, time, AlarmManager.INTERVAL_DAY, pendingIntent);
-    }
-
-    private String verificarDiaSemana(){
-        Date d = new Date();
-        Calendar c = new GregorianCalendar();
-        Log.e("Rotina", "Verifiação dias: "+c.getTime());
-        c.setTime(d); String nome = "";
-        int diaS = c.get(c.DAY_OF_WEEK);
-        String dia = "";
-        switch(diaS){
-            case Calendar.SUNDAY:
-                dia = "1";
-            break;
-            case Calendar.MONDAY:
-                dia = "2";
-                break;
-            case Calendar.TUESDAY:
-                dia = "3";
-                break;
-            case Calendar.WEDNESDAY:
-                dia = "4";
-                break;
-            case Calendar.THURSDAY:
-                dia = "5";
-                break;
-            case Calendar.FRIDAY:
-                dia = "6";
-                break;
-            case Calendar.SATURDAY:
-                dia = "7";
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + Calendar.DAY_OF_WEEK);
-        }
-        return dia;
     }
 }

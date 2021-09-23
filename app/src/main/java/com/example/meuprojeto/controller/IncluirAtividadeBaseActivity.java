@@ -113,7 +113,7 @@ public class IncluirAtividadeBaseActivity extends AppCompatActivity {
                 String nome = nome_atv.getText().toString();
                 String hora = horario.getText().toString();
                 String musica_atv = musica.getText().toString();
-                diasMarcados();
+                //diasMarcados();
                 if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
                     Toast.makeText(IncluirAtividadeBaseActivity.this,"Preencha todos os campos para incluir a atividade!", Toast.LENGTH_SHORT).show();
                 }else {
