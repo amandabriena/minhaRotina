@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".controller.RecyclerViewAdapterFeedbackAtividade"></activity>
+        <activity android:name=".controller.PopUpAtividadesAgendadas"
+            android:theme="@style/AppTheme.CustomTheme" />
         <activity android:name=".controller.RelatorioAtividadeActivity" />
         <activity android:name=".controller.FeedbackActivity" />
         <activity android:name=".controller.FinalizacaoCadastroGoogle" />

@@ -64,15 +64,8 @@ public class AtividadesAgendadasActivity extends AppCompatActivity {
         Date d = new Date();
         final Calendar cal = new GregorianCalendar();
         cal.setTime(d);
-        cal.set(DAY_OF_MONTH, 4);
         mes.setText(dateFormatMonth.format(d));
 
-        //Setando evento:
-
-        long time = cal.getTimeInMillis();
-        Log.e("Alarme", "Time agenda: "+cal.getTime());
-        Event ev1 = new Event(R.color.colorPrimary, time, "DIA HOJE");
-        compactCalendar.addEvent(ev1);
 
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override
@@ -80,7 +73,7 @@ public class AtividadesAgendadasActivity extends AppCompatActivity {
                 List<Event> events = compactCalendar.getEvents(dateClicked);
                 //Log.e("Alarme", "Date: "+cal.getTime());
                 Log.e("Alarme", "Day was clicked: " + dateClicked + " with events " + events);
-                
+
             }
 
             @Override
@@ -124,7 +117,7 @@ public class AtividadesAgendadasActivity extends AppCompatActivity {
         protected void onPostExecute(Void resultado) {
         }
     }
-
+    //Incluindo eventos:
     public void incluirEvento(AtividadeAgendada atv){
         Event evento = new Event(R.color.colorPrimary, atv.getData().getTime(), atv.getNomeAtividade());
         compactCalendar.addEvent(evento);
