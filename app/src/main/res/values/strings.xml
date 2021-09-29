@@ -84,6 +84,7 @@
     //Página de calendário de atividades agendadas
     <string name="instrucoes">Selecione uma data para agendar uma nova atividade fora da rotina ou selecione as já agendadas nos dias circulados para saber mais.</string>
 
+
     //Pagina de cadastrar preferências
     <string name="instrucoes_preferencias">Informe algumas preferências da criança para auxiliar numa melhor rotina!</string>
     <string name="instrucoes_preferencias2">Por exemplo: desenhos, filmes, brinquedos e etc que goste mais.</string>

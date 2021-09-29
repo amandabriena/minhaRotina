@@ -5,18 +5,18 @@ import java.util.UUID;
 
 public class AtividadeAgendada extends Atividade {
     //alterar datas para tipo Date
-    private String data;
+    private Date data;
     private String dataPrevia;
     private String urlVideo;
 
     public AtividadeAgendada() {
     }
 
-    public String getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Date data) {
         this.data = data;
     }
 

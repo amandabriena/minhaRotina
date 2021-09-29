@@ -41,6 +41,7 @@ import static java.util.Calendar.getInstance;
 
 public class CadastrarAtividadeFora extends AppCompatActivity {
     AtividadeAgendada atividadeFora;
+
     EditText descricao, data, dataPreparacao, horario;
     Button btCadastrarAtividade;
     private Calendar calendar;
@@ -169,7 +170,7 @@ public class CadastrarAtividadeFora extends AppCompatActivity {
 
 
             atividadeFora.setNomeAtividade(descricao.getText().toString());
-            atividadeFora.setData(data.getText().toString());
+            atividadeFora.setData(calendar.getTime());
             atividadeFora.setDataPrevia(dataPreparacao.getText().toString());
             atividadeFora.setIdUsuario(usuario_atv);
             setarAlarmeAtividade();
