@@ -74,12 +74,7 @@
                     android:background="@drawable/edit_round"
                     android:focusableInTouchMode="false"/>
 
-                <EditText
-                    android:id="@+id/musica"
-                    android:layout_width="@dimen/width_edit"
-                    android:layout_height="@dimen/height_edit"
-                    android:layout_marginTop="@dimen/margin_top_editar"
-                    android:background="@drawable/edit_round" />
+
 
                 <TextView
                     android:id="@+id/tdias"

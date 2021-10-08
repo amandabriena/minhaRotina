@@ -63,7 +63,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
     private ArrayList<Passo> listaPassosAntiga = new ArrayList<>();
     private ArrayList<String> listaDiasSemana = new ArrayList<>();
     private boolean verificador = true;
-    EditText nome_atv, horario, musica;
+    EditText nome_atv, horario;
     ImageButton btUploadImg;
     ImageView imagemAtividade;
     Button btCancelar, btAtualizar, btAdicionarPasso;
