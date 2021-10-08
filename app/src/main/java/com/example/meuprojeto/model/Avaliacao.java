@@ -1,8 +1,8 @@
 package com.example.meuprojeto.model;
 
-public class Feedback {
+public class Avaliacao {
     private String id;
     private int avaliacao;
-    private String comentario;
+    private String id_atividade;
 
 }
