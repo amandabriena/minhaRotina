@@ -34,7 +34,7 @@
         <activity android:name=".controller.CadastrarAtividadesInicialActivity" />
         <activity android:name=".controller.CadastrarPreferenciasActivity" />
         <activity android:name=".controller.AtividadesAgendadasActivity" />
-        <activity android:name=".controller.CadastrarAtividadeFora" />
+        <activity android:name=".controller.CadastrarAtividadeAgendada" />
         <activity
             android:name=".controller.PopUpResponsaveis"
             android:theme="@style/AppTheme.CustomTheme" />

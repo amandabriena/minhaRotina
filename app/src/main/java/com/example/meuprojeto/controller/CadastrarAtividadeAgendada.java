@@ -22,10 +22,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.meuprojeto.R;
-import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.AtividadeAgendada;
 import com.example.meuprojeto.util.AlarmeAtividadeFora;
-import com.example.meuprojeto.util.AlarmeAtividades;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,7 +37,7 @@ import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
 import static java.util.Calendar.getInstance;
 
-public class CadastrarAtividadeFora extends AppCompatActivity {
+public class CadastrarAtividadeAgendada extends AppCompatActivity {
     AtividadeAgendada atividadeFora;
 
     EditText descricao, data, dataPreparacao, horario;
@@ -79,7 +77,7 @@ public class CadastrarAtividadeFora extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 criarAtividade();
-                Intent intent = new Intent(CadastrarAtividadeFora.this, DashboardActivity.class);
+                Intent intent = new Intent(CadastrarAtividadeAgendada.this, DashboardActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -98,7 +96,7 @@ public class CadastrarAtividadeFora extends AppCompatActivity {
                 data.setText(simpleDateFormat.format(c.getTime()));
             }
         };
-        new  DatePickerDialog(CadastrarAtividadeFora.this, dateSetListener, c.get(YEAR),
+        new  DatePickerDialog(CadastrarAtividadeAgendada.this, dateSetListener, c.get(YEAR),
                 c.get(MONTH), c.get(DAY_OF_MONTH)).show();
     }
 
@@ -120,11 +118,11 @@ public class CadastrarAtividadeFora extends AppCompatActivity {
                         dataPreparacao.setText(simpleDateFormat.format(calendar.getTime()));
                     }
                 };
-                new TimePickerDialog(CadastrarAtividadeFora.this, timeSetListener,
+                new TimePickerDialog(CadastrarAtividadeAgendada.this, timeSetListener,
                         calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),true).show();
             }
         };
-        new  DatePickerDialog(CadastrarAtividadeFora.this, dateSetListener, calendar.get(YEAR),
+        new  DatePickerDialog(CadastrarAtividadeAgendada.this, dateSetListener, calendar.get(YEAR),
                 calendar.get(MONTH), calendar.get(DAY_OF_MONTH)).show();
     }
     private void criarNotificacao(){
@@ -145,16 +143,16 @@ public class CadastrarAtividadeFora extends AppCompatActivity {
         //calendar.set(Calendar.DAY_OF_WEEK, diaSemana);
         Log.e("Alarme", "Horario: "+calendar.getTime());
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent i = new Intent(CadastrarAtividadeFora.this, AlarmeAtividadeFora.class);
+        Intent i = new Intent(CadastrarAtividadeAgendada.this, AlarmeAtividadeFora.class);
         //O request code do peding intent será o id da atividade com ultimo digito numero referente ao dia da semana
         Log.e("Alarme", "id atv: "+atividadeFora.getId());
         int code =  Integer.parseInt(atividadeFora.getId());
         Log.e("Alarme", "Request code: "+code);
-        pendingIntent = PendingIntent.getBroadcast(CadastrarAtividadeFora.this, code, i, 0);
+        pendingIntent = PendingIntent.getBroadcast(CadastrarAtividadeAgendada.this, code, i, 0);
 
         alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
 
-        Toast.makeText(CadastrarAtividadeFora.this, "Alarme configurado para: "+calendar.getTime(), Toast.LENGTH_LONG).show();
+        Toast.makeText(CadastrarAtividadeAgendada.this, "Alarme configurado para: "+calendar.getTime(), Toast.LENGTH_LONG).show();
     }
     private void criarAtividade(){
         String descricaoAtv = descricao.getText().toString();
