@@ -89,20 +89,7 @@
                     android:layout_marginTop="@dimen/margin_top_editar"
                     android:background="@drawable/edit_round"
                     android:focusableInTouchMode="false"/>
-                <TextView
-                    android:id="@+id/tmusica"
-                    android:layout_width="wrap_content"
-                    android:layout_height="26dp"
-                    android:layout_gravity="left"
-                    android:layout_marginTop="@dimen/margin_top_cadastro"
-                    android:text="@string/musica"
-                    android:textAppearance="@style/label" />
-                <EditText
-                    android:id="@+id/musica"
-                    android:layout_width="@dimen/width_edit"
-                    android:layout_height="@dimen/height_edit"
-                    android:layout_marginTop="@dimen/margin_top_editar"
-                    android:background="@drawable/edit_round" />
+
 
                 <TextView
                     android:id="@+id/tdias"

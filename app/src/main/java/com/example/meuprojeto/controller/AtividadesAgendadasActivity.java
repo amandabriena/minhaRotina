@@ -4,15 +4,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.meuprojeto.R;
-import com.example.meuprojeto.model.Atividade;
 import com.example.meuprojeto.model.AtividadeAgendada;
 import com.github.sundeepk.compactcalendarview.CompactCalendarView;
 import com.github.sundeepk.compactcalendarview.domain.Event;
@@ -43,7 +44,6 @@ import static com.example.meuprojeto.util.Utilitarios.verificarDiaSemana;
 import static java.util.Calendar.DAY_OF_MONTH;
 
 public class AtividadesAgendadasActivity extends AppCompatActivity {
-    //MaterialCalendarView calendario;
 
     CompactCalendarView compactCalendar;
     private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM yyyy", Locale.getDefault()) ;
@@ -71,9 +71,13 @@ public class AtividadesAgendadasActivity extends AppCompatActivity {
             @Override
             public void onDayClick(Date dateClicked) {
                 List<Event> events = compactCalendar.getEvents(dateClicked);
-                //Log.e("Alarme", "Date: "+cal.getTime());
+                List<AtividadeAgendada> atividadesDia = buscarAtividadesData(events);
                 Log.e("Alarme", "Day was clicked: " + dateClicked + " with events " + events);
-
+                if(atividadesDia.size() > 0){
+                    Intent intent = new Intent(AtividadesAgendadasActivity.this, PopUpAtividadesAgendadas.class);
+                    intent.putParcelableArrayListExtra("atividades", (ArrayList<? extends Parcelable>) atividadesDia);
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -122,6 +126,24 @@ public class AtividadesAgendadasActivity extends AppCompatActivity {
         Event evento = new Event(R.color.colorPrimary, atv.getData().getTime(), atv.getNomeAtividade());
         compactCalendar.addEvent(evento);
         Log.e("Alarme", "Evento add: "+atv.getNomeAtividade());
+        Log.e("Alarme", "Evento add time: "+atv.getData().getTime());
         Log.e("Alarme", "Evento time: "+evento.getTimeInMillis());
+    }
+
+    public List<AtividadeAgendada> buscarAtividadesData(List<Event> events){
+        Log.e("Alarme", "busca por atividades");
+        List<AtividadeAgendada> listaAtividadesDia = new ArrayList<>();
+        for (Event e: events) {
+            Log.e("Alarme", "busca evento"+e.getTimeInMillis());
+            for (AtividadeAgendada atividadeAgendada: listaAtividades) {
+                Log.e("Alarme", "busca data"+atividadeAgendada.getData().getTime());
+                if((atividadeAgendada.getData().getTime()+"").equals(e.getTimeInMillis()+"")){
+                    Log.e("Alarme", "Atividade adicionada: "+atividadeAgendada.getNomeAtividade());
+                    listaAtividadesDia.add(atividadeAgendada);
+                }
+            }
+        }
+
+        return listaAtividadesDia;
     }
 }

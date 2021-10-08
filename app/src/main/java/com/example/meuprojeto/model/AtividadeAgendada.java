@@ -1,5 +1,7 @@
 package com.example.meuprojeto.model;
 
+import androidx.annotation.Nullable;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -34,5 +36,16 @@ public class AtividadeAgendada extends Atividade {
 
     public void setUrlVideo(String urlVideo) {
         this.urlVideo = urlVideo;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj instanceof AtividadeAgendada){
+            if(this.getId().
+                    equals(((AtividadeAgendada) obj).getId())){
+                return true;
+            }
+        }
+        return false;
     }
 }

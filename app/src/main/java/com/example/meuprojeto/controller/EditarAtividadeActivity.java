@@ -79,7 +79,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editar_atividade);
 
         atividade = getIntent().getParcelableExtra("atividade");
-
+        calendar = Calendar.getInstance();
         Log.e("id Atividade:", atividade.getId());
         new CarregarPassosAsynctask().execute();
 
@@ -101,9 +101,11 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(recyclerViewAdapter);
 
+
+
         nome_atv = (EditText) findViewById(R.id.nome_atividade);
         horario = (EditText) findViewById(R.id.horario);
-        musica = (EditText) findViewById(R.id.musica);
+        //musica = (EditText) findViewById(R.id.musica);
         btUploadImg = (ImageButton) findViewById(R.id.btUploadImg);
         imagemAtividade = (ImageView) findViewById(R.id.imgIcon);
         btCancelar = (Button) findViewById(R.id.btCancelar);
@@ -115,7 +117,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         Picasso.get().load(atividade.getImagemURL()).into(imagemAtividade);
         nome_atv.setHint(atividade.getNomeAtividade());
         horario.setHint(atividade.getHorario());
-        musica.setHint(atividade.getMusica());
+        //musica.setHint(atividade.getMusica());
         setarDias();
 
         //mascara de horário:
@@ -200,7 +202,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         Log.e("Atividade", "Atualizando atividade");
         String nome = nome_atv.getText().toString();
         String hora = horario.getText().toString();
-        String musicaAtv = musica.getText().toString();
+        //String musicaAtv = musica.getText().toString();
         //cancelando alarmes anteriormente configurados:
         for (String dia: atividade.getDias_semana()) {
             String idRequest = atividade.getId()+dia;
@@ -225,13 +227,6 @@ public class EditarAtividadeActivity extends AppCompatActivity {
                     .document(FirebaseAuth.getInstance().getUid())
                     .collection("/atividades").document(atividade.getId())
                     .update("horario",hora);
-        }
-        if(!musicaAtv.isEmpty()){
-            Log.e("Atividade", "musica atualizado");
-            FirebaseFirestore.getInstance().collection("usuarios")
-                    .document(FirebaseAuth.getInstance().getUid())
-                    .collection("/atividades").document(atividade.getId())
-                    .update("musica",musicaAtv);
         }
         if(dataIMG != null){
             Log.e("Atividade", "img atualizado");
@@ -351,7 +346,7 @@ public class EditarAtividadeActivity extends AppCompatActivity {
         }
     }
     private void showTimeDialog(final EditText horario){
-        calendar = Calendar.getInstance();
+
         TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener(){
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {

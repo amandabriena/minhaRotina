@@ -14,22 +14,22 @@ import com.example.meuprojeto.model.AtividadeAgendada;
 
 import java.util.List;
 
-public class RecyclerViewAdapterAtividadesAgendades extends RecyclerView.Adapter<RecyclerViewAdapterAtividadesAgendades.MyViewHolder> {
-    private List<AtividadeAgendada> listaAtividadesGer;
+public class RecyclerViewAdapterAtividadesAgendadas extends RecyclerView.Adapter<RecyclerViewAdapterAtividadesAgendadas.MyViewHolder> {
+    private List<AtividadeAgendada> listaAtividadesAg;
     private ClickListener<AtividadeAgendada> clickListenerDelete, clickListenerEdita;
-    public RecyclerViewAdapterAtividadesAgendades(List<AtividadeAgendada> listaAtividadesGer) {
-        this.listaAtividadesGer = listaAtividadesGer;
+    public RecyclerViewAdapterAtividadesAgendadas(List<AtividadeAgendada> listaAtividades) {
+        this.listaAtividadesAg = listaAtividades;
     }
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_adapter_ger, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_adapter_agendadas, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-        final AtividadeAgendada atividade = listaAtividadesGer.get(position);
+        final AtividadeAgendada atividade = listaAtividadesAg.get(position);
 
         holder.nome_atv_ger.setText(atividade.getNomeAtividade());
         holder.horario_atv_ger.setText(atividade.getHorario());
@@ -50,7 +50,7 @@ public class RecyclerViewAdapterAtividadesAgendades extends RecyclerView.Adapter
 
     @Override
     public int getItemCount() {
-        return listaAtividadesGer.size();
+        return listaAtividadesAg.size();
     }
 
 
@@ -66,7 +66,7 @@ public class RecyclerViewAdapterAtividadesAgendades extends RecyclerView.Adapter
         private TextView nome_atv_ger;
         private TextView horario_atv_ger;
         private Button btEditar, btDeletar;
-        private CardView cardViewGer;
+        private CardView cardView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -74,8 +74,7 @@ public class RecyclerViewAdapterAtividadesAgendades extends RecyclerView.Adapter
             horario_atv_ger = itemView.findViewById(R.id.horario_atv_ger);
             btEditar = itemView.findViewById(R.id.btEditarAtividade);
             btDeletar = itemView.findViewById(R.id.btDeletarAtividade);
-
-            cardViewGer = itemView.findViewById(R.id.cardViewGer);
+            cardView = itemView.findViewById(R.id.cardViewAgendadas);
 
         }
     }

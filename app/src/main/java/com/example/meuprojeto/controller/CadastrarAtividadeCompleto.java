@@ -57,7 +57,7 @@ public class CadastrarAtividadeCompleto extends AppCompatActivity {
     private RecyclerViewAdapterPassosHorizontal recyclerViewAdapter;
     private ArrayList<Passo> listaPassos = new ArrayList<>();
     private ArrayList<String> listaDiasSemana = new ArrayList<>();
-    EditText nome_atv, horario, musica;
+    EditText nome_atv, horario;
     ImageButton btUploadImg;
     ImageView imagemAtividade;
     Button btCancelar, btCadastrar, btAdicionarPasso;
@@ -90,7 +90,7 @@ public class CadastrarAtividadeCompleto extends AppCompatActivity {
         //Atrelando variáveis as views
         nome_atv = (EditText) findViewById(R.id.nome_atividade);
         horario = (EditText) findViewById(R.id.horario);
-        musica = (EditText) findViewById(R.id.musica);
+        //musica = (EditText) findViewById(R.id.musica);
         btCadastrar = (Button) findViewById(R.id.btCadastrar);
         btCancelar = (Button) findViewById(R.id.btCancelar);
         btUploadImg = (ImageButton) findViewById(R.id.btUploadImg);
@@ -136,11 +136,11 @@ public class CadastrarAtividadeCompleto extends AppCompatActivity {
             public void onClick(View v) {
                 String nome = nome_atv.getText().toString();
                 String hora = horario.getText().toString();
-                String musica_atv = musica.getText().toString();
+                //String musica_atv = musica.getText().toString();
                 //diasMarcados();
                 if(dataIMG == null){
                     Toast.makeText(CadastrarAtividadeCompleto.this,"Por gentileza adicione uma imagem para a atividade!", Toast.LENGTH_SHORT).show();
-                }else if(nome.isEmpty() || hora.isEmpty() || musica_atv.isEmpty()){
+                }else if(nome.isEmpty() || hora.isEmpty()){
                     Toast.makeText(CadastrarAtividadeCompleto.this,"Preencha todos os campos para criar a atividade!", Toast.LENGTH_SHORT).show();
                 }else {
                     progress.setMessage("Adicionando atividade..");
@@ -231,7 +231,7 @@ public class CadastrarAtividadeCompleto extends AppCompatActivity {
                         atividade.setImagemURL(uri.toString());
                         atividade.setNomeAtividade(nome_atv.getText().toString());
                         atividade.setHorario(horario.getText().toString());
-                        atividade.setMusica(musica.getText().toString());
+                        //atividade.setMusica(musica.getText().toString());
                         atividade.setStatus("0");
                         atividade.setIdUsuario(usuario_atv);
                         atividade.setDias_semana(listaDiasSemana);
