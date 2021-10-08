@@ -47,6 +47,17 @@
             app:compactCalendarMultiEventIndicatorColor="#fff"
             />
 
+        <Button
+            android:id="@+id/btCriarNova"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/button_round_border"
+            android:text="@string/btCriarnova"
+            android:drawableEnd="@drawable/ic_add"
+            android:padding="@dimen/padding_icons_button"
+            android:layout_marginTop="20dp"
+            />
 
 
     </LinearLayout>

@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +51,7 @@ public class AtividadesAgendadasActivity extends AppCompatActivity {
     private SimpleDateFormat dateFormatMonth = new SimpleDateFormat("MMMM yyyy", Locale.getDefault()) ;
     private TextView mes;
     private List<AtividadeAgendada> listaAtividades = new ArrayList<>();
+    Button btIncluirAtividadeAgendada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +61,26 @@ public class AtividadesAgendadasActivity extends AppCompatActivity {
         compactCalendar = (CompactCalendarView) findViewById(R.id.compactcalendar_view);
         compactCalendar.setUseThreeLetterAbbreviation(true);
 
+        btIncluirAtividadeAgendada = (Button) findViewById(R.id.btCriarNova);
+
         new CarregarListaAsynctask().execute();
+
+
+
+        btIncluirAtividadeAgendada.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Direcionando a ação do botão para abrir a tela de atividades
+                Intent addAtividade = new Intent(AtividadesAgendadasActivity.this, CadastrarAtividadeFora.class);
+                startActivity(addAtividade);
+            }
+        });
 
         //Setando informação do mês atual
         Date d = new Date();
         final Calendar cal = new GregorianCalendar();
         cal.setTime(d);
         mes.setText(dateFormatMonth.format(d));
-
 
         compactCalendar.setListener(new CompactCalendarView.CompactCalendarViewListener() {
             @Override

@@ -73,15 +73,7 @@
                 android:drawableEnd="@drawable/ic_build"
                 android:padding="@dimen/padding_icons_button"
                 />
-            <Button
-                android:id="@+id/btAddAtividadeFora"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_bts_dashboard"
-                android:layout_marginTop="@dimen/margin_bts_dashboard"
-                android:background="@drawable/button_round_border2"
-                android:drawableEnd="@drawable/ic_create"
-                android:padding="@dimen/padding_icons_button"
-                android:text="@string/btAddAtividadeFora" />
+
             <Button
                 android:id="@+id/btAtvsAgendadas"
                 android:layout_width="match_parent"

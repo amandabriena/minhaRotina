@@ -39,7 +39,7 @@
     <string name="btRotinaDiaria">MINHA ROTINA DE HOJE</string>
     <string name="btGerAtividades">GERENCIAR ROTINA</string>
     <string name="btAddAtividadeFora">ADICIONAR ATIVIDADE FORA DA ROTINA</string>
-    <string name="btAtvsAgendadas">VER ATIVIDADES AGENDADAS</string>
+    <string name="btAtvsAgendadas">ATIVIDADES AGENDADAS</string>
     <string name="btRelatorioAtividades">RELATÓRIO ATIVIDADES</string>
     <string name="btVolMax">AJUSTAR VOLUME MÁXIMO</string>
     <string name="btEditarPreferencias">EDITAR PREFERÊNCIAS</string>

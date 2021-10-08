@@ -26,7 +26,7 @@ import com.squareup.picasso.Picasso;
 
 public class DashboardActivity extends AppCompatActivity {
     //Declarando variáveis
-    Button btGerAtividades, btCadastrarAtv, btEditar, btRotinaDiaria, btVoltar, btEditarPreferencias, btAtividadesAgendadas, btRelatorioAtividades;
+    Button btGerAtividades, btEditar, btRotinaDiaria, btVoltar, btEditarPreferencias, btAtividadesAgendadas, btRelatorioAtividades;
     ImageView imgIcon;
 
     @Override
@@ -38,7 +38,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         imgIcon = (ImageView) findViewById(R.id.imgIcon);
         btGerAtividades = (Button) findViewById(R.id.btGerAtividades);
-        btCadastrarAtv = (Button) findViewById(R.id.btAddAtividadeFora);
         btRotinaDiaria = (Button) findViewById(R.id.btRotinaDiaria);
         btEditar = (Button) findViewById(R.id.btEditar);
         btEditarPreferencias = (Button) findViewById(R.id.btEditarPreferencias);
@@ -82,14 +81,7 @@ public class DashboardActivity extends AppCompatActivity {
                 startActivity(addAtividade);
             }
         });
-        btCadastrarAtv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Direcionando a ação do botão para abrir a tela de atividades
-                Intent addAtividade = new Intent(DashboardActivity.this, CadastrarAtividadeFora.class);
-                startActivity(addAtividade);
-            }
-        });
+
         btEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
